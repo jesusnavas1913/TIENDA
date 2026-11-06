@@ -276,17 +276,21 @@ export default function QuickSupermarketCatalog({
     if (calc?.calculated_amount != null) {
       return {
         amount: calc.calculated_amount,
-        currency: calc.currency_code || "EUR",
+        currency: calc.currency_code || "COP",
       }
     }
-    return { amount: mode === "mayor" ? 45 : 5, currency: "EUR" }
+    return { amount: mode === "mayor" ? 85000 : 8500, currency: "COP" }
   }
 
-  const formatCurrency = (amount: number, currency = "EUR") =>
-    new Intl.NumberFormat("es-ES", {
+  const formatCurrency = (amount: number, currency = "COP") => {
+    const isCOP = currency.toUpperCase() === "COP"
+    return new Intl.NumberFormat(isCOP ? "es-CO" : "es-ES", {
       style: "currency",
       currency: currency.toUpperCase(),
+      minimumFractionDigits: isCOP ? 0 : 2,
+      maximumFractionDigits: isCOP ? 0 : 2,
     }).format(amount)
+  }
 
   const categories = useMemo(() => {
     const map = new Map<string, { id: string; name: string; count: number }>()

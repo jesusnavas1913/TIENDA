@@ -3,6 +3,7 @@ import { Metadata } from "next"
 import FeaturedProducts from "@modules/home/components/featured-products"
 import Hero from "@modules/home/components/hero"
 import QuickSupermarketCatalog from "@modules/home/components/quick-catalog"
+import StoreLocatorColombia from "@modules/home/components/store-locator"
 import { listCollections } from "@lib/data/collections"
 import { listProducts } from "@lib/data/products"
 import { getRegion, listRegions } from "@lib/data/regions"
@@ -102,6 +103,7 @@ export default async function Home(props: {
       />
       <Hero />
       <QuickSupermarketCatalog products={allProducts || []} />
+      <StoreLocatorColombia />
       {collections && collections.length > 0 && (
         <div className="py-12">
           <ul className="flex flex-col gap-x-6">

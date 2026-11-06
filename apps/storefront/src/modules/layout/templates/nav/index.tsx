@@ -26,10 +26,13 @@ export default async function Nav() {
             </div>
             <div className="hidden small:flex items-center gap-x-5 text-xs font-semibold text-slate-600">
               <LocalizedClientLink href="/store" className="hover:text-emerald-600 transition-colors">
-                Catálogo Completo
+                Catálogo Mayor y Detal
               </LocalizedClientLink>
               <a href="#catalogo-rapido" className="hover:text-emerald-600 transition-colors">
-                Ofertas Express
+                Pasillos
+              </a>
+              <a href="#mapa-sedes-colombia" className="hover:text-emerald-600 transition-colors flex items-center gap-1 text-emerald-700 font-bold">
+                📍 Sedes Colombia
               </a>
             </div>
           </div>

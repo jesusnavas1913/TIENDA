@@ -13,14 +13,15 @@ export const convertToLocale = ({
   currency_code,
   minimumFractionDigits,
   maximumFractionDigits,
-  locale = "en-US",
+  locale = "es-CO",
 }: ConvertToLocaleParams) => {
+  const isCOP = currency_code?.toLowerCase() === "cop"
   return currency_code && !isEmpty(currency_code)
-    ? new Intl.NumberFormat(locale, {
+    ? new Intl.NumberFormat(isCOP ? "es-CO" : locale, {
         style: "currency",
         currency: currency_code,
-        minimumFractionDigits,
-        maximumFractionDigits,
+        minimumFractionDigits: minimumFractionDigits ?? (isCOP ? 0 : 2),
+        maximumFractionDigits: maximumFractionDigits ?? (isCOP ? 0 : 2),
       }).format(amount)
     : amount.toString()
 }

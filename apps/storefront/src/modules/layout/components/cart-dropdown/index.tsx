@@ -41,7 +41,8 @@ const CartDropdown = ({
   const totalItems = countItems(cartState)
 
   const subtotal = cartState?.subtotal ?? 0
-  const FREE_SHIPPING_THRESHOLD = 30
+  const isCOP = cartState?.currency_code?.toLowerCase() === "cop"
+  const FREE_SHIPPING_THRESHOLD = isCOP ? 100000 : 30
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal)
   const shippingProgress = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100))
   const itemRef = useRef<number>(totalItems || 0)
@@ -144,11 +145,18 @@ const CartDropdown = ({
                 <div className="flex justify-between text-[11px] font-medium text-slate-600 mb-1">
                   {remainingForFreeShipping > 0 ? (
                     <span>
-                      Te faltan <strong>€{remainingForFreeShipping.toFixed(2)}</strong> para <strong>Envío Gratis 🚚</strong>
+                      Te faltan{" "}
+                      <strong>
+                        {convertToLocale({
+                          amount: remainingForFreeShipping,
+                          currency_code: cartState?.currency_code || "cop",
+                        })}
+                      </strong>{" "}
+                      para <strong>Domicilio Gratis 🚚</strong>
                     </span>
                   ) : (
                     <span className="text-emerald-700 font-bold">
-                      🎉 ¡Tienes Envío Express GRATIS en tu pedido!
+                      🎉 ¡Tienes Domicilio Express GRATIS en tu pedido!
                     </span>
                   )}
                   <span>{shippingProgress}%</span>

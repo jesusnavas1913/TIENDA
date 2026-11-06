@@ -43,10 +43,10 @@ const Hero = () => {
       {/* Top Promotional Strip */}
       <div className="bg-emerald-800 text-white text-xs sm:text-sm py-2.5 px-4 text-center font-medium tracking-wide flex flex-wrap items-center justify-center gap-2">
         <span className="bg-amber-400 text-slate-950 font-extrabold px-2 py-0.5 rounded text-[11px] uppercase">
-          VENTA AL POR MAYOR Y AL DETAL
+          🇨🇴 SÚPER EXPRESS COLOMBIA • MAYOR Y DETAL
         </span>
         <span>
-          🚚 <strong>ENVÍO GRATIS</strong> desde €30 • Surtimos tu hogar, restaurante o negocio con precios de central mayorista
+          🚚 <strong>DOMICILIO GRATIS</strong> desde $100.000 COP • Nequi, Daviplata, PSE y Pago Contraentrega en Bogotá, Medellín, Cali y Barranquilla
         </span>
       </div>
 
@@ -89,15 +89,15 @@ const Hero = () => {
                     <ShoppingBag /> Ver Pasillos (Mayor y Detal)
                   </Button>
                 </a>
-                <LocalizedClientLink href="/store">
+                <a href="#mapa-sedes-colombia">
                   <Button
                     variant="secondary"
                     size="large"
                     className="bg-white/10 hover:bg-white/20 text-white border-white/20 px-6 py-3.5 rounded-xl backdrop-blur-sm"
                   >
-                    Catálogo Completo <ArrowUpRightMini />
+                    📍 Ver Mapa de Sedes en Colombia <ArrowUpRightMini />
                   </Button>
-                </LocalizedClientLink>
+                </a>
               </div>
 
               {/* Trust Badges */}
