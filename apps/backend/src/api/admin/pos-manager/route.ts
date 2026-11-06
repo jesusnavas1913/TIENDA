@@ -12,6 +12,8 @@ import {
   updateProductVariantsWorkflow,
 } from "@medusajs/medusa/core-flows"
 
+const roundCop100 = (val: number) => Math.max(100, Math.round(val / 100) * 100)
+
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -58,10 +60,21 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     imageUrl,
     categoryId,
     barcode,
+    costCop,
+    detalMarginPct,
+    mayorMarginPct,
+    mayorUnits,
+    discountPct,
     detalPriceCop,
     mayorPriceCop,
     detalLabel,
     mayorLabel,
+    // Bulk global percentage parameters
+    targetScope,
+    globalDetalMarginPct,
+    globalMayorMarginPct,
+    globalDiscountPct,
+    globalPriceAdjustPct,
   } = body
 
   if (action === "delete" && productId) {
@@ -71,7 +84,144 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     return res.json({ success: true })
   }
 
-  // Update existing product (barcode, image, title, prices)
+  // BULK / GLOBAL PERCENTAGE UPDATE ACROSS ALL OR CATEGORY PRODUCTS
+  if (action === "bulk-percentage") {
+    const { data: allProducts } = await query.graph({
+      entity: "product",
+      fields: [
+        "id",
+        "title",
+        "metadata",
+        "categories.id",
+        "variants.id",
+        "variants.title",
+        "variants.sku",
+        "variants.prices.amount",
+        "variants.prices.currency_code",
+      ],
+    })
+
+    const targetProducts = allProducts.filter((p: any) => {
+      if (!targetScope || targetScope === "all") return true
+      return p.categories?.some((c: any) => c.id === targetScope)
+    })
+
+    let updatedCount = 0
+
+    for (const prod of targetProducts) {
+      const variants = prod.variants || []
+      const detalVar =
+        variants.find(
+          (v: any) =>
+            v.title?.toLowerCase().includes("detal") ||
+            v.sku?.toUpperCase().startsWith("DETAL")
+        ) || variants[0]
+      const mayorVar =
+        variants.find(
+          (v: any) =>
+            v.title?.toLowerCase().includes("mayor") ||
+            v.sku?.toUpperCase().startsWith("MAYOR")
+        ) || variants[1]
+
+      const getCop = (v: any, fallback: number) => {
+        const p = v?.prices?.find(
+          (pr: any) => pr.currency_code?.toLowerCase() === "cop"
+        )
+        return p?.amount ?? fallback
+      }
+
+      const currentDetal = getCop(detalVar, 6500)
+      const currentMayor = getCop(mayorVar, 52000)
+      const meta = (prod.metadata || {}) as Record<string, any>
+
+      const baseCost =
+        Number(meta.cost_cop) || Math.round(currentDetal / 1.3)
+      const unitsInMayor = Number(meta.mayor_units) || 10
+      const dMargin =
+        globalDetalMarginPct !== undefined && globalDetalMarginPct !== ""
+          ? Number(globalDetalMarginPct)
+          : Number(meta.detal_margin_pct ?? 30)
+      const mMargin =
+        globalMayorMarginPct !== undefined && globalMayorMarginPct !== ""
+          ? Number(globalMayorMarginPct)
+          : Number(meta.mayor_margin_pct ?? 15)
+      const disc =
+        globalDiscountPct !== undefined && globalDiscountPct !== ""
+          ? Number(globalDiscountPct)
+          : Number(meta.discount_pct ?? 0)
+
+      let newDetal = currentDetal
+      let newMayor = currentMayor
+
+      if (
+        globalPriceAdjustPct !== undefined &&
+        globalPriceAdjustPct !== "" &&
+        Number(globalPriceAdjustPct) !== 0
+      ) {
+        // Direct percentage increase/decrease on current prices (e.g. +10% or -5%)
+        const factor = 1 + Number(globalPriceAdjustPct) / 100
+        newDetal = roundCop100(currentDetal * factor)
+        newMayor = roundCop100(currentMayor * factor)
+      } else {
+        // Calculate from Cost + Margin % - Discount %
+        const discountFactor = Math.max(0.1, 1 - disc / 100)
+        newDetal = roundCop100(
+          baseCost * (1 + dMargin / 100) * discountFactor
+        )
+        newMayor = roundCop100(
+          baseCost * unitsInMayor * (1 + mMargin / 100) * discountFactor
+        )
+      }
+
+      await updateProductsWorkflow(req.scope).run({
+        input: {
+          selector: { id: prod.id },
+          update: {
+            metadata: {
+              ...meta,
+              cost_cop: baseCost,
+              detal_margin_pct: dMargin,
+              mayor_margin_pct: mMargin,
+              mayor_units: unitsInMayor,
+              discount_pct: disc,
+            },
+          },
+        },
+      })
+
+      for (const v of variants) {
+        const isMayor =
+          v.title?.toLowerCase().includes("mayor") ||
+          v.sku?.toUpperCase().startsWith("MAYOR")
+        const targetAmount = isMayor ? newMayor : newDetal
+
+        await updateProductVariantsWorkflow(req.scope).run({
+          input: {
+            selector: { id: v.id },
+            update: {
+              prices: [
+                { amount: targetAmount, currency_code: "cop" },
+                {
+                  amount: Math.max(1, Math.round(targetAmount / 4200)),
+                  currency_code: "eur",
+                },
+                {
+                  amount: Math.max(1, Math.round(targetAmount / 3900)),
+                  currency_code: "usd",
+                },
+              ],
+            },
+          },
+        })
+      }
+
+      updatedCount++
+    }
+
+    return res.json({ success: true, updatedCount })
+  }
+
+  // UPDATE SINGLE PRODUCT (BARCODE, IMAGE, MARGINS %, PRICES)
   if (action === "update" && productId) {
     const { data: existing } = await query.graph({
       entity: "product",
@@ -95,6 +245,17 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
       ...(barcode !== undefined ? { barcode } : {}),
       ...(detalLabel !== undefined ? { detal_label: detalLabel } : {}),
       ...(mayorLabel !== undefined ? { mayor_label: mayorLabel } : {}),
+      ...(costCop !== undefined ? { cost_cop: Number(costCop) } : {}),
+      ...(detalMarginPct !== undefined
+        ? { detal_margin_pct: Number(detalMarginPct) }
+        : {}),
+      ...(mayorMarginPct !== undefined
+        ? { mayor_margin_pct: Number(mayorMarginPct) }
+        : {}),
+      ...(mayorUnits !== undefined ? { mayor_units: Number(mayorUnits) } : {}),
+      ...(discountPct !== undefined
+        ? { discount_pct: Number(discountPct) }
+        : {}),
     }
 
     await updateProductsWorkflow(req.scope).run({
@@ -112,7 +273,6 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
       },
     })
 
-    // Update variants barcode & COP prices
     for (const v of prod.variants || []) {
       const isMayor =
         v.title?.toLowerCase().includes("mayor") ||
@@ -129,8 +289,14 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
       if (!Number.isNaN(priceCop) && priceCop > 0) {
         variantUpdate.prices = [
           { amount: priceCop, currency_code: "cop" },
-          { amount: Math.max(1, Math.round(priceCop / 4200)), currency_code: "eur" },
-          { amount: Math.max(1, Math.round(priceCop / 3900)), currency_code: "usd" },
+          {
+            amount: Math.max(1, Math.round(priceCop / 4200)),
+            currency_code: "eur",
+          },
+          {
+            amount: Math.max(1, Math.round(priceCop / 3900)),
+            currency_code: "usd",
+          },
         ]
       }
 
@@ -147,7 +313,7 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     return res.json({ success: true })
   }
 
-  // Create new product with Barcode, Image, Detal & Mayor variants
+  // CREATE NEW PRODUCT WITH COST, PERCENTAGES & BARCODE
   const { data: salesChannels } = await query.graph({
     entity: "sales_channel",
     fields: ["id"],
@@ -199,7 +365,8 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
 
   const detalCopNum = Number(detalPriceCop) || 5000
   const mayorCopNum = Number(mayorPriceCop) || detalCopNum * 10
-  const cleanBarcode = barcode || `770${Math.floor(1000000000 + Math.random() * 9000000000)}`
+  const cleanBarcode =
+    barcode || `770${Math.floor(1000000000 + Math.random() * 9000000000)}`
   const finalImg =
     imageUrl ||
     "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80"
@@ -210,7 +377,8 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
         {
           title: title || "Nuevo Producto",
           handle: cleanHandle,
-          description: description || "Producto fresco disponible al detal y por mayor.",
+          description:
+            description || "Producto fresco disponible al detal y por mayor.",
           status: ProductStatus.PUBLISHED,
           shipping_profile_id: shippingProfile.id,
           ...(categoryId ? { category_ids: [categoryId] } : {}),
@@ -220,6 +388,11 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
             barcode: cleanBarcode,
             detal_label: detalLabel || "Unidad Estándar",
             mayor_label: mayorLabel || "Caja / Paca Mayorista",
+            cost_cop: Number(costCop) || Math.round(detalCopNum / 1.3),
+            detal_margin_pct: Number(detalMarginPct ?? 30),
+            mayor_margin_pct: Number(mayorMarginPct ?? 15),
+            mayor_units: Number(mayorUnits ?? 10),
+            discount_pct: Number(discountPct ?? 0),
           },
           options: [{ id: modOption.id }],
           variants: [
@@ -227,14 +400,20 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
               title: "Al Detal (Unidad)",
               sku: `DETAL-${cleanBarcode}`,
               barcode: cleanBarcode,
-              ean: cleanBarcode,
+              ean: `${cleanBarcode}1`,
               options: {
                 Modalidad: "Al Detal (Unidad)",
               },
               prices: [
                 { amount: detalCopNum, currency_code: "cop" },
-                { amount: Math.max(1, Math.round(detalCopNum / 4200)), currency_code: "eur" },
-                { amount: Math.max(1, Math.round(detalCopNum / 3900)), currency_code: "usd" },
+                {
+                  amount: Math.max(1, Math.round(detalCopNum / 4200)),
+                  currency_code: "eur",
+                },
+                {
+                  amount: Math.max(1, Math.round(detalCopNum / 3900)),
+                  currency_code: "usd",
+                },
               ],
             },
             {
@@ -247,8 +426,14 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
               },
               prices: [
                 { amount: mayorCopNum, currency_code: "cop" },
-                { amount: Math.max(1, Math.round(mayorCopNum / 4200)), currency_code: "eur" },
-                { amount: Math.max(1, Math.round(mayorCopNum / 3900)), currency_code: "usd" },
+                {
+                  amount: Math.max(1, Math.round(mayorCopNum / 4200)),
+                  currency_code: "eur",
+                },
+                {
+                  amount: Math.max(1, Math.round(mayorCopNum / 3900)),
+                  currency_code: "usd",
+                },
               ],
             },
           ],
@@ -258,7 +443,6 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     },
   })
 
-  // Seed stock automatically
   const { data: inventoryItems } = await query.graph({
     entity: "inventory_item",
     fields: ["id", "location_levels.id"],

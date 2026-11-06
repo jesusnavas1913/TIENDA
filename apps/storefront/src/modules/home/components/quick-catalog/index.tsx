@@ -423,6 +423,11 @@ export default function QuickSupermarketCatalog({
     const categoryName = product.categories?.[0]?.name || "Supermercado"
     const catStyle =
       CATEGORY_STYLES[categoryName] || CATEGORY_STYLES["Frutas y Verduras"]
+    const metaDiscount = Number((product.metadata as any)?.discount_pct || 0)
+    const oldPriceCop =
+      metaDiscount > 0
+        ? Math.round(priceNum / (1 - metaDiscount / 100) / 100) * 100
+        : null
 
     return (
       <div
@@ -449,6 +454,11 @@ export default function QuickSupermarketCatalog({
             </LocalizedClientLink>
 
             <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+              {metaDiscount > 0 && (
+                <span className="bg-rose-600 text-white text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow-md">
+                  🔥 OFERTA -{metaDiscount}% OFF
+                </span>
+              )}
               {mode === "mayor" ? (
                 <span className="bg-amber-500 text-slate-950 text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow-md">
                   📦 MAYORISTA • {specs.savingPct}
@@ -544,10 +554,15 @@ export default function QuickSupermarketCatalog({
                     ? "Precio Caja / Bulto Mayorista"
                     : "Precio Unidad al Detal"}
                 </span>
-                <div className="flex items-baseline gap-2">
+                <div className="flex items-baseline gap-2 flex-wrap">
                   <span className="text-2xl font-extrabold text-slate-900">
                     {formatCurrency(priceNum, currency)}
                   </span>
+                  {oldPriceCop && (
+                    <span className="text-xs text-slate-400 line-through font-semibold">
+                      {formatCurrency(oldPriceCop, currency)}
+                    </span>
+                  )}
                   {mode === "mayor" && (
                     <span className="text-[11px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">
                       {specs.savingPct}
