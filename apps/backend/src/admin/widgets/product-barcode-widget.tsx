@@ -17,11 +17,11 @@ const ProductBarcodeImageWidget = ({ data }: { data: any }) => {
   const [barcode, setBarcode] = useState<string>("")
   const [imageUrl, setImageUrl] = useState<string>("")
   const [costCop, setCostCop] = useState<string>("5000")
-  const [detalMarginPct, setDetalMarginPct] = useState<string>("30")
+  const [detalMarginPct, setDetalMarginPct] = useState<string>("20")
   const [mayorMarginPct, setMayorMarginPct] = useState<string>("15")
   const [mayorUnits, setMayorUnits] = useState<string>("10")
   const [discountPct, setDiscountPct] = useState<string>("0")
-  const [detalPrice, setDetalPrice] = useState<string>("6500")
+  const [detalPrice, setDetalPrice] = useState<string>("6000")
   const [mayorPrice, setMayorPrice] = useState<string>("57500")
   const [detalLabel, setDetalLabel] = useState<string>("")
   const [mayorLabel, setMayorLabel] = useState<string>("")
@@ -60,9 +60,9 @@ const ProductBarcodeImageWidget = ({ data }: { data: any }) => {
       detalVar?.ean ||
       `77000${(data.id || "").slice(-8).replace(/\D/g, "5")}`
 
-    const cCop = Number(meta.cost_cop) || roundCop100(dPrice / 1.3)
+    const cCop = Number(meta.cost_cop) || roundCop100(dPrice / 1.2)
     const dPct =
-      meta.detal_margin_pct !== undefined ? Number(meta.detal_margin_pct) : 30
+      meta.detal_margin_pct !== undefined ? Number(meta.detal_margin_pct) : 20
     const mPct =
       meta.mayor_margin_pct !== undefined ? Number(meta.mayor_margin_pct) : 15
     const mUnits = Number(meta.mayor_units) || 10

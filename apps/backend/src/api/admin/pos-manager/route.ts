@@ -135,12 +135,12 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
       const meta = (prod.metadata || {}) as Record<string, any>
 
       const baseCost =
-        Number(meta.cost_cop) || Math.round(currentDetal / 1.3)
+        Number(meta.cost_cop) || Math.round(currentDetal / 1.2)
       const unitsInMayor = Number(meta.mayor_units) || 10
       const dMargin =
         globalDetalMarginPct !== undefined && globalDetalMarginPct !== ""
           ? Number(globalDetalMarginPct)
-          : Number(meta.detal_margin_pct ?? 30)
+          : Number(meta.detal_margin_pct ?? 20)
       const mMargin =
         globalMayorMarginPct !== undefined && globalMayorMarginPct !== ""
           ? Number(globalMayorMarginPct)
@@ -388,8 +388,8 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
             barcode: cleanBarcode,
             detal_label: detalLabel || "Unidad Estándar",
             mayor_label: mayorLabel || "Caja / Paca Mayorista",
-            cost_cop: Number(costCop) || Math.round(detalCopNum / 1.3),
-            detal_margin_pct: Number(detalMarginPct ?? 30),
+            cost_cop: Number(costCop) || Math.round(detalCopNum / 1.2),
+            detal_margin_pct: Number(detalMarginPct ?? 20),
             mayor_margin_pct: Number(mayorMarginPct ?? 15),
             mayor_units: Number(mayorUnits ?? 10),
             discount_pct: Number(discountPct ?? 0),

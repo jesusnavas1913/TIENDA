@@ -25,9 +25,9 @@ const POSBarcodeManagerPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [editingProduct, setEditingProduct] = useState<any | null>(null)
 
-  // Global / Bulk Percentage States
+  // Global / Bulk Percentage States (Default standard: 20% Detal, 15% Mayor)
   const [targetScope, setTargetScope] = useState<string>("all")
-  const [globalDetalMargin, setGlobalDetalMargin] = useState<string>("30")
+  const [globalDetalMargin, setGlobalDetalMargin] = useState<string>("20")
   const [globalMayorMargin, setGlobalMayorMargin] = useState<string>("15")
   const [globalDiscount, setGlobalDiscount] = useState<string>("0")
   const [globalPriceAdjust, setGlobalPriceAdjust] = useState<string>("")
@@ -56,11 +56,11 @@ const POSBarcodeManagerPage = () => {
   const [formDescription, setFormDescription] = useState("")
   const [formCategoryId, setFormCategoryId] = useState("")
   const [formCostCop, setFormCostCop] = useState("5000")
-  const [formDetalMargin, setFormDetalMargin] = useState("30")
+  const [formDetalMargin, setFormDetalMargin] = useState("20")
   const [formMayorMargin, setFormMayorMargin] = useState("15")
   const [formMayorUnits, setFormMayorUnits] = useState("10")
   const [formDiscountPct, setFormDiscountPct] = useState("0")
-  const [formDetalPrice, setFormDetalPrice] = useState("6500")
+  const [formDetalPrice, setFormDetalPrice] = useState("6000")
   const [formMayorPrice, setFormMayorPrice] = useState("57500")
   const [formDetalLabel, setFormDetalLabel] = useState("Unidad x 1kg")
   const [formMayorLabel, setFormMayorLabel] = useState("Caja Mayorista x 10kg")
@@ -121,11 +121,11 @@ const POSBarcodeManagerPage = () => {
     const meta = p.metadata || {}
 
     const costCop =
-      Number(meta.cost_cop) || roundCop100(detalPrice / 1.3)
+      Number(meta.cost_cop) || roundCop100(detalPrice / 1.2)
     const detalPct =
       meta.detal_margin_pct !== undefined
         ? Number(meta.detal_margin_pct)
-        : Math.max(5, Math.round(((detalPrice - costCop) / costCop) * 100))
+        : 20
     const mayorUnits = Number(meta.mayor_units) || 10
     const mayorPct =
       meta.mayor_margin_pct !== undefined
@@ -184,11 +184,11 @@ const POSBarcodeManagerPage = () => {
     setFormImage("")
     setFormDescription("")
     setFormCostCop("5000")
-    setFormDetalMargin("30")
+    setFormDetalMargin("20")
     setFormMayorMargin("15")
     setFormMayorUnits("10")
     setFormDiscountPct("0")
-    setFormDetalPrice("6500")
+    setFormDetalPrice("6000")
     setFormMayorPrice("57500")
     setFormDetalLabel("Unidad Estándar")
     setFormMayorLabel("Caja Mayorista x 10 uds")
@@ -277,6 +277,26 @@ const POSBarcodeManagerPage = () => {
     next.mayorPrice = roundCop100(
       next.costCop * next.mayorUnits * (1 + next.mayorPct / 100) * discFactor
     )
+    setRowEdits((prev) => ({ ...prev, [p.id]: next }))
+  }
+
+  const updateRowManualPrice = (
+    p: any,
+    field: "detalPrice" | "mayorPrice",
+    priceValue: number
+  ) => {
+    const base = rowEdits[p.id] || getProductDetails(p)
+    const next = { ...base, [field]: priceValue }
+    if (next.costCop > 0) {
+      if (field === "detalPrice") {
+        next.detalPct = Math.round(
+          ((priceValue - next.costCop) / next.costCop) * 100
+        )
+      } else {
+        const boxCost = next.costCop * (next.mayorUnits || 10)
+        next.mayorPct = Math.round(((priceValue - boxCost) / boxCost) * 100)
+      }
+    }
     setRowEdits((prev) => ({ ...prev, [p.id]: next }))
   }
 
@@ -842,10 +862,10 @@ const POSBarcodeManagerPage = () => {
                       </div>
                     </Table.Cell>
 
-                    {/* Detal % and Calculated COP */}
+                    {/* Detal % and Editable Manual COP Price */}
                     <Table.Cell>
-                      <div className="flex items-center gap-2">
-                        <div className="w-20">
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-16" title="% Ganancia Al Detal (Estándar 20%)">
                           <Input
                             type="number"
                             size="small"
@@ -859,21 +879,28 @@ const POSBarcodeManagerPage = () => {
                             }
                           />
                         </div>
-                        <div className="flex flex-col">
-                          <span className="font-bold text-emerald-600 text-xs">
-                            $ {Number(current.detalPrice).toLocaleString("es-CO")}
-                          </span>
-                          <span className="text-[10px] text-ui-fg-subtle">
-                            +{current.detalPct}% detal
-                          </span>
+                        <span className="text-xs font-bold text-ui-fg-muted">%</span>
+                        <div className="w-28" title="Precio Al Detal Manual ($ COP)">
+                          <Input
+                            type="number"
+                            size="small"
+                            value={current.detalPrice}
+                            onChange={(e) =>
+                              updateRowManualPrice(
+                                p,
+                                "detalPrice",
+                                Number(e.target.value || 0)
+                              )
+                            }
+                          />
                         </div>
                       </div>
                     </Table.Cell>
 
-                    {/* Mayor % and Calculated COP */}
+                    {/* Mayor % and Editable Manual COP Price */}
                     <Table.Cell>
-                      <div className="flex items-center gap-2">
-                        <div className="w-20">
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-16" title="% Ganancia Mayorista (Estándar 15%)">
                           <Input
                             type="number"
                             size="small"
@@ -887,13 +914,20 @@ const POSBarcodeManagerPage = () => {
                             }
                           />
                         </div>
-                        <div className="flex flex-col">
-                          <span className="font-bold text-amber-600 text-xs">
-                            $ {Number(current.mayorPrice).toLocaleString("es-CO")}
-                          </span>
-                          <span className="text-[10px] text-ui-fg-subtle">
-                            +{current.mayorPct}% (x{current.mayorUnits}u)
-                          </span>
+                        <span className="text-xs font-bold text-ui-fg-muted">%</span>
+                        <div className="w-28" title="Precio Mayorista Manual ($ COP)">
+                          <Input
+                            type="number"
+                            size="small"
+                            value={current.mayorPrice}
+                            onChange={(e) =>
+                              updateRowManualPrice(
+                                p,
+                                "mayorPrice",
+                                Number(e.target.value || 0)
+                              )
+                            }
+                          />
                         </div>
                       </div>
                     </Table.Cell>
