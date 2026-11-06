@@ -7,16 +7,15 @@ const EmptyCartMessage = () => {
     <div className="py-48 px-2 flex flex-col justify-center items-start" data-testid="empty-cart-message">
       <Heading
         level="h1"
-        className="flex flex-row text-3xl-regular gap-x-2 items-baseline"
+        className="flex flex-row text-3xl-regular gap-x-2 items-baseline font-extrabold"
       >
-        Cart
+        🛒 Tu Carrito está vacío
       </Heading>
       <Text className="text-base-regular mt-4 mb-6 max-w-[32rem]">
-        You don&apos;t have anything in your cart. Let&apos;s change that, use
-        the link below to start browsing our products.
+        Aún no has agregado productos de nuestro supermercado. Explora los pasillos para comprar al detal o al por mayor con precios en Pesos Colombianos ($ COP).
       </Text>
       <div>
-        <InteractiveLink href="/store">Explore products</InteractiveLink>
+        <InteractiveLink href="/store">Ir a los Pasillos del Supermercado</InteractiveLink>
       </div>
     </div>
   )

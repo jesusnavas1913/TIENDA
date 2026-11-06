@@ -13,20 +13,22 @@ const ItemsTemplate = ({ cart }: ItemsTemplateProps) => {
   const items = cart?.items
   return (
     <div>
-      <div className="pb-3 flex items-center">
-        <Heading className="text-[2rem] leading-[2.75rem]">Cart</Heading>
+      <div className="pb-3 flex items-center justify-between">
+        <Heading className="text-[2rem] leading-[2.75rem] font-extrabold text-slate-900">
+          🛒 Mi Carrito de Compra
+        </Heading>
       </div>
       <Table>
         <Table.Header className="border-t-0">
           <Table.Row className="text-ui-fg-subtle txt-medium-plus">
-            <Table.HeaderCell className="!pl-0">Item</Table.HeaderCell>
+            <Table.HeaderCell className="!pl-0">Producto</Table.HeaderCell>
             <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell>Quantity</Table.HeaderCell>
+            <Table.HeaderCell>Cantidad</Table.HeaderCell>
             <Table.HeaderCell className="hidden small:table-cell">
-              Price
+              Precio Unitario (COP)
             </Table.HeaderCell>
             <Table.HeaderCell className="!pr-0 text-right">
-              Total
+              Subtotal (COP)
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>

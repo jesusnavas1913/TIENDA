@@ -42,15 +42,15 @@ const SearchDrawer = ({ isOpen, close, children }: SearchDrawerProps) => {
                 data-testid="search-drawer"
               >
                 <div className="flex h-full flex-col border-l border-ui-border-base bg-ui-bg-base shadow-elevation-modal">
-                  <div className="flex items-center justify-between border-b border-ui-border-base px-4 py-3">
-                    <Dialog.Title className="text-large-semi text-ui-fg-base">
-                      Search
+                  <div className="flex items-center justify-between border-b border-ui-border-base px-4 py-3 bg-emerald-900 text-white">
+                    <Dialog.Title className="text-base font-extrabold">
+                      🔍 Buscador Inteligente • Mayor y Detal (COP)
                     </Dialog.Title>
                     <button
                       type="button"
                       onClick={close}
-                      aria-label="Close search"
-                      className="text-ui-fg-muted hover:text-ui-fg-base"
+                      aria-label="Cerrar buscador"
+                      className="text-white/80 hover:text-white"
                       data-testid="close-search-drawer"
                     >
                       <XMark />

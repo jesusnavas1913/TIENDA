@@ -29,8 +29,10 @@ const CartDropdown = ({
   cart?: HttpTypes.StoreCart | null
 }) => {
   // Statically rendered pages can't read the cart cookie, so the cart is loaded in the browser.
-  const [clientCart, setClientCart] = useState<HttpTypes.StoreCart | null>(null)
-  const cartState = serverCart ?? clientCart
+  const [clientCart, setClientCart] = useState<HttpTypes.StoreCart | null>(
+    serverCart ?? null
+  )
+  const cartState = clientCart ?? serverCart
   const [activeTimer, setActiveTimer] = useState<NodeJS.Timer | undefined>(
     undefined
   )
@@ -49,16 +51,11 @@ const CartDropdown = ({
   const itemRef = useRef<number>(totalItems || 0)
 
   useEffect(() => {
-    if (serverCart) {
-      return
-    }
-
     let isInitialLoad = true
     const load = () =>
       retrieveCart()
         .then((cart) => {
           if (isInitialLoad) {
-            // Don't auto-open the dropdown for items that were already in the cart.
             itemRef.current = countItems(cart)
             isInitialLoad = false
           }
@@ -69,7 +66,7 @@ const CartDropdown = ({
     load()
     window.addEventListener(CART_UPDATED_EVENT, load)
     return () => window.removeEventListener(CART_UPDATED_EVENT, load)
-  }, [serverCart])
+  }, [])
 
   const timedOpen = () => {
     open()

@@ -1,149 +1,262 @@
 "use client"
 
-import { MagnifyingGlass } from "@medusajs/icons"
-import Link from "next/link"
-import { useParams } from "next/navigation"
-import { useCallback, useEffect, useRef, useState } from "react"
-import type { SearchClient } from "instantsearch.js"
-import {
-  Configure,
-  InstantSearch,
-  useHits,
-  useInstantSearch,
-  useSearchBox,
-} from "react-instantsearch"
-
-import useSearchSettled from "@lib/hooks/use-search-settled"
+import { addToCart } from "@lib/data/cart"
+import { listProducts } from "@lib/data/products"
 import useToggleState from "@lib/hooks/use-toggle-state"
-import { PRODUCT_INDEX_NAME, searchClient } from "@lib/search-client"
-import { Text } from "@modules/common/components/ui"
+import { notifyCartUpdated } from "@lib/util/cart-events"
+import { formatCOP } from "@lib/util/money"
+import { MagnifyingGlass } from "@medusajs/icons"
+import { HttpTypes } from "@medusajs/types"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import Thumbnail from "@modules/products/components/thumbnail"
+import { useParams } from "next/navigation"
+import { useEffect, useMemo, useState } from "react"
 import SearchDrawer from "./drawer"
-import SearchHit, { ProductHit } from "./hit"
-
-const HITS_PER_PAGE = 12
-const DEBOUNCE_MS = 250
-
-const SearchPanel = ({ onNavigate }: { onNavigate: () => void }) => {
-  const timer = useRef<number | undefined>(undefined)
-
-  const queryHook = useCallback(
-    (nextQuery: string, search: (value: string) => void) => {
-      window.clearTimeout(timer.current)
-      timer.current = window.setTimeout(() => search(nextQuery), DEBOUNCE_MS)
-    },
-    []
-  )
-
-  const { query, refine } = useSearchBox({ queryHook })
-  const { items } = useHits<ProductHit>()
-  const { status, error } = useInstantSearch()
-  const { isSettled } = useSearchSettled()
-
-  const [inputValue, setInputValue] = useState(query)
-
-  useEffect(() => () => window.clearTimeout(timer.current), [])
-
-  const hasInput = Boolean(inputValue.trim())
-  const isPending = inputValue.trim() !== query.trim()
-  const hasResults = Boolean(query.trim()) && items.length > 0
-
-  return (
-    <>
-      <div className="flex items-center gap-x-3 border-b border-ui-border-base px-4">
-        <MagnifyingGlass className="shrink-0 text-ui-fg-muted" />
-        <input
-          type="search"
-          value={inputValue}
-          onChange={(event) => {
-            setInputValue(event.target.value)
-            refine(event.target.value)
-          }}
-          placeholder="Search products"
-          aria-label="Search products"
-          autoFocus
-          className="txt-medium w-full bg-transparent py-4 text-ui-fg-base outline-none placeholder:text-ui-fg-muted"
-          data-testid="search-input"
-        />
-      </div>
-
-      <div className="flex-1 overflow-y-auto">
-        {!hasInput ? (
-          <Text
-            className="px-4 py-6 text-center text-ui-fg-muted"
-            data-testid="search-empty"
-          >
-            Start typing to search for products.
-          </Text>
-        ) : status === "error" ? (
-          <Text
-            className="px-4 py-6 text-center text-ui-fg-error"
-            data-testid="search-error"
-          >
-            Couldn&apos;t search products
-            {error?.message ? `: ${error.message}` : "."}
-          </Text>
-        ) : !isSettled ? (
-          <Text
-            className="px-4 py-6 text-center text-ui-fg-muted"
-            data-testid="search-loading"
-          >
-            Searching&hellip;
-          </Text>
-        ) : hasResults ? (
-          <ul className="py-2" data-testid="search-results">
-            {items.map((hit) => (
-              <SearchHit key={hit.objectID} hit={hit} onNavigate={onNavigate} />
-            ))}
-          </ul>
-        ) : isPending || !query.trim() ? (
-          <Text
-            className="px-4 py-6 text-center text-ui-fg-muted"
-            data-testid="search-loading"
-          >
-            Searching&hellip;
-          </Text>
-        ) : (
-          <Text
-            className="px-4 py-6 text-center text-ui-fg-subtle"
-            data-testid="search-no-results"
-          >
-            No products found for &quot;{query}&quot;
-          </Text>
-        )}
-      </div>
-    </>
-  )
-}
 
 const Search = () => {
   const { state: isOpen, open, close } = useToggleState()
-  const { countryCode } = useParams<{ countryCode: string }>()
+  const params = useParams<{ countryCode: string }>()
+  const countryCode = params?.countryCode || "co"
+
+  const [products, setProducts] = useState<HttpTypes.StoreProduct[]>([])
+  const [loading, setLoading] = useState(false)
+  const [query, setQuery] = useState("")
+  const [addingId, setAddingId] = useState<string | null>(null)
+  const [addedId, setAddedId] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!isOpen || products.length > 0) return
+    setLoading(true)
+    listProducts({
+      countryCode,
+      queryParams: {
+        limit: 50,
+        fields: "*variants.calculated_price,*categories,+metadata",
+      },
+    })
+      .then(({ response }) => {
+        setProducts(response.products || [])
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [isOpen, countryCode, products.length])
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return products.slice(0, 8)
+    return products.filter((p) => {
+      const barcode = (
+        (p.metadata as any)?.barcode ||
+        p.variants?.[0]?.barcode ||
+        ""
+      ).toLowerCase()
+      const cat = (p.categories?.[0]?.name || "").toLowerCase()
+      return (
+        p.title?.toLowerCase().includes(q) ||
+        p.description?.toLowerCase().includes(q) ||
+        barcode.includes(q) ||
+        cat.includes(q)
+      )
+    })
+  }, [products, query])
+
+  const getPrices = (p: HttpTypes.StoreProduct) => {
+    const variants = p.variants || []
+    const detalVar =
+      variants.find((v) => v.title?.toLowerCase().includes("detal")) ||
+      variants[0]
+    const mayorVar =
+      variants.find((v) => v.title?.toLowerCase().includes("mayor")) ||
+      variants[1]
+
+    const extractCop = (v: any, fallback: number) => {
+      const calc = v?.calculated_price?.calculated_amount
+      const code = (v?.calculated_price?.currency_code || "COP").toUpperCase()
+      if (calc != null) {
+        return code !== "COP" && calc < 500 ? calc * 2000 : calc
+      }
+      return fallback
+    }
+
+    return {
+      detalVar,
+      mayorVar,
+      detalCop: extractCop(detalVar, 6500),
+      mayorCop: extractCop(mayorVar, 52000),
+      barcode:
+        (p.metadata as any)?.barcode ||
+        detalVar?.barcode ||
+        "7701001001",
+    }
+  }
+
+  const handleQuickAdd = async (variantId?: string, key?: string) => {
+    if (!variantId || !key) return
+    setAddingId(key)
+    try {
+      await addToCart({
+        variantId,
+        quantity: 1,
+        countryCode,
+      })
+      notifyCartUpdated()
+      setAddedId(key)
+      setTimeout(() => {
+        setAddedId((prev) => (prev === key ? null : prev))
+      }, 1500)
+    } finally {
+      setAddingId(null)
+    }
+  }
 
   return (
     <>
-      {/* A real link so search works without JavaScript; with JS it opens the drawer instead. */}
-      <Link
-        href={`/${countryCode}/search`}
-        onClick={(event) => {
-          event.preventDefault()
-          open()
-        }}
-        aria-label="Search products"
-        className="flex items-center hover:text-ui-fg-base"
+      <button
+        type="button"
+        onClick={open}
+        aria-label="Buscar productos"
+        className="flex items-center gap-2 bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 px-3.5 py-1.5 rounded-full border border-slate-200 transition-colors text-xs font-bold"
         data-testid="nav-search-button"
       >
-        <MagnifyingGlass />
-      </Link>
+        <MagnifyingGlass className="w-4 h-4" />
+        <span className="hidden sm:inline">Buscar / Código 770...</span>
+      </button>
 
       <SearchDrawer isOpen={isOpen} close={close}>
-        <InstantSearch
-          indexName={PRODUCT_INDEX_NAME}
-          searchClient={searchClient as unknown as SearchClient}
-          future={{ preserveSharedStateOnUnmount: true }}
-        >
-          <Configure hitsPerPage={HITS_PER_PAGE} />
-          <SearchPanel onNavigate={close} />
-        </InstantSearch>
+        <div className="p-4 border-b border-slate-200 bg-slate-50">
+          <div className="relative">
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="🔫 Escribe producto, categoría o código 770..."
+              autoFocus
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-600 focus:outline-none shadow-sm"
+            />
+          </div>
+          <div className="flex flex-wrap items-center gap-1.5 mt-2.5 text-[11px]">
+            <span className="text-slate-400 font-semibold">Rápido:</span>
+            {["Aguacate", "Café", "Arroz", "Huevos", "Leche", "770"].map(
+              (chip) => (
+                <button
+                  key={chip}
+                  type="button"
+                  onClick={() => setQuery(chip)}
+                  className="px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-700 hover:border-emerald-500 hover:text-emerald-700 font-semibold"
+                >
+                  {chip}
+                </button>
+              )
+            )}
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          {loading ? (
+            <div className="py-12 text-center text-sm text-slate-500">
+              Cargando catálogo de Colombia...
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="py-12 text-center">
+              <p className="text-sm font-bold text-slate-800">
+                No encontramos &quot;{query}&quot;
+              </p>
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                className="mt-2 text-xs text-emerald-700 font-bold underline"
+              >
+                Ver productos sugeridos
+              </button>
+            </div>
+          ) : (
+            filtered.map((p) => {
+              const info = getPrices(p)
+              const detalKey = `${p.id}-detal`
+              const mayorKey = `${p.id}-mayor`
+
+              return (
+                <div
+                  key={p.id}
+                  className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm hover:border-emerald-500/50 transition-all flex gap-3"
+                >
+                  <LocalizedClientLink
+                    href={`/products/${p.handle}`}
+                    onClick={close}
+                    className="w-20 h-20 rounded-xl overflow-hidden bg-slate-100 shrink-0"
+                  >
+                    <Thumbnail
+                      thumbnail={p.thumbnail}
+                      images={p.images}
+                      size="square"
+                      className="!p-0 !rounded-none h-full w-full"
+                    />
+                  </LocalizedClientLink>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+                        {p.categories?.[0]?.name || "Supermercado"}
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-500">
+                        ║▌║ {info.barcode}
+                      </span>
+                    </div>
+
+                    <LocalizedClientLink
+                      href={`/products/${p.handle}`}
+                      onClick={close}
+                    >
+                      <h4 className="font-extrabold text-slate-900 text-sm truncate mt-1 hover:text-emerald-700">
+                        {p.title}
+                      </h4>
+                    </LocalizedClientLink>
+
+                    <div className="grid grid-cols-2 gap-1.5 mt-2">
+                      <button
+                        type="button"
+                        disabled={addingId === detalKey}
+                        onClick={() =>
+                          handleQuickAdd(info.detalVar?.id, detalKey)
+                        }
+                        className="px-2 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-extrabold flex flex-col items-center leading-tight"
+                      >
+                        <span>
+                          {addedId === detalKey
+                            ? "✓ Agregado"
+                            : "🛍️ + Al Detal"}
+                        </span>
+                        <span className="text-[10px] font-normal opacity-95">
+                          {formatCOP(info.detalCop)}
+                        </span>
+                      </button>
+
+                      {info.mayorVar && (
+                        <button
+                          type="button"
+                          disabled={addingId === mayorKey}
+                          onClick={() =>
+                            handleQuickAdd(info.mayorVar?.id, mayorKey)
+                          }
+                          className="px-2 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 text-[11px] font-extrabold flex flex-col items-center leading-tight"
+                        >
+                          <span>
+                            {addedId === mayorKey
+                              ? "✓ Agregado"
+                              : "📦 + Por Mayor"}
+                          </span>
+                          <span className="text-[10px] font-semibold">
+                            {formatCOP(info.mayorCop)}
+                          </span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )
+            })
+          )}
+        </div>
       </SearchDrawer>
     </>
   )

@@ -274,22 +274,25 @@ export default function QuickSupermarketCatalog({
     const v = getSelectedVariant(product, mode) as any
     const calc = v?.calculated_price
     if (calc?.calculated_amount != null) {
+      const code = (calc.currency_code || "COP").toUpperCase()
+      // If user visits /dk or another EUR region, convert to realistic COP so Colombian Pesos are always shown clearly
+      if (code !== "COP" && calc.calculated_amount < 500) {
+        return {
+          amount: Math.round(calc.calculated_amount * 2000),
+          currency: "COP",
+        }
+      }
       return {
         amount: calc.calculated_amount,
-        currency: calc.currency_code || "COP",
+        currency: "COP",
       }
     }
-    return { amount: mode === "mayor" ? 85000 : 8500, currency: "COP" }
+    return { amount: mode === "mayor" ? 58000 : 6900, currency: "COP" }
   }
 
-  const formatCurrency = (amount: number, currency = "COP") => {
-    const isCOP = currency.toUpperCase() === "COP"
-    return new Intl.NumberFormat(isCOP ? "es-CO" : "es-ES", {
-      style: "currency",
-      currency: currency.toUpperCase(),
-      minimumFractionDigits: isCOP ? 0 : 2,
-      maximumFractionDigits: isCOP ? 0 : 2,
-    }).format(amount)
+  const formatCurrency = (amount: number, _currency = "COP") => {
+    const rounded = Math.round(amount || 0)
+    return `$ ${rounded.toLocaleString("es-CO")} COP`
   }
 
   const categories = useMemo(() => {

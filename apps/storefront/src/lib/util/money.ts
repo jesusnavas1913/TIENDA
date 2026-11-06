@@ -8,6 +8,11 @@ type ConvertToLocaleParams = {
   locale?: string
 }
 
+export const formatCOP = (amount: number): string => {
+  const rounded = Math.round(amount || 0)
+  return `$ ${rounded.toLocaleString("es-CO")} COP`
+}
+
 export const convertToLocale = ({
   amount,
   currency_code,
@@ -15,13 +20,19 @@ export const convertToLocale = ({
   maximumFractionDigits,
   locale = "es-CO",
 }: ConvertToLocaleParams) => {
-  const isCOP = currency_code?.toLowerCase() === "cop"
-  return currency_code && !isEmpty(currency_code)
-    ? new Intl.NumberFormat(isCOP ? "es-CO" : locale, {
-        style: "currency",
-        currency: currency_code,
-        minimumFractionDigits: minimumFractionDigits ?? (isCOP ? 0 : 2),
-        maximumFractionDigits: maximumFractionDigits ?? (isCOP ? 0 : 2),
-      }).format(amount)
-    : amount.toString()
+  if (!currency_code || isEmpty(currency_code)) {
+    return formatCOP(amount)
+  }
+
+  const isCOP = currency_code.toLowerCase() === "cop"
+  if (isCOP) {
+    return formatCOP(amount)
+  }
+
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currency_code,
+    minimumFractionDigits: minimumFractionDigits ?? 0,
+    maximumFractionDigits: maximumFractionDigits ?? 0,
+  }).format(amount)
 }

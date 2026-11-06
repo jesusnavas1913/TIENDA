@@ -4,9 +4,11 @@ import CartTemplate from "@modules/cart/templates"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
-  title: "Cart",
-  description: "View your cart",
+  title: "Mi Carrito | Súper Express Colombia",
+  description: "Revisa tu carrito de compra al por mayor y al detal",
 }
 
 export default async function Cart() {
