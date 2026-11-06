@@ -21,10 +21,14 @@ export default async function Footer() {
           <div>
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
+              className="txt-compact-xlarge-plus text-slate-900 hover:text-emerald-600 uppercase font-extrabold flex items-center gap-2"
             >
-              Medusa Store
+              <span className="bg-emerald-600 text-white px-2 py-0.5 rounded-lg text-sm">🛒</span>
+              SÚPER EXPRESS
             </LocalizedClientLink>
+            <p className="text-xs text-slate-500 mt-2 max-w-xs">
+              Tu autoservicio y supermercado online de confianza. Productos frescos del campo a tu mesa en 30 minutos.
+            </p>
           </div>
           <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
             {productCategories && productCategories?.length > 0 && (
@@ -205,7 +209,7 @@ export default async function Footer() {
         </div>
         <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
           <Text className="txt-compact-small">
-            © {new Date().getFullYear()} Medusa Store. All rights reserved.
+            © {new Date().getFullYear()} Súper Express Autoservicio. Todos los derechos reservados.
           </Text>
           <MedusaCTA />
         </div>

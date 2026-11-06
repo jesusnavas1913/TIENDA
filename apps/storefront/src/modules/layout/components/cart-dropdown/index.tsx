@@ -41,6 +41,9 @@ const CartDropdown = ({
   const totalItems = countItems(cartState)
 
   const subtotal = cartState?.subtotal ?? 0
+  const FREE_SHIPPING_THRESHOLD = 30
+  const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal)
+  const shippingProgress = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100))
   const itemRef = useRef<number>(totalItems || 0)
 
   useEffect(() => {
@@ -110,10 +113,10 @@ const CartDropdown = ({
       <Popover className="relative h-full">
         <PopoverButton className="h-full">
           <LocalizedClientLink
-            className="hover:text-ui-fg-base"
+            className="hover:text-emerald-600 font-bold flex items-center gap-1.5 bg-emerald-50 text-emerald-800 px-3.5 py-1.5 rounded-full border border-emerald-200 transition-colors"
             href="/cart"
             data-testid="nav-cart-link"
-          >{`Cart (${totalItems})`}</LocalizedClientLink>
+          >{`🛒 Carrito (${totalItems})`}</LocalizedClientLink>
         </PopoverButton>
         <Transition
           show={cartDropdownOpen}
@@ -130,8 +133,33 @@ const CartDropdown = ({
             className="hidden small:block absolute top-[calc(100%+1px)] right-0 bg-white border-x border-b border-gray-200 w-[420px] text-ui-fg-base"
             data-testid="nav-cart-dropdown"
           >
-            <div className="p-4 flex items-center justify-center">
-              <h3 className="text-large-semi">Cart</h3>
+            <div className="p-4 border-b border-slate-100 flex flex-col gap-2 bg-slate-50">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-extrabold text-slate-900">🛒 Tu Carrito de Compra</h3>
+                <span className="text-xs font-semibold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">
+                  {totalItems} {totalItems === 1 ? "producto" : "productos"}
+                </span>
+              </div>
+              <div className="w-full">
+                <div className="flex justify-between text-[11px] font-medium text-slate-600 mb-1">
+                  {remainingForFreeShipping > 0 ? (
+                    <span>
+                      Te faltan <strong>€{remainingForFreeShipping.toFixed(2)}</strong> para <strong>Envío Gratis 🚚</strong>
+                    </span>
+                  ) : (
+                    <span className="text-emerald-700 font-bold">
+                      🎉 ¡Tienes Envío Express GRATIS en tu pedido!
+                    </span>
+                  )}
+                  <span>{shippingProgress}%</span>
+                </div>
+                <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-emerald-500 transition-all duration-300 rounded-full"
+                    style={{ width: `${shippingProgress}%` }}
+                  />
+                </div>
+              </div>
             </div>
             {cartState && cartState.items?.length ? (
               <>
