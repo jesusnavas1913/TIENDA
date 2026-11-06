@@ -316,13 +316,20 @@ export default function QuickSupermarketCatalog({
         p.categories?.some(
           (c) => c.id === selectedCategory || c.name === selectedCategory
         )
+      const q = searchQuery.trim().toLowerCase()
+      const barcodeMeta = ((p.metadata as any)?.barcode || "").toLowerCase()
+      const variantBarcode = (
+        p.variants?.[0]?.barcode ||
+        p.variants?.[0]?.ean ||
+        ""
+      ).toLowerCase()
       const matchesSearch =
-        !searchQuery.trim() ||
-        p.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.categories?.some((c) =>
-          c.name?.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+        !q ||
+        p.title?.toLowerCase().includes(q) ||
+        p.description?.toLowerCase().includes(q) ||
+        barcodeMeta.includes(q) ||
+        variantBarcode.includes(q) ||
+        p.categories?.some((c) => c.name?.toLowerCase().includes(q))
       return matchesCat && matchesSearch
     })
 
@@ -499,8 +506,8 @@ export default function QuickSupermarketCatalog({
                   ({specs.reviews})
                 </span>
               </span>
-              <span className="text-[11px] text-emerald-700 font-semibold">
-                ● Stock disponible
+              <span className="text-[10px] font-mono bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200">
+                ║▌║ {(product.metadata as any)?.barcode || product.variants?.[0]?.barcode || "7701001"}
               </span>
             </div>
 
@@ -696,7 +703,7 @@ export default function QuickSupermarketCatalog({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="🔍 Buscar producto o categoría..."
+                placeholder="🔫 Buscar por nombre o código 770..."
                 className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-600 focus:bg-white focus:outline-none"
               />
               {searchQuery && (
