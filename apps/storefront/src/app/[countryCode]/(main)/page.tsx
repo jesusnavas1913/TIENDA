@@ -60,8 +60,8 @@ export default async function Home(props: {
   } = await listProducts({
     regionId: region.id,
     queryParams: {
-      limit: 24,
-      fields: "*variants.calculated_price,*categories",
+      limit: 50,
+      fields: "*variants.calculated_price,*categories,+metadata",
     },
   })
 

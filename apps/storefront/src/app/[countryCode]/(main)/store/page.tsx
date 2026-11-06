@@ -28,7 +28,7 @@ export default async function StorePage(props: {
     regionId: region.id,
     queryParams: {
       limit: 50,
-      fields: "*variants.calculated_price,*categories",
+      fields: "*variants.calculated_price,*categories,+metadata",
     },
   })
 
