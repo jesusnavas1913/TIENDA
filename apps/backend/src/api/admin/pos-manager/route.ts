@@ -221,6 +221,26 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     return res.json({ success: true, updatedCount })
   }
 
+  // CREATE OR UPSERT BY BARCODE (IF SCANNED BARCODE ALREADY EXISTS, UPDATE IT CLEANLY)
+  if (barcode && String(barcode).trim()) {
+    const cleanBc = String(barcode).trim()
+    const { data: allExisting } = await query.graph({
+      entity: "product",
+      fields: ["id", "title", "metadata", "variants.id", "variants.title", "variants.sku", "variants.barcode"],
+    })
+    const matched = allExisting.find(
+      (p: any) =>
+        p.metadata?.barcode === cleanBc ||
+        p.variants?.some((v: any) => v.barcode === cleanBc)
+    )
+    if (matched && !productId) {
+      // Redirect create into update if barcode already exists
+      body.action = "update"
+      body.productId = matched.id
+      return POST(req, res)
+    }
+  }
+
   // UPDATE SINGLE PRODUCT (BARCODE, IMAGE, MARGINS %, PRICES)
   if (action === "update" && productId) {
     const { data: existing } = await query.graph({
@@ -332,27 +352,6 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
   })
   const stockLocation = stockLocations[0]
 
-  const { data: existingOptions } = await query.graph({
-    entity: "product_option",
-    fields: ["id", "title"],
-  })
-  let modOption = existingOptions.find((o: any) => o.title === "Modalidad")
-  if (!modOption) {
-    const { result: options } = await createProductOptionsWorkflow(
-      req.scope
-    ).run({
-      input: {
-        product_options: [
-          {
-            title: "Modalidad",
-            values: ["Al Detal (Unidad)", "Al por Mayor (Caja / Bulto)"],
-          },
-        ],
-      },
-    })
-    modOption = options[0]
-  }
-
   const cleanHandle =
     (title || "producto")
       .toLowerCase()
@@ -394,7 +393,12 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
             mayor_units: Number(mayorUnits ?? 10),
             discount_pct: Number(discountPct ?? 0),
           },
-          options: [{ id: modOption.id }],
+          options: [
+            {
+              title: "Modalidad",
+              values: ["Al Detal (Unidad)", "Al por Mayor (Caja / Bulto)"],
+            },
+          ],
           variants: [
             {
               title: "Al Detal (Unidad)",

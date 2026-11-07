@@ -12,9 +12,59 @@ import {
   Textarea,
   toast,
 } from "@medusajs/ui"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 const roundCop100 = (val: number) => Math.max(100, Math.round(val / 100) * 100)
+
+// Built-in Colombian GS1 770 Dictionary so scanning or typing common barcodes auto-fills the product!
+const COLOMBIAN_BARCODE_DICTIONARY: Record<
+  string,
+  {
+    title: string
+    costCop: number
+    detalLabel: string
+    mayorLabel: string
+    mayorUnits: number
+    imageUrl: string
+  }
+> = {
+  "7702001051001": {
+    title: "Arroz Diana Premium Grano Entero",
+    costCop: 3800,
+    detalLabel: "Bolsa x 1kg",
+    mayorLabel: "Paca Mayorista x 25kg",
+    mayorUnits: 25,
+    imageUrl:
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
+  },
+  "7702004003502": {
+    title: "Café Sello Rojo Tradicional Colombiano",
+    costCop: 16500,
+    detalLabel: "Bolsa x 500g",
+    mayorLabel: "Paca x 12 Bolsas",
+    mayorUnits: 12,
+    imageUrl:
+      "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80",
+  },
+  "7702129001009": {
+    title: "Leche Alquería Entera Larga Vida",
+    costCop: 4200,
+    detalLabel: "Bolsa x 1.1L",
+    mayorLabel: "Paca x 12 Bolsas",
+    mayorUnits: 12,
+    imageUrl:
+      "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=800&q=80",
+  },
+  "7702025102004": {
+    title: "Aceite Premier Puro Girasol",
+    costCop: 22000,
+    detalLabel: "Botella x 1000ml",
+    mayorLabel: "Caja x 12 Botellas",
+    mayorUnits: 12,
+    imageUrl:
+      "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80",
+  },
+}
 
 const POSBarcodeManagerPage = () => {
   const [products, setProducts] = useState<any[]>([])
@@ -24,6 +74,20 @@ const POSBarcodeManagerPage = () => {
   const [savingId, setSavingId] = useState<string | null>(null)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [editingProduct, setEditingProduct] = useState<any | null>(null)
+
+  // Fast POS Scanner Bar States (1-Line Entry)
+  const barcodeInputRef = useRef<HTMLInputElement>(null)
+  const [fastBarcode, setFastBarcode] = useState("")
+  const [fastTitle, setFastTitle] = useState("")
+  const [fastCostCop, setFastCostCop] = useState("5000")
+  const [fastDetalPct, setFastDetalPct] = useState("20")
+  const [fastMayorPct, setFastMayorPct] = useState("15")
+  const [fastMayorUnits, setFastMayorUnits] = useState("10")
+  const [fastDetalPrice, setFastDetalPrice] = useState("6000")
+  const [fastMayorPrice, setFastMayorPrice] = useState("57500")
+  const [fastCategoryId, setFastCategoryId] = useState("")
+  const [fastImageUrl, setFastImageUrl] = useState("")
+  const [fastSaving, setFastSaving] = useState(false)
 
   // Global / Bulk Percentage States (Default standard: 20% Detal, 15% Mayor)
   const [targetScope, setTargetScope] = useState<string>("all")
@@ -49,7 +113,7 @@ const POSBarcodeManagerPage = () => {
     >
   >({})
 
-  // Form states for Create / Full Edit Modal
+  // Form states for Full Edit Modal
   const [formTitle, setFormTitle] = useState("")
   const [formBarcode, setFormBarcode] = useState("")
   const [formImage, setFormImage] = useState("")
@@ -74,9 +138,9 @@ const POSBarcodeManagerPage = () => {
       const json = await res.json()
       setProducts(json.products || [])
       setCategories(json.categories || [])
-      if (json.categories?.[0]?.id && !formCategoryId) {
-        setFormCategoryId(json.categories[0].id)
-      }
+      const firstCat = json.categories?.[0]?.id || ""
+      if (firstCat && !formCategoryId) setFormCategoryId(firstCat)
+      if (firstCat && !fastCategoryId) setFastCategoryId(firstCat)
       setRowEdits({})
     } catch {
       toast.error("Error cargando el catálogo POS")
@@ -155,6 +219,133 @@ const POSBarcodeManagerPage = () => {
     }
   }
 
+  // Fast Bar auto-calc when cost or % changes
+  const recalcFastBar = (
+    cStr: string,
+    dPctStr: string,
+    mPctStr: string,
+    uStr: string
+  ) => {
+    const cost = Number(cStr) || 0
+    const dPct = Number(dPctStr) || 0
+    const mPct = Number(mPctStr) || 0
+    const units = Math.max(1, Number(uStr) || 10)
+    if (cost > 0) {
+      setFastDetalPrice(String(roundCop100(cost * (1 + dPct / 100))))
+      setFastMayorPrice(String(roundCop100(cost * units * (1 + mPct / 100))))
+    }
+  }
+
+  // When user types or scans a barcode in Fast Bar, check if it exists in store or GS1 dictionary
+  const handleFastBarcodeChange = (val: string) => {
+    setFastBarcode(val)
+    const clean = val.trim()
+    if (!clean) return
+
+    // 1. Check if product already exists in store
+    const existing = products.find((p) => {
+      const info = getProductDetails(p)
+      return info.barcode === clean
+    })
+    if (existing) {
+      const info = getProductDetails(existing)
+      setFastTitle(existing.title || "")
+      setFastCostCop(String(info.costCop))
+      setFastDetalPct(String(info.detalPct))
+      setFastMayorPct(String(info.mayorPct))
+      setFastMayorUnits(String(info.mayorUnits))
+      setFastDetalPrice(String(info.detalPrice))
+      setFastMayorPrice(String(info.mayorPrice))
+      if (info.categoryId) setFastCategoryId(info.categoryId)
+      setFastImageUrl(existing.thumbnail || existing.images?.[0]?.url || "")
+      toast.info(`Código existente detectado: "${existing.title}" cargado para actualizar.`)
+      return
+    }
+
+    // 2. Check built-in Colombian GS1 dictionary
+    const preset = COLOMBIAN_BARCODE_DICTIONARY[clean]
+    if (preset) {
+      setFastTitle(preset.title)
+      setFastCostCop(String(preset.costCop))
+      setFastMayorUnits(String(preset.mayorUnits))
+      setFastImageUrl(preset.imageUrl)
+      recalcFastBar(
+        String(preset.costCop),
+        fastDetalPct,
+        fastMayorPct,
+        String(preset.mayorUnits)
+      )
+      toast.success(`¡Código 770 reconocido: ${preset.title}!`)
+    }
+  }
+
+  const handleFastBarSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault()
+    if (!fastTitle.trim()) {
+      toast.error("Escribe el nombre del producto")
+      return
+    }
+
+    const finalBc = fastBarcode.trim() || generateColombianBarcode()
+    setFastSaving(true)
+    try {
+      const res = await fetch("/admin/pos-manager", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "create",
+          barcode: finalBc,
+          title: fastTitle.trim(),
+          categoryId: fastCategoryId || categories[0]?.id,
+          costCop: Number(fastCostCop),
+          detalMarginPct: Number(fastDetalPct),
+          mayorMarginPct: Number(fastMayorPct),
+          mayorUnits: Number(fastMayorUnits),
+          detalPriceCop: Number(fastDetalPrice),
+          mayorPriceCop: Number(fastMayorPrice),
+          imageUrl: fastImageUrl.trim() || undefined,
+          detalLabel: "Unidad Estándar",
+          mayorLabel: `Caja Mayorista x ${fastMayorUnits} uds`,
+        }),
+      })
+
+      if (!res.ok) throw new Error("Error guardando producto rápido")
+
+      toast.success(
+        `✅ "${fastTitle}" ingresado con Código ${finalBc} (${fastDetalPct}% Detal / ${fastMayorPct}% Mayor)`
+      )
+      // Reset fast bar for next barcode scan immediately!
+      setFastBarcode("")
+      setFastTitle("")
+      setFastImageUrl("")
+      await loadData()
+      barcodeInputRef.current?.focus()
+    } catch {
+      toast.error("Error al ingresar producto rápido")
+    } finally {
+      setFastSaving(false)
+    }
+  }
+
+  // Handle local computer image file upload -> base64 Data URL
+  const handleFileUpload = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    target: "fast" | "modal"
+  ) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        if (target === "fast") setFastImageUrl(reader.result)
+        else setFormImage(reader.result)
+        toast.success("📷 Fotografía cargada desde tu equipo")
+      }
+    }
+    reader.readAsDataURL(file)
+  }
+
   const recalculateModalPrices = (
     costStr: string,
     dPctStr: string,
@@ -175,24 +366,6 @@ const POSBarcodeManagerPage = () => {
       setFormDetalPrice(String(dPrice))
       setFormMayorPrice(String(mPrice))
     }
-  }
-
-  const openCreateModal = () => {
-    setEditingProduct(null)
-    setFormTitle("")
-    setFormBarcode(generateColombianBarcode())
-    setFormImage("")
-    setFormDescription("")
-    setFormCostCop("5000")
-    setFormDetalMargin("20")
-    setFormMayorMargin("15")
-    setFormMayorUnits("10")
-    setFormDiscountPct("0")
-    setFormDetalPrice("6000")
-    setFormMayorPrice("57500")
-    setFormDetalLabel("Unidad Estándar")
-    setFormMayorLabel("Caja Mayorista x 10 uds")
-    setShowCreateModal(true)
   }
 
   const openEditModal = (p: any) => {
@@ -248,11 +421,7 @@ const POSBarcodeManagerPage = () => {
 
       if (!res.ok) throw new Error("Error al guardar")
 
-      toast.success(
-        editingProduct
-          ? "¡Producto, Porcentajes y Precios COP actualizados!"
-          : "¡Nuevo producto creado con Código de Barras y Porcentajes!"
-      )
+      toast.success("¡Producto actualizado correctamente!")
       setShowCreateModal(false)
       await loadData()
     } catch {
@@ -262,7 +431,6 @@ const POSBarcodeManagerPage = () => {
     }
   }
 
-  // Inline row percentage change handler
   const updateRowField = (
     p: any,
     field: "costCop" | "detalPct" | "mayorPct" | "discountPct",
@@ -322,10 +490,10 @@ const POSBarcodeManagerPage = () => {
         }),
       })
       if (!res.ok) throw new Error("Error")
-      toast.success(`¡Porcentajes de "${p.title}" aplicados!`)
+      toast.success(`¡Precios de "${p.title}" guardados!`)
       await loadData()
     } catch {
-      toast.error("Error guardando porcentaje individual")
+      toast.error("Error guardando cambios")
     } finally {
       setSavingId(null)
     }
@@ -402,43 +570,167 @@ const POSBarcodeManagerPage = () => {
 
   return (
     <div className="flex flex-col gap-y-6 p-4">
-      {/* Top Header */}
-      <Container className="p-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* FAST 1-LINE BARCODE ENTRY SCANNER */}
+      <Container className="p-6 border-2 border-emerald-600 bg-ui-bg-base shadow-md">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <Badge color="green">🇨🇴 SÚPER EXPRESS COLOMBIA</Badge>
-              <Badge color="purple">CONTROL DE PORCENTAJES GLOBAL E INDIVIDUAL</Badge>
-              <Badge color="blue">EAN-13 / 770</Badge>
+              <Badge color="green">⚡ INGRESO RÁPIDO CON LECTOR DE CÓDIGO DE BARRAS</Badge>
+              <Badge color="blue">20% DETAL / 15% MAYOR AUTOMÁTICO</Badge>
             </div>
-            <Heading level="h1" className="text-2xl font-bold">
-              Centro de Control: Porcentajes de Ganancia (%), Códigos 770 e Imágenes
+            <Heading level="h1" className="text-xl font-bold">
+              Pistola POS: Escanea o Escribe el Código 770 → Pon el Costo → Enter para Guardar
             </Heading>
-            <Text className="text-ui-fg-subtle text-sm mt-1">
-              Busca cualquier producto para cambiar su porcentaje individual en vivo, o aplica un porcentaje global a toda la tienda o a una categoría.
+            <Text className="text-xs text-ui-fg-subtle">
+              Si escaneas un código que ya existe, carga sus datos para actualizarlo sin errores. Prueba los códigos rápidos de muestra abajo:
             </Text>
           </div>
-          <div className="flex items-center gap-3">
-            <Button variant="secondary" onClick={loadData}>
-              🔄 Actualizar
-            </Button>
-            <Button variant="primary" onClick={openCreateModal}>
-              ➕ Nuevo Producto
-            </Button>
+
+          <div className="flex flex-wrap gap-1.5">
+            {Object.entries(COLOMBIAN_BARCODE_DICTIONARY).map(([code, item]) => (
+              <Button
+                key={code}
+                variant="secondary"
+                size="small"
+                type="button"
+                onClick={() => handleFastBarcodeChange(code)}
+              >
+                🔫 {item.title.split(" ").slice(0, 2).join(" ")} ({code.slice(-4)})
+              </Button>
+            ))}
           </div>
         </div>
+
+        <form
+          onSubmit={handleFastBarSubmit}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-end bg-ui-bg-subtle p-4 rounded-xl border"
+        >
+          <div className="lg:col-span-2">
+            <Text className="text-xs font-bold mb-1">
+              1️⃣ Código de Barras (770)
+            </Text>
+            <div className="flex gap-1">
+              <Input
+                ref={barcodeInputRef}
+                value={fastBarcode}
+                onChange={(e) => handleFastBarcodeChange(e.target.value)}
+                placeholder="Escanea 770..."
+                autoFocus
+              />
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={() => handleFastBarcodeChange(generateColombianBarcode())}
+                title="Generar código 770 automático"
+              >
+                🎲
+              </Button>
+            </div>
+          </div>
+
+          <div className="lg:col-span-3">
+            <Text className="text-xs font-bold mb-1">
+              2️⃣ Nombre del Producto *
+            </Text>
+            <Input
+              value={fastTitle}
+              onChange={(e) => setFastTitle(e.target.value)}
+              placeholder="Ej: Aceite Premier x 1000ml"
+            />
+          </div>
+
+          <div className="lg:col-span-2">
+            <Text className="text-xs font-bold mb-1">3️⃣ Categoría</Text>
+            <Select
+              value={fastCategoryId}
+              onValueChange={(val) => setFastCategoryId(val)}
+            >
+              <Select.Trigger>
+                <Select.Value placeholder="Categoría" />
+              </Select.Trigger>
+              <Select.Content>
+                {categories.map((c) => (
+                  <Select.Item key={c.id} value={c.id}>
+                    {c.name}
+                  </Select.Item>
+                ))}
+              </Select.Content>
+            </Select>
+          </div>
+
+          <div className="lg:col-span-1">
+            <Text className="text-xs font-bold mb-1">4️⃣ Costo ($)</Text>
+            <Input
+              type="number"
+              value={fastCostCop}
+              onChange={(e) => {
+                setFastCostCop(e.target.value)
+                recalcFastBar(
+                  e.target.value,
+                  fastDetalPct,
+                  fastMayorPct,
+                  fastMayorUnits
+                )
+              }}
+            />
+          </div>
+
+          <div className="lg:col-span-1">
+            <Text className="text-xs font-bold mb-1">
+              🛍️ Detal (+{fastDetalPct}%)
+            </Text>
+            <Input
+              type="number"
+              value={fastDetalPrice}
+              onChange={(e) => setFastDetalPrice(e.target.value)}
+              title="Precio Al Detal (Autocalculado +20% o edítalo manual)"
+            />
+          </div>
+
+          <div className="lg:col-span-1">
+            <Text className="text-xs font-bold mb-1">
+              📦 Mayor (+{fastMayorPct}%)
+            </Text>
+            <Input
+              type="number"
+              value={fastMayorPrice}
+              onChange={(e) => setFastMayorPrice(e.target.value)}
+              title="Precio Mayorista (Autocalculado +15% o edítalo manual)"
+            />
+          </div>
+
+          <div className="lg:col-span-2 flex gap-1.5 items-center">
+            <label className="cursor-pointer px-2.5 py-2 rounded-lg border bg-ui-bg-base hover:bg-ui-bg-base-hover text-xs font-bold shrink-0">
+              📷 Subir Foto
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => handleFileUpload(e, "fast")}
+              />
+            </label>
+            <Button
+              variant="primary"
+              type="submit"
+              isLoading={fastSaving}
+              className="w-full"
+            >
+              ➕ Ingresar (Enter)
+            </Button>
+          </div>
+        </form>
       </Container>
 
       {/* GLOBAL PERCENTAGE ENGINE PANEL */}
-      <Container className="p-6 border-2 border-emerald-500/40 bg-ui-bg-subtle">
+      <Container className="p-5 border bg-ui-bg-subtle">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <Heading level="h2" className="text-base font-bold">
-                📊 Motor de Porcentajes Globales (Toda la Tienda o por Categoría)
+                📊 Motor de Porcentajes Globales (20% Detal y 15% Mayor por defecto)
               </Heading>
               <Text className="text-xs text-ui-fg-subtle">
-                Elige si deseas aplicar los porcentajes a todos los productos o solo al departamento seleccionado.
+                Aplica porcentajes en bloque a toda la tienda o filtra por un departamento específico.
               </Text>
             </div>
 
@@ -465,8 +757,7 @@ const POSBarcodeManagerPage = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 pt-2 border-t">
-            {/* Option A: Set Global Profit Margin % */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-4 gap-3 items-end bg-ui-bg-base p-4 rounded-xl border">
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-4 gap-3 items-end bg-ui-bg-base p-3.5 rounded-xl border">
               <div>
                 <Text className="text-xs font-bold mb-1">
                   🛍️ % Ganancia Detal
@@ -475,7 +766,6 @@ const POSBarcodeManagerPage = () => {
                   type="number"
                   value={globalDetalMargin}
                   onChange={(e) => setGlobalDetalMargin(e.target.value)}
-                  placeholder="30"
                 />
               </div>
               <div>
@@ -486,7 +776,6 @@ const POSBarcodeManagerPage = () => {
                   type="number"
                   value={globalMayorMargin}
                   onChange={(e) => setGlobalMayorMargin(e.target.value)}
-                  placeholder="15"
                 />
               </div>
               <div>
@@ -497,7 +786,6 @@ const POSBarcodeManagerPage = () => {
                   type="number"
                   value={globalDiscount}
                   onChange={(e) => setGlobalDiscount(e.target.value)}
-                  placeholder="0"
                 />
               </div>
               <Button
@@ -509,8 +797,7 @@ const POSBarcodeManagerPage = () => {
               </Button>
             </div>
 
-            {/* Option B: Quick Global Increase / Decrease % */}
-            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-3 items-end bg-ui-bg-base p-4 rounded-xl border">
+            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-3 items-end bg-ui-bg-base p-3.5 rounded-xl border">
               <div>
                 <Text className="text-xs font-bold mb-1">
                   📈 Subir / Bajar Precios Actuales (%)
@@ -519,7 +806,7 @@ const POSBarcodeManagerPage = () => {
                   type="number"
                   value={globalPriceAdjust}
                   onChange={(e) => setGlobalPriceAdjust(e.target.value)}
-                  placeholder="Ej: 10 para +10% o -5 para -5%"
+                  placeholder="Ej: 10 para +10% o -5"
                 />
               </div>
               <Button
@@ -527,7 +814,7 @@ const POSBarcodeManagerPage = () => {
                 isLoading={applyingBulk}
                 onClick={() => handleApplyGlobalPercentages("adjust")}
               >
-                🔄 Ajustar Precios en Bloque
+                🔄 Ajustar en Bloque
               </Button>
             </div>
           </div>
@@ -539,27 +826,26 @@ const POSBarcodeManagerPage = () => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="w-full sm:w-96">
             <Input
-              placeholder="🔍 Busca un producto o escanea código 770 para cambiar su %..."
+              placeholder="🔍 Buscar en inventario por nombre o código 770..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
           <Text className="text-xs text-ui-fg-muted">
-            💡 <strong>Tip:</strong> Cambia el <strong>Costo Base</strong>, el{" "}
-            <strong>% Detal</strong> o el <strong>% Mayor</strong> en cualquier fila y pulsa{" "}
-            <strong>💾 Aplicar</strong>.
+            💡 Puedes editar el <strong>%</strong> (automático) o escribir directamente el{" "}
+            <strong>Precio $ COP</strong> (manual) en cada fila y pulsar <strong>💾 Aplicar %</strong>.
           </Text>
         </div>
       </Container>
 
-      {/* Create / Full Edit Modal */}
+      {/* Full Edit Modal */}
       {showCreateModal && (
         <Container className="p-6 border-2 border-emerald-500 bg-ui-bg-subtle">
           <div className="flex items-center justify-between mb-4">
             <Heading level="h2" className="text-lg font-bold">
               {editingProduct
-                ? `✏️ Editando Completo: ${editingProduct.title}`
-                : "➕ Crear Producto con Calculadora de Porcentajes (%)"}
+                ? `✏️ Editando Foto, Código y Precios: ${editingProduct.title}`
+                : "➕ Nuevo Producto"}
             </Heading>
             <Button
               variant="transparent"
@@ -577,7 +863,6 @@ const POSBarcodeManagerPage = () => {
               <Input
                 value={formTitle}
                 onChange={(e) => setFormTitle(e.target.value)}
-                placeholder="Ej: Aceite Gourmet x 1000ml"
               />
             </div>
 
@@ -619,7 +904,6 @@ const POSBarcodeManagerPage = () => {
               </Select>
             </div>
 
-            {/* Percentage Calculator Row */}
             <div>
               <Text className="text-xs font-bold mb-1">
                 💵 Costo Base Unidad ($ COP)
@@ -702,7 +986,7 @@ const POSBarcodeManagerPage = () => {
 
             <div>
               <Text className="text-xs font-bold mb-1">
-                🛍️ Precio Final Detal ($ COP)
+                🛍️ Precio Final Detal ($ COP - Manual)
               </Text>
               <Input
                 type="number"
@@ -723,7 +1007,7 @@ const POSBarcodeManagerPage = () => {
 
             <div>
               <Text className="text-xs font-bold mb-1">
-                📦 Precio Final Mayorista ($ COP)
+                📦 Precio Final Mayorista ($ COP - Manual)
               </Text>
               <Input
                 type="number"
@@ -742,15 +1026,26 @@ const POSBarcodeManagerPage = () => {
               />
             </div>
 
-            <div className="md:col-span-3">
+            <div className="md:col-span-2">
               <Text className="text-xs font-bold mb-1">
-                🖼️ URL de la Fotografía del Producto
+                🖼️ URL de Imagen o Subir desde tu PC
               </Text>
-              <Input
-                value={formImage}
-                onChange={(e) => setFormImage(e.target.value)}
-                placeholder="https://..."
-              />
+              <div className="flex gap-2">
+                <Input
+                  value={formImage}
+                  onChange={(e) => setFormImage(e.target.value)}
+                  placeholder="https://..."
+                />
+                <label className="cursor-pointer px-3 py-1.5 rounded-lg border bg-ui-bg-base hover:bg-ui-bg-base-hover text-xs font-bold shrink-0 flex items-center">
+                  📁 Subir Archivo
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => handleFileUpload(e, "modal")}
+                  />
+                </label>
+              </div>
             </div>
 
             <div className="flex items-center gap-3">
@@ -785,17 +1080,17 @@ const POSBarcodeManagerPage = () => {
               isLoading={savingId !== null}
               onClick={handleSaveProduct}
             >
-              💾 Guardar Producto y Publicar
+              💾 Guardar Cambios
             </Button>
           </div>
         </Container>
       )}
 
-      {/* Products Table with Individual Percentage Controls */}
+      {/* Products Table */}
       <Container className="p-0 overflow-hidden">
         {loading ? (
           <div className="p-12 text-center">
-            <Text>Cargando productos y porcentajes...</Text>
+            <Text>Cargando productos y códigos de barras...</Text>
           </div>
         ) : (
           <Table>
@@ -803,8 +1098,8 @@ const POSBarcodeManagerPage = () => {
               <Table.Row>
                 <Table.HeaderCell>Producto / Código 770</Table.HeaderCell>
                 <Table.HeaderCell>💵 Costo Base (COP)</Table.HeaderCell>
-                <Table.HeaderCell>🛍️ % Detal → Precio COP</Table.HeaderCell>
-                <Table.HeaderCell>📦 % Mayor → Precio COP</Table.HeaderCell>
+                <Table.HeaderCell>🛍️ % Detal y Precio ($ COP)</Table.HeaderCell>
+                <Table.HeaderCell>📦 % Mayor y Precio ($ COP)</Table.HeaderCell>
                 <Table.HeaderCell>🏷️ % Desc.</Table.HeaderCell>
                 <Table.HeaderCell className="text-right">
                   Guardar / Editar
@@ -844,7 +1139,6 @@ const POSBarcodeManagerPage = () => {
                       </div>
                     </Table.Cell>
 
-                    {/* Cost Base Input */}
                     <Table.Cell>
                       <div className="w-28">
                         <Input
@@ -862,10 +1156,12 @@ const POSBarcodeManagerPage = () => {
                       </div>
                     </Table.Cell>
 
-                    {/* Detal % and Editable Manual COP Price */}
                     <Table.Cell>
                       <div className="flex items-center gap-1.5">
-                        <div className="w-16" title="% Ganancia Al Detal (Estándar 20%)">
+                        <div
+                          className="w-16"
+                          title="% Ganancia Al Detal (Estándar 20%)"
+                        >
                           <Input
                             type="number"
                             size="small"
@@ -879,8 +1175,13 @@ const POSBarcodeManagerPage = () => {
                             }
                           />
                         </div>
-                        <span className="text-xs font-bold text-ui-fg-muted">%</span>
-                        <div className="w-28" title="Precio Al Detal Manual ($ COP)">
+                        <span className="text-xs font-bold text-ui-fg-muted">
+                          %
+                        </span>
+                        <div
+                          className="w-28"
+                          title="Precio Al Detal Manual ($ COP)"
+                        >
                           <Input
                             type="number"
                             size="small"
@@ -897,10 +1198,12 @@ const POSBarcodeManagerPage = () => {
                       </div>
                     </Table.Cell>
 
-                    {/* Mayor % and Editable Manual COP Price */}
                     <Table.Cell>
                       <div className="flex items-center gap-1.5">
-                        <div className="w-16" title="% Ganancia Mayorista (Estándar 15%)">
+                        <div
+                          className="w-16"
+                          title="% Ganancia Mayorista (Estándar 15%)"
+                        >
                           <Input
                             type="number"
                             size="small"
@@ -914,8 +1217,13 @@ const POSBarcodeManagerPage = () => {
                             }
                           />
                         </div>
-                        <span className="text-xs font-bold text-ui-fg-muted">%</span>
-                        <div className="w-28" title="Precio Mayorista Manual ($ COP)">
+                        <span className="text-xs font-bold text-ui-fg-muted">
+                          %
+                        </span>
+                        <div
+                          className="w-28"
+                          title="Precio Mayorista Manual ($ COP)"
+                        >
                           <Input
                             type="number"
                             size="small"
@@ -932,7 +1240,6 @@ const POSBarcodeManagerPage = () => {
                       </div>
                     </Table.Cell>
 
-                    {/* Discount % */}
                     <Table.Cell>
                       <div className="w-16">
                         <Input
@@ -950,7 +1257,6 @@ const POSBarcodeManagerPage = () => {
                       </div>
                     </Table.Cell>
 
-                    {/* Actions */}
                     <Table.Cell className="text-right">
                       <div className="flex items-center justify-end gap-1.5">
                         {hasChanges && (
