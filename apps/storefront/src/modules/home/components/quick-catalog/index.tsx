@@ -420,6 +420,14 @@ export default function QuickSupermarketCatalog({
     const qty = getQty(product.id)
     const specs = getSpecs(product)
     const { amount: priceNum, currency } = getVariantPrice(product, mode)
+    const { amount: detalUnitAmount } = getVariantPrice(product, "detal")
+    const { amount: mayorBoxAmount } = getVariantPrice(product, "mayor")
+    const mayorUnitsCount = Math.max(
+      1,
+      Number((product.metadata as any)?.mayor_units || 10)
+    )
+    const pumMayorUnit = Math.round(mayorBoxAmount / mayorUnitsCount)
+    const unitSavingsCop = Math.max(0, detalUnitAmount - pumMayorUnit)
     const categoryName = product.categories?.[0]?.name || "Supermercado"
     const catStyle =
       CATEGORY_STYLES[categoryName] || CATEGORY_STYLES["Frutas y Verduras"]
@@ -566,6 +574,24 @@ export default function QuickSupermarketCatalog({
                   {mode === "mayor" && (
                     <span className="text-[11px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">
                       {specs.savingPct}
+                    </span>
+                  )}
+                </div>
+                <div className="mt-1 text-[11px] font-semibold">
+                  {mode === "mayor" ? (
+                    <span className="text-amber-800">
+                      🏭 PUM: Sale a{" "}
+                      <strong>{formatCurrency(pumMayorUnit, currency)}</strong>{" "}
+                      / ud
+                      {unitSavingsCop > 0
+                        ? ` (Ahorras ${formatCurrency(unitSavingsCop, currency)}/ud)`
+                        : ""}
+                    </span>
+                  ) : (
+                    <span className="text-emerald-700">
+                      💡 En paca mayorista (x{mayorUnitsCount}u) sale a{" "}
+                      <strong>{formatCurrency(pumMayorUnit, currency)}</strong>{" "}
+                      / ud
                     </span>
                   )}
                 </div>

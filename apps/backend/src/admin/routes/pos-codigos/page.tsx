@@ -598,8 +598,286 @@ const POSBarcodeManagerPage = () => {
     })
   }, [products, search, targetScope])
 
+  // Industrial KPI Summary across filtered catalog
+  const industrialKpis = useMemo(() => {
+    let totalCost = 0
+    let totalDetalRev = 0
+    let totalMayorBoxCost = 0
+    let totalMayorRev = 0
+
+    filteredProducts.forEach((p) => {
+      const info = rowEdits[p.id] || getProductDetails(p)
+      totalCost += info.costCop
+      totalDetalRev += info.detalPrice
+      totalMayorBoxCost += info.costCop * (info.mayorUnits || 10)
+      totalMayorRev += info.mayorPrice
+    })
+
+    const detalProfit = totalDetalRev - totalCost
+    const mayorProfit = totalMayorRev - totalMayorBoxCost
+    const avgDetalMargin =
+      totalDetalRev > 0
+        ? Math.round((1 - totalCost / totalDetalRev) * 100)
+        : 20
+    const avgMayorMargin =
+      totalMayorRev > 0
+        ? Math.round((1 - totalMayorBoxCost / totalMayorRev) * 100)
+        : 15
+
+    return {
+      skuCount: filteredProducts.length,
+      totalCost,
+      totalDetalRev,
+      detalProfit,
+      avgDetalMargin,
+      totalMayorRev,
+      mayorProfit,
+      avgMayorMargin,
+    }
+  }, [filteredProducts, rowEdits])
+
+  // Save all edited rows in 1 click
+  const handleSaveAllEditedRows = async () => {
+    const editedIds = Object.keys(rowEdits)
+    if (editedIds.length === 0) return
+    setApplyingBulk(true)
+    try {
+      for (const pid of editedIds) {
+        const edit = rowEdits[pid]
+        await fetch("/admin/pos-manager", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "update",
+            productId: pid,
+            costCop: edit.costCop,
+            detalMarginPct: edit.detalPct,
+            mayorMarginPct: edit.mayorPct,
+            mayorUnits: edit.mayorUnits,
+            discountPct: edit.discountPct,
+            detalPriceCop: edit.detalPrice,
+            mayorPriceCop: edit.mayorPrice,
+          }),
+        })
+      }
+      toast.success(
+        `✅ Se guardaron los ${editedIds.length} productos modificados`
+      )
+      await loadData()
+    } catch {
+      toast.error("Error guardando cambios múltiples")
+    } finally {
+      setApplyingBulk(false)
+    }
+  }
+
+  // Export catalog to Excel CSV (with UTF-8 BOM for Spanish & accents)
+  const handleExportExcelCsv = () => {
+    const headers = [
+      "Codigo_Barras_GS1_770",
+      "Producto",
+      "Categoria",
+      "Costo_Base_COP",
+      "Margen_Detal_%",
+      "Divisor_Industrial_Detal",
+      "Precio_Venta_Detal_COP",
+      "Ganancia_Neta_Detal_COP",
+      "Unidades_Caja_Mayor",
+      "Margen_Mayor_%",
+      "Divisor_Industrial_Mayor",
+      "Precio_Venta_Mayor_COP",
+      "PUM_Precio_Unidad_En_Mayor_COP",
+      "Ganancia_Neta_Caja_Mayor_COP",
+    ]
+
+    const rows = filteredProducts.map((p) => {
+      const base = getProductDetails(p)
+      const cur = rowEdits[p.id] || base
+      const dDiv = getIndustrialDivisor(cur.detalPct).toFixed(2)
+      const mDiv = getIndustrialDivisor(cur.mayorPct).toFixed(2)
+      const dProfit = cur.detalPrice - cur.costCop
+      const mProfit = cur.mayorPrice - cur.costCop * cur.mayorUnits
+      const pum = Math.round(cur.mayorPrice / Math.max(1, cur.mayorUnits))
+
+      return [
+        `"${base.barcode}"`,
+        `"${(p.title || "").replace(/"/g, '""')}"`,
+        `"${base.categoryName}"`,
+        cur.costCop,
+        cur.detalPct,
+        dDiv,
+        cur.detalPrice,
+        dProfit,
+        cur.mayorUnits,
+        cur.mayorPct,
+        mDiv,
+        cur.mayorPrice,
+        pum,
+        mProfit,
+      ].join(";")
+    })
+
+    const csvContent = "\uFEFF" + [headers.join(";"), ...rows].join("\n")
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement("a")
+    link.href = url
+    link.setAttribute(
+      "download",
+      `Catalogo_Industrial_SuperExpress_${new Date().toISOString().slice(0, 10)}.csv`
+    )
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    toast.success("📥 Catálogo exportado para Excel (.CSV)")
+  }
+
+  // Print Shelf Barcode Labels (Etiquetas de Góndola Estilo Supermercado / Makro)
+  const handlePrintShelfLabels = () => {
+    const win = window.open("", "_blank", "width=950,height=700")
+    if (!win) {
+      toast.error("Permite las ventanas emergentes para imprimir etiquetas")
+      return
+    }
+    const cardsHtml = filteredProducts
+      .map((p) => {
+        const base = getProductDetails(p)
+        const cur = rowEdits[p.id] || base
+        const pum = Math.round(cur.mayorPrice / Math.max(1, cur.mayorUnits))
+        return `
+        <div class="label-card">
+          <div class="cat">${base.categoryName.toUpperCase()} • SÚPER EXPRESS COLOMBIA</div>
+          <div class="title">${p.title}</div>
+          <div class="prices">
+            <div class="detal-box">
+              <div class="tag">PRECIO AL DETAL (${base.detalLabel})</div>
+              <div class="price-big">$ ${cur.detalPrice.toLocaleString("es-CO")}</div>
+            </div>
+            <div class="mayor-box">
+              <div class="tag">PRECIO MAYORISTA (x${cur.mayorUnits} uds)</div>
+              <div class="price-mid">$ ${cur.mayorPrice.toLocaleString("es-CO")}</div>
+              <div class="pum">PUM: Sale a $ ${pum.toLocaleString("es-CO")} / ud</div>
+            </div>
+          </div>
+          <div class="barcode-wrap">
+            <div class="bars">║▌║█║▌│║▌║▌█║▌║█║▌│║▌║</div>
+            <div class="code">${base.barcode}</div>
+          </div>
+        </div>`
+      })
+      .join("")
+
+    win.document.write(`
+      <html>
+        <head>
+          <title>Etiquetas de Góndola GS1-770 - Súper Express Colombia</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 16px; background: #f8fafc; }
+            .toolbar { margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; background: #064e3b; color: white; padding: 12px 18px; border-radius: 10px; }
+            .btn { background: #fbbf24; color: #0f172a; font-weight: 900; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+            .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+            .label-card { background: white; border: 2px solid #0f172a; border-radius: 10px; padding: 12px; page-break-inside: avoid; }
+            .cat { font-size: 10px; font-weight: bold; color: #047857; letter-spacing: 0.5px; }
+            .title { font-size: 15px; font-weight: 900; color: #0f172a; margin: 4px 0 8px; }
+            .prices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border-top: 1px dashed #cbd5e1; border-bottom: 1px dashed #cbd5e1; padding: 8px 0; }
+            .detal-box { background: #ecfdf5; padding: 6px 8px; border-radius: 6px; border: 1px solid #a7f3d0; }
+            .mayor-box { background: #fffbeb; padding: 6px 8px; border-radius: 6px; border: 1px solid #fde68a; }
+            .tag { font-size: 9px; font-weight: 800; color: #475569; }
+            .price-big { font-size: 20px; font-weight: 900; color: #065f46; }
+            .price-mid { font-size: 17px; font-weight: 900; color: #92400e; }
+            .pum { font-size: 10px; font-weight: 800; color: #b45309; margin-top: 2px; }
+            .barcode-wrap { text-align: center; margin-top: 8px; font-family: monospace; }
+            .bars { font-size: 18px; letter-spacing: 3px; font-weight: bold; }
+            .code { font-size: 12px; font-weight: bold; letter-spacing: 2px; }
+            @media print { .toolbar { display: none; } body { background: white; padding: 0; } }
+          </style>
+        </head>
+        <body>
+          <div class="toolbar">
+            <div>
+              <strong>🖨️ ETIQUETAS DE GÓNDOLA Y ESTANTERÍA (GS1 COLOMBIA 770 + PUM)</strong>
+              <div style="font-size:12px;opacity:0.85;">Incluye Precio Detal, Precio Mayorista y Precio por Unidad de Medida (Ley SIC Colombia)</div>
+            </div>
+            <button class="btn" onclick="window.print()">🖨️ Imprimir Etiquetas Ahora</button>
+          </div>
+          <div class="grid">${cardsHtml}</div>
+        </body>
+      </html>
+    `)
+    win.document.close()
+  }
+
   return (
     <div className="flex flex-col gap-y-6 p-4">
+      {/* EXECUTIVE INDUSTRIAL KPI BAR */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Container className="p-4 border-l-4 border-l-slate-800 bg-ui-bg-base">
+          <Text className="text-xs font-bold text-ui-fg-subtle uppercase">
+            📦 Catálogo & Acciones Industriales
+          </Text>
+          <div className="text-2xl font-extrabold mt-1">
+            {industrialKpis.skuCount} Referencias (SKUs)
+          </div>
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            <Button
+              variant="secondary"
+              size="small"
+              type="button"
+              onClick={handleExportExcelCsv}
+            >
+              📥 Exportar Excel/CSV
+            </Button>
+            <Button
+              variant="secondary"
+              size="small"
+              type="button"
+              onClick={handlePrintShelfLabels}
+            >
+              🖨️ Etiquetas Góndola
+            </Button>
+          </div>
+        </Container>
+
+        <Container className="p-4 border-l-4 border-l-blue-600 bg-ui-bg-base">
+          <Text className="text-xs font-bold text-ui-fg-subtle uppercase">
+            💵 Suma Costo Base (1 Ud c/u)
+          </Text>
+          <div className="text-2xl font-extrabold mt-1">
+            {formatCop(industrialKpis.totalCost)} COP
+          </div>
+          <Text className="text-xs text-ui-fg-subtle mt-1">
+            Base sobre la cual se divide entre <strong>0.80</strong> (Detal) y{" "}
+            <strong>0.85</strong> (Mayor)
+          </Text>
+        </Container>
+
+        <Container className="p-4 border-l-4 border-l-emerald-600 bg-ui-bg-base">
+          <Text className="text-xs font-bold text-emerald-700 uppercase">
+            🛍️ Rentabilidad Al Detal (Prom. {industrialKpis.avgDetalMargin}% → ÷
+            {getIndustrialDivisor(industrialKpis.avgDetalMargin).toFixed(2)})
+          </Text>
+          <div className="text-2xl font-extrabold text-emerald-700 mt-1">
+            +{formatCop(industrialKpis.detalProfit)} COP
+          </div>
+          <Text className="text-xs text-ui-fg-subtle mt-1">
+            Venta total 1 ud c/u: {formatCop(industrialKpis.totalDetalRev)} COP
+          </Text>
+        </Container>
+
+        <Container className="p-4 border-l-4 border-l-amber-500 bg-ui-bg-base">
+          <Text className="text-xs font-bold text-amber-700 uppercase">
+            🏭 Rentabilidad Mayorista (Prom. {industrialKpis.avgMayorMargin}% → ÷
+            {getIndustrialDivisor(industrialKpis.avgMayorMargin).toFixed(2)})
+          </Text>
+          <div className="text-2xl font-extrabold text-amber-700 mt-1">
+            +{formatCop(industrialKpis.mayorProfit)} COP
+          </div>
+          <Text className="text-xs text-ui-fg-subtle mt-1">
+            Venta total 1 caja c/u: {formatCop(industrialKpis.totalMayorRev)} COP
+          </Text>
+        </Container>
+      </div>
       {/* FAST 1-LINE BARCODE ENTRY SCANNER */}
       <Container className="p-6 border-2 border-emerald-600 bg-ui-bg-base shadow-md">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
@@ -863,10 +1141,22 @@ const POSBarcodeManagerPage = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <Text className="text-xs text-ui-fg-muted">
-            💡 Puedes editar el <strong>%</strong> (automático) o escribir directamente el{" "}
-            <strong>Precio $ COP</strong> (manual) en cada fila y pulsar <strong>💾 Aplicar %</strong>.
-          </Text>
+          <div className="flex flex-wrap items-center gap-3">
+            {Object.keys(rowEdits).length > 0 && (
+              <Button
+                variant="primary"
+                size="small"
+                isLoading={applyingBulk}
+                onClick={handleSaveAllEditedRows}
+              >
+                💾 Guardar Todos los Cambios ({Object.keys(rowEdits).length})
+              </Button>
+            )}
+            <Text className="text-xs text-ui-fg-muted">
+              💡 Puedes editar el <strong>%</strong> (automático) o escribir el{" "}
+              <strong>Precio $ COP</strong> (manual) en cada fila.
+            </Text>
+          </div>
         </div>
       </Container>
 
@@ -1283,7 +1573,15 @@ const POSBarcodeManagerPage = () => {
                           {formatCop(
                             current.mayorPrice -
                               current.costCop * current.mayorUnits
+                          )}{" "}
+                          • PUM:{" "}
+                          {formatCop(
+                            Math.round(
+                              current.mayorPrice /
+                                Math.max(1, current.mayorUnits)
+                            )
                           )}
+                          /ud
                         </span>
                       </div>
                     </Table.Cell>
