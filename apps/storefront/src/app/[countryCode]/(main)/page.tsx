@@ -46,27 +46,32 @@ export default async function Home(props: {
 
   const { countryCode } = params
 
-  const region = await getRegion(countryCode)
+  const region = (await getRegion(countryCode)) || (await getRegion("co"))
 
   const { collections } = await listCollections({
     fields: "id, handle, title",
-  })
+  }).catch(() => ({ collections: [] }))
 
-  if (!region) {
-    return null
+  let allProducts: any[] = []
+  if (region) {
+    try {
+      const { response } = await listProducts({
+        regionId: region.id,
+        queryParams: {
+          limit: 100,
+          fields: "*variants.calculated_price,*categories,+metadata",
+        },
+      })
+      allProducts = response?.products || []
+    } catch {
+      allProducts = []
+    }
   }
 
-  const {
-    response: { products: allProducts },
-  } = await listProducts({
-    regionId: region.id,
-    queryParams: {
-      limit: 50,
-      fields: "*variants.calculated_price,*categories,+metadata",
-    },
-  })
-
-  const [origin, regions] = await Promise.all([getSiteOrigin(), listRegions()])
+  const [origin, regions] = await Promise.all([
+    getSiteOrigin(),
+    listRegions(),
+  ])
   const homeUrl = `${origin}/${countryCode}`
   const returnPolicies = buildRegionsReturnPolicies(regions)
   const structuredData = [
@@ -104,7 +109,7 @@ export default async function Home(props: {
       <Hero />
       <QuickSupermarketCatalog products={allProducts || []} />
       <StoreLocatorColombia />
-      {collections && collections.length > 0 && (
+      {region && collections && collections.length > 0 && (
         <div className="py-12">
           <ul className="flex flex-col gap-x-6">
             <FeaturedProducts collections={collections} region={region} />

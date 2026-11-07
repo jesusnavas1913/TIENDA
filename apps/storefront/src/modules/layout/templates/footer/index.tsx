@@ -33,8 +33,8 @@ export default async function Footer() {
           <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
             {productCategories && productCategories?.length > 0 && (
               <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  Categories
+                <span className="txt-small-plus txt-ui-fg-base font-bold text-slate-900">
+                  Pasillos del Supermercado
                 </span>
                 <ul
                   className="grid grid-cols-1 gap-2"
@@ -59,7 +59,7 @@ export default async function Footer() {
                       >
                         <LocalizedClientLink
                           className={clx(
-                            "hover:text-ui-fg-base",
+                            "hover:text-emerald-600 font-medium",
                             children && "txt-small-plus"
                           )}
                           href={`/categories/${c.handle}`}
@@ -73,7 +73,7 @@ export default async function Footer() {
                               children.map((child) => (
                                 <li key={child.id}>
                                   <LocalizedClientLink
-                                    className="hover:text-ui-fg-base"
+                                    className="hover:text-emerald-600"
                                     href={`/categories/${child.handle}`}
                                     data-testid="category-link"
                                   >
@@ -89,120 +89,54 @@ export default async function Footer() {
                 </ul>
               </div>
             )}
-            {collections && collections.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  Collections
-                </span>
-                <ul
-                  className={clx(
-                    "grid grid-cols-1 gap-2 text-ui-fg-subtle txt-small",
-                    {
-                      "grid-cols-2": (collections?.length || 0) > 3,
-                    }
-                  )}
-                >
-                  {collections?.slice(0, 6).map((c) => (
-                    <li key={c.id}>
-                      <LocalizedClientLink
-                        className="hover:text-ui-fg-base"
-                        href={`/collections/${c.handle}`}
-                      >
-                        {c.title}
-                      </LocalizedClientLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
             <div className="flex flex-col gap-y-2">
-              <span className="txt-small-plus txt-ui-fg-base">
-                Customer service
+              <span className="txt-small-plus txt-ui-fg-base font-bold text-slate-900">
+                Atención al Cliente
               </span>
               <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
-                    href="/shipping"
+                    className="hover:text-emerald-600"
+                    href="/store"
                   >
-                    Shipping information
+                    Catálogo Mayor y Detal
                   </LocalizedClientLink>
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
-                    href="/returns"
+                    className="hover:text-emerald-600"
+                    href="/#sedes-colombia"
                   >
-                    Return policy
+                    Sedes y Puntos de Recogida
                   </LocalizedClientLink>
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
-                    href="/terms"
+                    className="hover:text-emerald-600"
+                    href="/cart"
                   >
-                    Terms of service
+                    Mi Carrito de Compras
                   </LocalizedClientLink>
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
-                    href="/privacy"
+                    className="hover:text-emerald-600"
+                    href="/account"
                   >
-                    Privacy policy
-                  </LocalizedClientLink>
-                </li>
-                <li>
-                  <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
-                    href="/contact"
-                  >
-                    Contact
-                  </LocalizedClientLink>
-                </li>
-                <li>
-                  <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
-                    href="/search"
-                  >
-                    Search
+                    Mi Cuenta Mayorista
                   </LocalizedClientLink>
                 </li>
               </ul>
             </div>
             <div className="flex flex-col gap-y-2">
-              <span className="txt-small-plus txt-ui-fg-base">Medusa</span>
+              <span className="txt-small-plus txt-ui-fg-base font-bold text-slate-900">
+                Sedes Colombia
+              </span>
               <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
-                <li>
-                  <a
-                    href="https://github.com/medusajs"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://docs.medusajs.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/medusajs/dtc-starter"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    Source code
-                  </a>
-                </li>
+                <li>📍 Bogotá - Corabastos</li>
+                <li>📍 Medellín - Central Mayorista</li>
+                <li>📍 Cali - Cavasa / Santa Elena</li>
+                <li>📍 Barranquilla - Granabastos</li>
               </ul>
             </div>
           </div>

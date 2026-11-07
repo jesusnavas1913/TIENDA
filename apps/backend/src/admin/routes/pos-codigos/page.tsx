@@ -379,12 +379,12 @@ const POSBarcodeManagerPage = () => {
 
   const handleFastBarSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault()
-    if (!fastTitle.trim()) {
-      toast.error("Escribe el nombre del producto")
-      return
-    }
 
     const finalBc = fastBarcode.trim() || generateColombianBarcode()
+    const presetName = COLOMBIAN_BARCODE_DICTIONARY[finalBc]?.title
+    const finalProductTitle =
+      fastTitle.trim() || presetName || `Producto Código ${finalBc}`
+
     setFastSaving(true)
     setAutoSaveStatus("⏳ Guardando código en base de datos...")
     try {
@@ -396,43 +396,50 @@ const POSBarcodeManagerPage = () => {
           action: fastMatchedProduct ? "update" : "create",
           productId: fastMatchedProduct?.id,
           barcode: finalBc,
-          title: fastTitle.trim(),
+          title: finalProductTitle,
           categoryId: fastCategoryId || categories[0]?.id,
           sede: fastSede,
           stockQty: Number(fastStockQty || 150),
-          costCop: Number(fastCostCop),
-          detalMarginPct: Number(fastDetalPct),
-          mayorMarginPct: Number(fastMayorPct),
-          mayorUnits: Number(fastMayorUnits),
+          costCop: Number(fastCostCop) || 5000,
+          detalMarginPct: Number(fastDetalPct ?? 20),
+          mayorMarginPct: Number(fastMayorPct ?? 15),
+          mayorUnits: Number(fastMayorUnits || 10),
           detalPriceCop: Number(fastDetalPrice),
           mayorPriceCop: Number(fastMayorPrice),
           imageUrl: fastImageUrl.trim() || undefined,
           detalLabel: "Unidad Estándar",
-          mayorLabel: `Caja Mayorista x ${fastMayorUnits} uds`,
+          mayorLabel: `Caja Mayorista x ${fastMayorUnits || 10} uds`,
         }),
       })
 
-      if (!res.ok) throw new Error("Error guardando producto rápido")
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok || json.success === false) {
+        throw new Error(json.message || "Error guardando producto rápido")
+      }
 
       const timeStr = new Date().toLocaleTimeString("es-CO")
-      setAutoSaveStatus(`✅ Guardado: "${fastTitle}" (${finalBc}) a las ${timeStr}`)
+      setAutoSaveStatus(
+        `✅ Guardado: "${finalProductTitle}" (${finalBc}) a las ${timeStr}`
+      )
       toast.success(
         fastMatchedProduct
-          ? `✅ Código ${finalBc} ("${fastTitle}") actualizado en ${fastSede}`
-          : `✅ Nuevo producto "${fastTitle}" (${finalBc}) creado en ${fastSede}`
+          ? `✅ Código ${finalBc} ("${finalProductTitle}") actualizado en ${fastSede}`
+          : `✅ Nuevo producto "${finalProductTitle}" (${finalBc}) creado en ${fastSede}`
       )
       // Reset fast bar for next barcode scan immediately!
       clearFastBarcodeBar()
       await loadData()
-    } catch {
-      toast.error("Error al ingresar/actualizar producto por código")
+    } catch (err: any) {
+      toast.error(
+        err?.message || "Error al ingresar/actualizar producto por código"
+      )
       setAutoSaveStatus("⚠️ Error al guardar")
     } finally {
       setFastSaving(false)
     }
   }
 
-  // Handle local computer image file upload -> base64 Data URL
+  // Handle local computer image file upload -> compressed JPEG Data URL via Canvas so it never exceeds payload limits
   const handleFileUpload = (
     e: React.ChangeEvent<HTMLInputElement>,
     target: "fast" | "modal"
@@ -442,9 +449,36 @@ const POSBarcodeManagerPage = () => {
     const reader = new FileReader()
     reader.onload = () => {
       if (typeof reader.result === "string") {
-        if (target === "fast") setFastImageUrl(reader.result)
-        else setFormImage(reader.result)
-        toast.success("📷 Fotografía cargada desde tu equipo")
+        const img = new window.Image()
+        img.onload = () => {
+          const canvas = document.createElement("canvas")
+          const maxDim = 450
+          let w = img.width
+          let h = img.height
+          if (w > h && w > maxDim) {
+            h = Math.round((h * maxDim) / w)
+            w = maxDim
+          } else if (h > maxDim) {
+            w = Math.round((w * maxDim) / h)
+            h = maxDim
+          }
+          canvas.width = w
+          canvas.height = h
+          const ctx = canvas.getContext("2d")
+          if (ctx) {
+            ctx.fillStyle = "#ffffff"
+            ctx.fillRect(0, 0, w, h)
+            ctx.drawImage(img, 0, 0, w, h)
+            const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.75)
+            if (target === "fast") setFastImageUrl(compressedDataUrl)
+            else setFormImage(compressedDataUrl)
+          } else {
+            if (target === "fast") setFastImageUrl(reader.result as string)
+            else setFormImage(reader.result as string)
+          }
+          toast.success("📷 Fotografía optimizada y cargada desde tu equipo")
+        }
+        img.src = reader.result
       }
     }
     reader.readAsDataURL(file)
@@ -471,6 +505,30 @@ const POSBarcodeManagerPage = () => {
     }
   }
 
+  const openCreateModal = () => {
+    const newBc = generateColombianBarcode()
+    setEditingProduct(null)
+    setFormTitle("")
+    setFormBarcode(newBc)
+    setFormImage("")
+    setFormDescription("Producto fresco disponible al detal y al por mayor.")
+    setFormCategoryId(categories[0]?.id || "")
+    setFormSede(
+      selectedSedeFilter !== "all" ? selectedSedeFilter : "Todas las Sedes"
+    )
+    setFormStockQty("150")
+    setFormCostCop("5000")
+    setFormDetalMargin("20")
+    setFormMayorMargin("15")
+    setFormMayorUnits("10")
+    setFormDiscountPct("0")
+    setFormDetalPrice(String(calcIndustrialPrice(5000, 20, 0)))
+    setFormMayorPrice(String(calcIndustrialPrice(50000, 15, 0)))
+    setFormDetalLabel("Unidad Estándar")
+    setFormMayorLabel("Caja Mayorista x 10 uds")
+    setShowCreateModal(true)
+  }
+
   const openEditModal = (p: any) => {
     const info = getProductDetails(p)
     setEditingProduct(p)
@@ -494,10 +552,8 @@ const POSBarcodeManagerPage = () => {
   }
 
   const handleSaveProduct = async () => {
-    if (!formTitle.trim()) {
-      toast.error("Ingresa el nombre del producto")
-      return
-    }
+    const finalBc = formBarcode.trim() || generateColombianBarcode()
+    const finalTitle = formTitle.trim() || `Producto Código ${finalBc}`
     setSavingId(editingProduct ? editingProduct.id : "new")
     try {
       const res = await fetch("/admin/pos-manager", {
@@ -507,18 +563,18 @@ const POSBarcodeManagerPage = () => {
         body: JSON.stringify({
           action: editingProduct ? "update" : "create",
           productId: editingProduct?.id,
-          title: formTitle,
+          title: finalTitle,
           description: formDescription,
           imageUrl: formImage,
-          categoryId: formCategoryId,
+          categoryId: formCategoryId || categories[0]?.id,
           sede: formSede,
           stockQty: Number(formStockQty || 150),
-          barcode: formBarcode || generateColombianBarcode(),
-          costCop: Number(formCostCop),
-          detalMarginPct: Number(formDetalMargin),
-          mayorMarginPct: Number(formMayorMargin),
-          mayorUnits: Number(formMayorUnits),
-          discountPct: Number(formDiscountPct),
+          barcode: finalBc,
+          costCop: Number(formCostCop) || 5000,
+          detalMarginPct: Number(formDetalMargin ?? 20),
+          mayorMarginPct: Number(formMayorMargin ?? 15),
+          mayorUnits: Number(formMayorUnits || 10),
+          discountPct: Number(formDiscountPct || 0),
           detalPriceCop: Number(formDetalPrice),
           mayorPriceCop: Number(formMayorPrice),
           detalLabel: formDetalLabel,
@@ -526,13 +582,20 @@ const POSBarcodeManagerPage = () => {
         }),
       })
 
-      if (!res.ok) throw new Error("Error al guardar")
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok || json.success === false) {
+        throw new Error(json.message || "Error al guardar")
+      }
 
-      toast.success("¡Producto actualizado correctamente!")
+      toast.success(
+        editingProduct
+          ? `✅ Producto "${finalTitle}" actualizado correctamente`
+          : `✅ Nuevo producto "${finalTitle}" (${finalBc}) creado con éxito`
+      )
       setShowCreateModal(false)
       await loadData()
-    } catch {
-      toast.error("No se pudo guardar el producto")
+    } catch (err: any) {
+      toast.error(err?.message || "No se pudo guardar el producto")
     } finally {
       setSavingId(null)
     }
@@ -961,6 +1024,14 @@ const POSBarcodeManagerPage = () => {
             {industrialKpis.skuCount} Referencias (SKUs)
           </div>
           <div className="flex flex-wrap gap-1.5 mt-3">
+            <Button
+              variant="primary"
+              size="small"
+              type="button"
+              onClick={openCreateModal}
+            >
+              ➕ Nuevo Producto
+            </Button>
             <Button
               variant="secondary"
               size="small"

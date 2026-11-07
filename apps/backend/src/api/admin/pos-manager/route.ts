@@ -69,8 +69,9 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
 }
 
 export async function POST(req: MedusaRequest, res: MedusaResponse) {
-  const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const body = (req.body || {}) as any
+  try {
+    const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
+    const body = (req.body || {}) as any
 
   const {
     action,
@@ -338,9 +339,11 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
         : Number(detalPriceCop)
 
       const variantUpdate: any = {}
-      if (barcode !== undefined) {
-        variantUpdate.barcode = isMayor ? `${barcode}-M` : barcode
-        variantUpdate.ean = isMayor ? `${barcode}2` : `${barcode}1`
+      const cleanUpdateBc = String(barcode || "").trim()
+      if (cleanUpdateBc.length > 0) {
+        variantUpdate.barcode = isMayor
+          ? `${cleanUpdateBc}-M`
+          : cleanUpdateBc
       }
       if (!Number.isNaN(priceCop) && priceCop > 0) {
         variantUpdate.prices = [
@@ -388,47 +391,66 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
   })
   const stockLocation = stockLocations[0]
 
+  const uniqueSuffix = Math.floor(1000 + Math.random() * 9000)
+  const cleanBarcode =
+    String(barcode || "").trim() ||
+    `770${Math.floor(1000000000 + Math.random() * 9000000000)}`
+  const finalTitle =
+    String(title || "").trim() || `Producto Código ${cleanBarcode}`
+
   const cleanHandle =
-    (title || "producto")
+    finalTitle
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "") +
     "-" +
-    Math.floor(100 + Math.random() * 900)
+    uniqueSuffix
 
-  const detalCopNum = Number(detalPriceCop) || 5000
-  const mayorCopNum = Number(mayorPriceCop) || detalCopNum * 10
-  const cleanBarcode =
-    barcode || `770${Math.floor(1000000000 + Math.random() * 9000000000)}`
+  const baseCostNum = Number(costCop) || 5000
+  const dMarginNum = Number(detalMarginPct ?? 20)
+  const mMarginNum = Number(mayorMarginPct ?? 15)
+  const mUnitsNum = Math.max(1, Number(mayorUnits ?? 10))
+  const discNum = Number(discountPct ?? 0)
+
+  const detalCopNum =
+    Number(detalPriceCop) > 0
+      ? Number(detalPriceCop)
+      : calcIndustrialPrice(baseCostNum, dMarginNum, discNum)
+  const mayorCopNum =
+    Number(mayorPriceCop) > 0
+      ? Number(mayorPriceCop)
+      : calcIndustrialPrice(baseCostNum * mUnitsNum, mMarginNum, discNum)
+
   const finalImg =
-    imageUrl ||
+    String(imageUrl || "").trim() ||
     "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80"
 
   const { result: created } = await createProductsWorkflow(req.scope).run({
     input: {
       products: [
         {
-          title: title || "Nuevo Producto",
+          title: finalTitle,
           handle: cleanHandle,
           description:
             description || "Producto fresco disponible al detal y por mayor.",
           status: ProductStatus.PUBLISHED,
-          shipping_profile_id: shippingProfile.id,
+          ...(shippingProfile?.id
+            ? { shipping_profile_id: shippingProfile.id }
+            : {}),
           ...(categoryId ? { category_ids: [categoryId] } : {}),
           thumbnail: finalImg,
           images: [{ url: finalImg }],
           metadata: {
             barcode: cleanBarcode,
             detal_label: detalLabel || "Unidad Estándar",
-            mayor_label: mayorLabel || "Caja / Paca Mayorista",
-            cost_cop:
-              Number(costCop) || inferCostFromIndustrialPrice(detalCopNum, 20),
-            detal_margin_pct: Number(detalMarginPct ?? 20),
-            mayor_margin_pct: Number(mayorMarginPct ?? 15),
-            mayor_units: Number(mayorUnits ?? 10),
-            discount_pct: Number(discountPct ?? 0),
+            mayor_label: mayorLabel || `Caja Mayorista x ${mUnitsNum} uds`,
+            cost_cop: baseCostNum,
+            detal_margin_pct: dMarginNum,
+            mayor_margin_pct: mMarginNum,
+            mayor_units: mUnitsNum,
+            discount_pct: discNum,
             sede: sede || "Todas las Sedes",
             stock_qty: Number(stockQty ?? 150),
             pasillo: pasillo || "Góndola Central",
@@ -442,9 +464,10 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
           variants: [
             {
               title: "Al Detal (Unidad)",
-              sku: `DETAL-${cleanBarcode}`,
+              sku: `DETAL-${cleanBarcode}-${uniqueSuffix}`,
               barcode: cleanBarcode,
-              ean: `${cleanBarcode}1`,
+              manage_inventory: false,
+              allow_backorder: true,
               options: {
                 Modalidad: "Al Detal (Unidad)",
               },
@@ -462,9 +485,10 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
             },
             {
               title: "Al por Mayor (Caja / Bulto)",
-              sku: `MAYOR-${cleanBarcode}`,
+              sku: `MAYOR-${cleanBarcode}-${uniqueSuffix}`,
               barcode: `${cleanBarcode}-M`,
-              ean: `${cleanBarcode}2`,
+              manage_inventory: false,
+              allow_backorder: true,
               options: {
                 Modalidad: "Al por Mayor (Caja / Bulto)",
               },
@@ -481,30 +505,43 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
               ],
             },
           ],
-          sales_channels: [{ id: defaultSalesChannel.id }],
+          ...(defaultSalesChannel?.id
+            ? { sales_channels: [{ id: defaultSalesChannel.id }] }
+            : {}),
         },
       ],
     },
   })
 
-  const { data: inventoryItems } = await query.graph({
-    entity: "inventory_item",
-    fields: ["id", "location_levels.id"],
-  })
-  const itemsWithoutLevels = inventoryItems.filter(
-    (item: any) => !item.location_levels || item.location_levels.length === 0
-  )
-  if (itemsWithoutLevels.length > 0 && stockLocation) {
-    await createInventoryLevelsWorkflow(req.scope).run({
-      input: {
-        inventory_levels: itemsWithoutLevels.map((item: any) => ({
-          location_id: stockLocation.id,
-          stocked_quantity: 500,
-          inventory_item_id: item.id,
-        })),
-      },
+  try {
+    const { data: inventoryItems } = await query.graph({
+      entity: "inventory_item",
+      fields: ["id", "location_levels.id"],
     })
+    const itemsWithoutLevels = inventoryItems.filter(
+      (item: any) => !item.location_levels || item.location_levels.length === 0
+    )
+    if (itemsWithoutLevels.length > 0 && stockLocation) {
+      await createInventoryLevelsWorkflow(req.scope).run({
+        input: {
+          inventory_levels: itemsWithoutLevels.map((item: any) => ({
+            location_id: stockLocation.id,
+            stocked_quantity: 500,
+            inventory_item_id: item.id,
+          })),
+        },
+      })
+    }
+  } catch (invErr) {
+    console.warn("Inventory level warning:", invErr)
   }
 
   return res.json({ success: true, product: created[0] })
+  } catch (err: any) {
+    console.error("Error in POST /admin/pos-manager:", err)
+    return res.status(400).json({
+      success: false,
+      message: err?.message || "Error al guardar el producto en POS",
+    })
+  }
 }
