@@ -14,7 +14,33 @@ import {
 } from "@medusajs/ui"
 import { useEffect, useMemo, useRef, useState } from "react"
 
-const roundCop100 = (val: number) => Math.max(100, Math.round(val / 100) * 100)
+const roundCop = (val: number) => Math.max(100, Math.round(val))
+
+// Fórmula Grandes Industrias (Margen Bruto Comercial sobre Precio de Venta):
+// Precio Venta = Costo / (1 - %/100)
+// Ej: 20% -> Costo / 0.80 | 15% -> Costo / 0.85 | 30% -> Costo / 0.70
+const getIndustrialDivisor = (marginPct: number) => {
+  const safe = Math.min(95, Math.max(-90, Number(marginPct) || 0))
+  return Math.max(0.05, (100 - safe) / 100)
+}
+
+const calcIndustrialPrice = (
+  cost: number,
+  marginPct: number,
+  discountPct = 0
+) => {
+  const divisor = getIndustrialDivisor(marginPct)
+  const discFactor = Math.max(0.1, 1 - (Number(discountPct) || 0) / 100)
+  return roundCop((cost / divisor) * discFactor)
+}
+
+const calcIndustrialMarginFromPrice = (cost: number, price: number) => {
+  if (!price || price <= 0 || cost <= 0) return 0
+  return Math.round((1 - cost / price) * 100)
+}
+
+const formatCop = (val: number) =>
+  `$ ${Math.round(val || 0).toLocaleString("es-CO")}`
 
 // Built-in Colombian GS1 770 Dictionary so scanning or typing common barcodes auto-fills the product!
 const COLOMBIAN_BARCODE_DICTIONARY: Record<
@@ -83,8 +109,9 @@ const POSBarcodeManagerPage = () => {
   const [fastDetalPct, setFastDetalPct] = useState("20")
   const [fastMayorPct, setFastMayorPct] = useState("15")
   const [fastMayorUnits, setFastMayorUnits] = useState("10")
-  const [fastDetalPrice, setFastDetalPrice] = useState("6000")
-  const [fastMayorPrice, setFastMayorPrice] = useState("57500")
+  // 5000 / 0.80 = 6250 | (5000 * 10) / 0.85 = 58824
+  const [fastDetalPrice, setFastDetalPrice] = useState("6250")
+  const [fastMayorPrice, setFastMayorPrice] = useState("58824")
   const [fastCategoryId, setFastCategoryId] = useState("")
   const [fastImageUrl, setFastImageUrl] = useState("")
   const [fastSaving, setFastSaving] = useState(false)
@@ -124,8 +151,8 @@ const POSBarcodeManagerPage = () => {
   const [formMayorMargin, setFormMayorMargin] = useState("15")
   const [formMayorUnits, setFormMayorUnits] = useState("10")
   const [formDiscountPct, setFormDiscountPct] = useState("0")
-  const [formDetalPrice, setFormDetalPrice] = useState("6000")
-  const [formMayorPrice, setFormMayorPrice] = useState("57500")
+  const [formDetalPrice, setFormDetalPrice] = useState("6250")
+  const [formMayorPrice, setFormMayorPrice] = useState("58824")
   const [formDetalLabel, setFormDetalLabel] = useState("Unidad x 1kg")
   const [formMayorLabel, setFormMayorLabel] = useState("Caja Mayorista x 10kg")
 
@@ -184,12 +211,13 @@ const POSBarcodeManagerPage = () => {
     const mayorPrice = getCopPrice(mayorVar)
     const meta = p.metadata || {}
 
-    const costCop =
-      Number(meta.cost_cop) || roundCop100(detalPrice / 1.2)
     const detalPct =
       meta.detal_margin_pct !== undefined
         ? Number(meta.detal_margin_pct)
         : 20
+    const costCop =
+      Number(meta.cost_cop) ||
+      roundCop(detalPrice * getIndustrialDivisor(detalPct))
     const mayorUnits = Number(meta.mayor_units) || 10
     const mayorPct =
       meta.mayor_margin_pct !== undefined
@@ -219,7 +247,7 @@ const POSBarcodeManagerPage = () => {
     }
   }
 
-  // Fast Bar auto-calc when cost or % changes
+  // Fast Bar auto-calc when cost or % changes using Grandes Industrias formula: Costo / (1 - %/100)
   const recalcFastBar = (
     cStr: string,
     dPctStr: string,
@@ -231,8 +259,8 @@ const POSBarcodeManagerPage = () => {
     const mPct = Number(mPctStr) || 0
     const units = Math.max(1, Number(uStr) || 10)
     if (cost > 0) {
-      setFastDetalPrice(String(roundCop100(cost * (1 + dPct / 100))))
-      setFastMayorPrice(String(roundCop100(cost * units * (1 + mPct / 100))))
+      setFastDetalPrice(String(calcIndustrialPrice(cost, dPct, 0)))
+      setFastMayorPrice(String(calcIndustrialPrice(cost * units, mPct, 0)))
     }
   }
 
@@ -358,11 +386,10 @@ const POSBarcodeManagerPage = () => {
     const mPct = Number(mPctStr) || 0
     const units = Math.max(1, Number(unitsStr) || 10)
     const disc = Math.min(90, Math.max(0, Number(discStr) || 0))
-    const discFactor = 1 - disc / 100
 
     if (cost > 0) {
-      const dPrice = roundCop100(cost * (1 + dPct / 100) * discFactor)
-      const mPrice = roundCop100(cost * units * (1 + mPct / 100) * discFactor)
+      const dPrice = calcIndustrialPrice(cost, dPct, disc)
+      const mPrice = calcIndustrialPrice(cost * units, mPct, disc)
       setFormDetalPrice(String(dPrice))
       setFormMayorPrice(String(mPrice))
     }
@@ -438,12 +465,16 @@ const POSBarcodeManagerPage = () => {
   ) => {
     const base = rowEdits[p.id] || getProductDetails(p)
     const next = { ...base, [field]: value }
-    const discFactor = Math.max(0.1, 1 - (next.discountPct || 0) / 100)
-    next.detalPrice = roundCop100(
-      next.costCop * (1 + next.detalPct / 100) * discFactor
+    // Fórmula Grandes Industrias: Precio = Costo / (1 - %/100)
+    next.detalPrice = calcIndustrialPrice(
+      next.costCop,
+      next.detalPct,
+      next.discountPct || 0
     )
-    next.mayorPrice = roundCop100(
-      next.costCop * next.mayorUnits * (1 + next.mayorPct / 100) * discFactor
+    next.mayorPrice = calcIndustrialPrice(
+      next.costCop * next.mayorUnits,
+      next.mayorPct,
+      next.discountPct || 0
     )
     setRowEdits((prev) => ({ ...prev, [p.id]: next }))
   }
@@ -455,14 +486,13 @@ const POSBarcodeManagerPage = () => {
   ) => {
     const base = rowEdits[p.id] || getProductDetails(p)
     const next = { ...base, [field]: priceValue }
-    if (next.costCop > 0) {
+    if (next.costCop > 0 && priceValue > 0) {
       if (field === "detalPrice") {
-        next.detalPct = Math.round(
-          ((priceValue - next.costCop) / next.costCop) * 100
-        )
+        // Fórmula Inversa Grandes Industrias: % = (1 - Costo / Precio) * 100
+        next.detalPct = calcIndustrialMarginFromPrice(next.costCop, priceValue)
       } else {
         const boxCost = next.costCop * (next.mayorUnits || 10)
-        next.mayorPct = Math.round(((priceValue - boxCost) / boxCost) * 100)
+        next.mayorPct = calcIndustrialMarginFromPrice(boxCost, priceValue)
       }
     }
     setRowEdits((prev) => ({ ...prev, [p.id]: next }))
@@ -574,15 +604,17 @@ const POSBarcodeManagerPage = () => {
       <Container className="p-6 border-2 border-emerald-600 bg-ui-bg-base shadow-md">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
           <div>
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex flex-wrap items-center gap-2 mb-1">
               <Badge color="green">⚡ INGRESO RÁPIDO CON LECTOR DE CÓDIGO DE BARRAS</Badge>
-              <Badge color="blue">20% DETAL / 15% MAYOR AUTOMÁTICO</Badge>
+              <Badge color="blue">
+                🏭 FÓRMULA GRANDES INDUSTRIAS: 20% = Costo ÷ 0.80 | 15% = Costo ÷ 0.85
+              </Badge>
             </div>
             <Heading level="h1" className="text-xl font-bold">
               Pistola POS: Escanea o Escribe el Código 770 → Pon el Costo → Enter para Guardar
             </Heading>
             <Text className="text-xs text-ui-fg-subtle">
-              Si escaneas un código que ya existe, carga sus datos para actualizarlo sin errores. Prueba los códigos rápidos de muestra abajo:
+              Cálculo real de supermercados: <strong>Precio Venta = Costo ÷ (1 - %)</strong>. Al 20% divide entre <strong>0.80</strong> y al 15% divide entre <strong>0.85</strong>.
             </Text>
           </div>
 
@@ -677,25 +709,25 @@ const POSBarcodeManagerPage = () => {
 
           <div className="lg:col-span-1">
             <Text className="text-xs font-bold mb-1">
-              🛍️ Detal (+{fastDetalPct}%)
+              🛍️ Detal (÷{getIndustrialDivisor(Number(fastDetalPct)).toFixed(2)})
             </Text>
             <Input
               type="number"
               value={fastDetalPrice}
               onChange={(e) => setFastDetalPrice(e.target.value)}
-              title="Precio Al Detal (Autocalculado +20% o edítalo manual)"
+              title="Precio Al Detal (Costo ÷ 0.80 para 20%, o edítalo manual)"
             />
           </div>
 
           <div className="lg:col-span-1">
             <Text className="text-xs font-bold mb-1">
-              📦 Mayor (+{fastMayorPct}%)
+              📦 Mayor (÷{getIndustrialDivisor(Number(fastMayorPct)).toFixed(2)})
             </Text>
             <Input
               type="number"
               value={fastMayorPrice}
               onChange={(e) => setFastMayorPrice(e.target.value)}
-              title="Precio Mayorista (Autocalculado +15% o edítalo manual)"
+              title="Precio Mayorista (Costo Caja ÷ 0.85 para 15%, o edítalo manual)"
             />
           </div>
 
@@ -760,7 +792,7 @@ const POSBarcodeManagerPage = () => {
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-4 gap-3 items-end bg-ui-bg-base p-3.5 rounded-xl border">
               <div>
                 <Text className="text-xs font-bold mb-1">
-                  🛍️ % Ganancia Detal
+                  🛍️ % Ganancia Detal (÷{getIndustrialDivisor(Number(globalDetalMargin)).toFixed(2)})
                 </Text>
                 <Input
                   type="number"
@@ -770,7 +802,7 @@ const POSBarcodeManagerPage = () => {
               </div>
               <div>
                 <Text className="text-xs font-bold mb-1">
-                  📦 % Ganancia Mayor
+                  📦 % Ganancia Mayor (÷{getIndustrialDivisor(Number(globalMayorMargin)).toFixed(2)})
                 </Text>
                 <Input
                   type="number"
@@ -1157,86 +1189,102 @@ const POSBarcodeManagerPage = () => {
                     </Table.Cell>
 
                     <Table.Cell>
-                      <div className="flex items-center gap-1.5">
-                        <div
-                          className="w-16"
-                          title="% Ganancia Al Detal (Estándar 20%)"
-                        >
-                          <Input
-                            type="number"
-                            size="small"
-                            value={current.detalPct}
-                            onChange={(e) =>
-                              updateRowField(
-                                p,
-                                "detalPct",
-                                Number(e.target.value || 0)
-                              )
-                            }
-                          />
+                      <div className="flex flex-col gap-1">
+                        <div className="flex items-center gap-1.5">
+                          <div
+                            className="w-16"
+                            title="% Ganancia Al Detal (Fórmula Grandes Industrias: Costo ÷ 0.80 para 20%)"
+                          >
+                            <Input
+                              type="number"
+                              size="small"
+                              value={current.detalPct}
+                              onChange={(e) =>
+                                updateRowField(
+                                  p,
+                                  "detalPct",
+                                  Number(e.target.value || 0)
+                                )
+                              }
+                            />
+                          </div>
+                          <span className="text-xs font-bold text-ui-fg-muted">
+                            %
+                          </span>
+                          <div
+                            className="w-28"
+                            title="Precio Al Detal ($ COP) - Puedes editarlo manual"
+                          >
+                            <Input
+                              type="number"
+                              size="small"
+                              value={current.detalPrice}
+                              onChange={(e) =>
+                                updateRowManualPrice(
+                                  p,
+                                  "detalPrice",
+                                  Number(e.target.value || 0)
+                                )
+                              }
+                            />
+                          </div>
                         </div>
-                        <span className="text-xs font-bold text-ui-fg-muted">
-                          %
+                        <span className="text-[11px] font-mono text-emerald-700 font-semibold">
+                          ÷ {getIndustrialDivisor(current.detalPct).toFixed(2)} → Ganancia:{" "}
+                          {formatCop(current.detalPrice - current.costCop)}
                         </span>
-                        <div
-                          className="w-28"
-                          title="Precio Al Detal Manual ($ COP)"
-                        >
-                          <Input
-                            type="number"
-                            size="small"
-                            value={current.detalPrice}
-                            onChange={(e) =>
-                              updateRowManualPrice(
-                                p,
-                                "detalPrice",
-                                Number(e.target.value || 0)
-                              )
-                            }
-                          />
-                        </div>
                       </div>
                     </Table.Cell>
 
                     <Table.Cell>
-                      <div className="flex items-center gap-1.5">
-                        <div
-                          className="w-16"
-                          title="% Ganancia Mayorista (Estándar 15%)"
-                        >
-                          <Input
-                            type="number"
-                            size="small"
-                            value={current.mayorPct}
-                            onChange={(e) =>
-                              updateRowField(
-                                p,
-                                "mayorPct",
-                                Number(e.target.value || 0)
-                              )
-                            }
-                          />
+                      <div className="flex flex-col gap-1">
+                        <div className="flex items-center gap-1.5">
+                          <div
+                            className="w-16"
+                            title="% Ganancia Mayorista (Fórmula Grandes Industrias: Costo Caja ÷ 0.85 para 15%)"
+                          >
+                            <Input
+                              type="number"
+                              size="small"
+                              value={current.mayorPct}
+                              onChange={(e) =>
+                                updateRowField(
+                                  p,
+                                  "mayorPct",
+                                  Number(e.target.value || 0)
+                                )
+                              }
+                            />
+                          </div>
+                          <span className="text-xs font-bold text-ui-fg-muted">
+                            %
+                          </span>
+                          <div
+                            className="w-28"
+                            title="Precio Mayorista ($ COP) - Puedes editarlo manual"
+                          >
+                            <Input
+                              type="number"
+                              size="small"
+                              value={current.mayorPrice}
+                              onChange={(e) =>
+                                updateRowManualPrice(
+                                  p,
+                                  "mayorPrice",
+                                  Number(e.target.value || 0)
+                                )
+                              }
+                            />
+                          </div>
                         </div>
-                        <span className="text-xs font-bold text-ui-fg-muted">
-                          %
+                        <span className="text-[11px] font-mono text-amber-700 font-semibold">
+                          ÷ {getIndustrialDivisor(current.mayorPct).toFixed(2)} (x
+                          {current.mayorUnits}u) → Ganancia:{" "}
+                          {formatCop(
+                            current.mayorPrice -
+                              current.costCop * current.mayorUnits
+                          )}
                         </span>
-                        <div
-                          className="w-28"
-                          title="Precio Mayorista Manual ($ COP)"
-                        >
-                          <Input
-                            type="number"
-                            size="small"
-                            value={current.mayorPrice}
-                            onChange={(e) =>
-                              updateRowManualPrice(
-                                p,
-                                "mayorPrice",
-                                Number(e.target.value || 0)
-                              )
-                            }
-                          />
-                        </div>
                       </div>
                     </Table.Cell>
 

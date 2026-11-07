@@ -12,7 +12,27 @@ import {
   updateProductVariantsWorkflow,
 } from "@medusajs/medusa/core-flows"
 
-const roundCop100 = (val: number) => Math.max(100, Math.round(val / 100) * 100)
+const roundCop = (val: number) => Math.max(100, Math.round(val))
+
+// Fórmula Grandes Industrias (Margen Bruto sobre Precio de Venta):
+// Precio Venta = Costo / (1 - %Margen/100)
+// Ej: 20% -> Costo / 0.80 | 15% -> Costo / 0.85
+const calcIndustrialPrice = (
+  cost: number,
+  marginPct: number,
+  discountPct = 0
+) => {
+  const safeMargin = Math.min(95, Math.max(-90, Number(marginPct) || 0))
+  const divisor = Math.max(0.05, (100 - safeMargin) / 100)
+  const discountFactor = Math.max(0.1, 1 - (Number(discountPct) || 0) / 100)
+  return roundCop((cost / divisor) * discountFactor)
+}
+
+const inferCostFromIndustrialPrice = (price: number, marginPct = 20) => {
+  const safeMargin = Math.min(95, Math.max(0, Number(marginPct) || 20))
+  const divisor = Math.max(0.05, (100 - safeMargin) / 100)
+  return roundCop(price * divisor)
+}
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -135,7 +155,7 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
       const meta = (prod.metadata || {}) as Record<string, any>
 
       const baseCost =
-        Number(meta.cost_cop) || Math.round(currentDetal / 1.2)
+        Number(meta.cost_cop) || inferCostFromIndustrialPrice(currentDetal, 20)
       const unitsInMayor = Number(meta.mayor_units) || 10
       const dMargin =
         globalDetalMarginPct !== undefined && globalDetalMarginPct !== ""
@@ -160,16 +180,16 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
       ) {
         // Direct percentage increase/decrease on current prices (e.g. +10% or -5%)
         const factor = 1 + Number(globalPriceAdjustPct) / 100
-        newDetal = roundCop100(currentDetal * factor)
-        newMayor = roundCop100(currentMayor * factor)
+        newDetal = roundCop(currentDetal * factor)
+        newMayor = roundCop(currentMayor * factor)
       } else {
-        // Calculate from Cost + Margin % - Discount %
-        const discountFactor = Math.max(0.1, 1 - disc / 100)
-        newDetal = roundCop100(
-          baseCost * (1 + dMargin / 100) * discountFactor
-        )
-        newMayor = roundCop100(
-          baseCost * unitsInMayor * (1 + mMargin / 100) * discountFactor
+        // Fórmula Grandes Industrias: Precio Venta = Costo / (1 - %/100)
+        // Ej: 20% -> Costo / 0.80 | 15% -> Costo / 0.85
+        newDetal = calcIndustrialPrice(baseCost, dMargin, disc)
+        newMayor = calcIndustrialPrice(
+          baseCost * unitsInMayor,
+          mMargin,
+          disc
         )
       }
 
@@ -387,7 +407,8 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
             barcode: cleanBarcode,
             detal_label: detalLabel || "Unidad Estándar",
             mayor_label: mayorLabel || "Caja / Paca Mayorista",
-            cost_cop: Number(costCop) || Math.round(detalCopNum / 1.2),
+            cost_cop:
+              Number(costCop) || inferCostFromIndustrialPrice(detalCopNum, 20),
             detal_margin_pct: Number(detalMarginPct ?? 20),
             mayor_margin_pct: Number(mayorMarginPct ?? 15),
             mayor_units: Number(mayorUnits ?? 10),

@@ -10,7 +10,23 @@ import {
 } from "@medusajs/ui"
 import { useEffect, useState } from "react"
 
-const roundCop100 = (val: number) => Math.max(100, Math.round(val / 100) * 100)
+const roundCop = (val: number) => Math.max(100, Math.round(val))
+
+// Fórmula Grandes Industrias: Precio Venta = Costo / (1 - %/100)
+const getIndustrialDivisor = (marginPct: number) => {
+  const safe = Math.min(95, Math.max(-90, Number(marginPct) || 0))
+  return Math.max(0.05, (100 - safe) / 100)
+}
+
+const calcIndustrialPrice = (
+  cost: number,
+  marginPct: number,
+  discountPct = 0
+) => {
+  const divisor = getIndustrialDivisor(marginPct)
+  const discFactor = Math.max(0.1, 1 - (Number(discountPct) || 0) / 100)
+  return roundCop((cost / divisor) * discFactor)
+}
 
 const ProductBarcodeImageWidget = ({ data }: { data: any }) => {
   const productId = data?.id
@@ -60,9 +76,11 @@ const ProductBarcodeImageWidget = ({ data }: { data: any }) => {
       detalVar?.ean ||
       `77000${(data.id || "").slice(-8).replace(/\D/g, "5")}`
 
-    const cCop = Number(meta.cost_cop) || roundCop100(dPrice / 1.2)
     const dPct =
       meta.detal_margin_pct !== undefined ? Number(meta.detal_margin_pct) : 20
+    const cCop =
+      Number(meta.cost_cop) ||
+      roundCop(dPrice * getIndustrialDivisor(dPct))
     const mPct =
       meta.mayor_margin_pct !== undefined ? Number(meta.mayor_margin_pct) : 15
     const mUnits = Number(meta.mayor_units) || 10
@@ -93,12 +111,9 @@ const ProductBarcodeImageWidget = ({ data }: { data: any }) => {
     const mPct = Number(mPctStr) || 0
     const units = Math.max(1, Number(uStr) || 10)
     const disc = Math.min(90, Math.max(0, Number(discStr) || 0))
-    const factor = 1 - disc / 100
     if (cost > 0) {
-      setDetalPrice(String(roundCop100(cost * (1 + dPct / 100) * factor)))
-      setMayorPrice(
-        String(roundCop100(cost * units * (1 + mPct / 100) * factor))
-      )
+      setDetalPrice(String(calcIndustrialPrice(cost, dPct, disc)))
+      setMayorPrice(String(calcIndustrialPrice(cost * units, mPct, disc)))
     }
   }
 
