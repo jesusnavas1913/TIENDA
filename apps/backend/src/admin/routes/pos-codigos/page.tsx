@@ -42,6 +42,14 @@ const calcIndustrialMarginFromPrice = (cost: number, price: number) => {
 const formatCop = (val: number) =>
   `$ ${Math.round(val || 0).toLocaleString("es-CO")}`
 
+const COLOMBIAN_SEDES = [
+  "Todas las Sedes",
+  "Bogotá - Corabastos",
+  "Medellín - Mayorista",
+  "Cali - Cavasa",
+  "Barranquilla - Centro",
+]
+
 // Built-in Colombian GS1 770 Dictionary so scanning or typing common barcodes auto-fills the product!
 const COLOMBIAN_BARCODE_DICTIONARY: Record<
   string,
@@ -113,8 +121,19 @@ const POSBarcodeManagerPage = () => {
   const [fastDetalPrice, setFastDetalPrice] = useState("6250")
   const [fastMayorPrice, setFastMayorPrice] = useState("58824")
   const [fastCategoryId, setFastCategoryId] = useState("")
+  const [fastSede, setFastSede] = useState("Todas las Sedes")
+  const [fastStockQty, setFastStockQty] = useState("150")
   const [fastImageUrl, setFastImageUrl] = useState("")
   const [fastSaving, setFastSaving] = useState(false)
+  const [fastMatchedProduct, setFastMatchedProduct] = useState<any | null>(null)
+
+  // Auto-save & Sede organization states
+  const [selectedSedeFilter, setSelectedSedeFilter] = useState<string>("all")
+  const [autoSaveEnabled, setAutoSaveEnabled] = useState<boolean>(true)
+  const [autoSaveStatus, setAutoSaveStatus] = useState<string>(
+    "✅ Auto-guardado activo"
+  )
+  const autoSaveTimerRef = useRef<any>(null)
 
   // Global / Bulk Percentage States (Default standard: 20% Detal, 15% Mayor)
   const [targetScope, setTargetScope] = useState<string>("all")
@@ -136,6 +155,8 @@ const POSBarcodeManagerPage = () => {
         discountPct: number
         detalPrice: number
         mayorPrice: number
+        sede: string
+        stockQty: number
       }
     >
   >({})
@@ -146,6 +167,8 @@ const POSBarcodeManagerPage = () => {
   const [formImage, setFormImage] = useState("")
   const [formDescription, setFormDescription] = useState("")
   const [formCategoryId, setFormCategoryId] = useState("")
+  const [formSede, setFormSede] = useState("Todas las Sedes")
+  const [formStockQty, setFormStockQty] = useState("150")
   const [formCostCop, setFormCostCop] = useState("5000")
   const [formDetalMargin, setFormDetalMargin] = useState("20")
   const [formMayorMargin, setFormMayorMargin] = useState("15")
@@ -244,7 +267,44 @@ const POSBarcodeManagerPage = () => {
       mayorLabel: meta.mayor_label || "Caja Mayorista",
       categoryName: p.categories?.[0]?.name || "Sin Categoría",
       categoryId: p.categories?.[0]?.id || "",
+      sede: meta.sede || "Todas las Sedes",
+      stockQty: meta.stock_qty !== undefined ? Number(meta.stock_qty) : 150,
     }
+  }
+
+  // Helper to load any product directly into the top Barcode Editor Bar
+  const loadProductIntoBarcodeBar = (p: any) => {
+    const info = getProductDetails(p)
+    setFastMatchedProduct(p)
+    setFastBarcode(info.barcode)
+    setFastTitle(p.title || "")
+    setFastCostCop(String(info.costCop))
+    setFastDetalPct(String(info.detalPct))
+    setFastMayorPct(String(info.mayorPct))
+    setFastMayorUnits(String(info.mayorUnits))
+    setFastDetalPrice(String(info.detalPrice))
+    setFastMayorPrice(String(info.mayorPrice))
+    if (info.categoryId) setFastCategoryId(info.categoryId)
+    setFastSede(info.sede || "Todas las Sedes")
+    setFastStockQty(String(info.stockQty ?? 150))
+    setFastImageUrl(p.thumbnail || p.images?.[0]?.url || "")
+    window.scrollTo({ top: 0, behavior: "smooth" })
+    toast.info(`✏️ Modo Editar por Código activado: ${info.barcode} - ${p.title}`)
+  }
+
+  const clearFastBarcodeBar = () => {
+    setFastMatchedProduct(null)
+    setFastBarcode("")
+    setFastTitle("")
+    setFastImageUrl("")
+    setFastCostCop("5000")
+    setFastDetalPct("20")
+    setFastMayorPct("15")
+    setFastMayorUnits("10")
+    setFastDetalPrice("6250")
+    setFastMayorPrice("58824")
+    setFastStockQty("150")
+    barcodeInputRef.current?.focus()
   }
 
   // Fast Bar auto-calc when cost or % changes using Grandes Industrias formula: Costo / (1 - %/100)
@@ -268,15 +328,19 @@ const POSBarcodeManagerPage = () => {
   const handleFastBarcodeChange = (val: string) => {
     setFastBarcode(val)
     const clean = val.trim()
-    if (!clean) return
+    if (!clean) {
+      setFastMatchedProduct(null)
+      return
+    }
 
-    // 1. Check if product already exists in store
+    // 1. Check if product already exists in store -> Switch to MODO EDITAR POR CÓDIGO!
     const existing = products.find((p) => {
       const info = getProductDetails(p)
       return info.barcode === clean
     })
     if (existing) {
       const info = getProductDetails(existing)
+      setFastMatchedProduct(existing)
       setFastTitle(existing.title || "")
       setFastCostCop(String(info.costCop))
       setFastDetalPct(String(info.detalPct))
@@ -285,10 +349,16 @@ const POSBarcodeManagerPage = () => {
       setFastDetalPrice(String(info.detalPrice))
       setFastMayorPrice(String(info.mayorPrice))
       if (info.categoryId) setFastCategoryId(info.categoryId)
+      setFastSede(info.sede || "Todas las Sedes")
+      setFastStockQty(String(info.stockQty ?? 150))
       setFastImageUrl(existing.thumbnail || existing.images?.[0]?.url || "")
-      toast.info(`Código existente detectado: "${existing.title}" cargado para actualizar.`)
+      toast.info(
+        `✏️ MODO EDITAR POR CÓDIGO: "${existing.title}" (${clean}) cargado automáticamente.`
+      )
       return
     }
+
+    setFastMatchedProduct(null)
 
     // 2. Check built-in Colombian GS1 dictionary
     const preset = COLOMBIAN_BARCODE_DICTIONARY[clean]
@@ -316,16 +386,20 @@ const POSBarcodeManagerPage = () => {
 
     const finalBc = fastBarcode.trim() || generateColombianBarcode()
     setFastSaving(true)
+    setAutoSaveStatus("⏳ Guardando código en base de datos...")
     try {
       const res = await fetch("/admin/pos-manager", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          action: "create",
+          action: fastMatchedProduct ? "update" : "create",
+          productId: fastMatchedProduct?.id,
           barcode: finalBc,
           title: fastTitle.trim(),
           categoryId: fastCategoryId || categories[0]?.id,
+          sede: fastSede,
+          stockQty: Number(fastStockQty || 150),
           costCop: Number(fastCostCop),
           detalMarginPct: Number(fastDetalPct),
           mayorMarginPct: Number(fastMayorPct),
@@ -340,17 +414,19 @@ const POSBarcodeManagerPage = () => {
 
       if (!res.ok) throw new Error("Error guardando producto rápido")
 
+      const timeStr = new Date().toLocaleTimeString("es-CO")
+      setAutoSaveStatus(`✅ Guardado: "${fastTitle}" (${finalBc}) a las ${timeStr}`)
       toast.success(
-        `✅ "${fastTitle}" ingresado con Código ${finalBc} (${fastDetalPct}% Detal / ${fastMayorPct}% Mayor)`
+        fastMatchedProduct
+          ? `✅ Código ${finalBc} ("${fastTitle}") actualizado en ${fastSede}`
+          : `✅ Nuevo producto "${fastTitle}" (${finalBc}) creado en ${fastSede}`
       )
       // Reset fast bar for next barcode scan immediately!
-      setFastBarcode("")
-      setFastTitle("")
-      setFastImageUrl("")
+      clearFastBarcodeBar()
       await loadData()
-      barcodeInputRef.current?.focus()
     } catch {
-      toast.error("Error al ingresar producto rápido")
+      toast.error("Error al ingresar/actualizar producto por código")
+      setAutoSaveStatus("⚠️ Error al guardar")
     } finally {
       setFastSaving(false)
     }
@@ -403,6 +479,8 @@ const POSBarcodeManagerPage = () => {
     setFormImage(p.thumbnail || p.images?.[0]?.url || "")
     setFormDescription(p.description || "")
     setFormCategoryId(info.categoryId || categories[0]?.id || "")
+    setFormSede(info.sede || "Todas las Sedes")
+    setFormStockQty(String(info.stockQty ?? 150))
     setFormCostCop(String(info.costCop))
     setFormDetalMargin(String(info.detalPct))
     setFormMayorMargin(String(info.mayorPct))
@@ -433,6 +511,8 @@ const POSBarcodeManagerPage = () => {
           description: formDescription,
           imageUrl: formImage,
           categoryId: formCategoryId,
+          sede: formSede,
+          stockQty: Number(formStockQty || 150),
           barcode: formBarcode || generateColombianBarcode(),
           costCop: Number(formCostCop),
           detalMarginPct: Number(formDetalMargin),
@@ -458,6 +538,43 @@ const POSBarcodeManagerPage = () => {
     }
   }
 
+  // Auto-save helper: saves row automatically after 850ms of typing so user doesn't lose work
+  const scheduleRowAutoSave = (p: any, nextEdit: any) => {
+    if (!autoSaveEnabled) return
+    setAutoSaveStatus(`⏳ Auto-guardando "${p.title}"...`)
+    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current)
+    autoSaveTimerRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch("/admin/pos-manager", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "update",
+            productId: p.id,
+            costCop: nextEdit.costCop,
+            detalMarginPct: nextEdit.detalPct,
+            mayorMarginPct: nextEdit.mayorPct,
+            mayorUnits: nextEdit.mayorUnits,
+            discountPct: nextEdit.discountPct,
+            detalPriceCop: nextEdit.detalPrice,
+            mayorPriceCop: nextEdit.mayorPrice,
+            sede: nextEdit.sede,
+            stockQty: nextEdit.stockQty,
+          }),
+        })
+        if (res.ok) {
+          const timeStr = new Date().toLocaleTimeString("es-CO")
+          setAutoSaveStatus(
+            `✅ Auto-guardado: "${p.title}" (${timeStr})`
+          )
+        }
+      } catch {
+        setAutoSaveStatus("⚠️ Error en auto-guardado")
+      }
+    }, 850)
+  }
+
   const updateRowField = (
     p: any,
     field: "costCop" | "detalPct" | "mayorPct" | "discountPct",
@@ -477,6 +594,7 @@ const POSBarcodeManagerPage = () => {
       next.discountPct || 0
     )
     setRowEdits((prev) => ({ ...prev, [p.id]: next }))
+    scheduleRowAutoSave(p, next)
   }
 
   const updateRowManualPrice = (
@@ -496,6 +614,18 @@ const POSBarcodeManagerPage = () => {
       }
     }
     setRowEdits((prev) => ({ ...prev, [p.id]: next }))
+    scheduleRowAutoSave(p, next)
+  }
+
+  const updateRowSedeOrStock = (
+    p: any,
+    field: "sede" | "stockQty",
+    val: string | number
+  ) => {
+    const base = rowEdits[p.id] || getProductDetails(p)
+    const next = { ...base, [field]: val }
+    setRowEdits((prev) => ({ ...prev, [p.id]: next }))
+    scheduleRowAutoSave(p, next)
   }
 
   const handleSaveRowPercentage = async (p: any) => {
@@ -517,10 +647,12 @@ const POSBarcodeManagerPage = () => {
           discountPct: edit.discountPct,
           detalPriceCop: edit.detalPrice,
           mayorPriceCop: edit.mayorPrice,
+          sede: edit.sede,
+          stockQty: edit.stockQty,
         }),
       })
       if (!res.ok) throw new Error("Error")
-      toast.success(`¡Precios de "${p.title}" guardados!`)
+      toast.success(`¡Precios y Sede de "${p.title}" guardados!`)
       await loadData()
     } catch {
       toast.error("Error guardando cambios")
@@ -535,6 +667,7 @@ const POSBarcodeManagerPage = () => {
       const payload: any = {
         action: "bulk-percentage",
         targetScope,
+        targetSede: selectedSedeFilter,
       }
       if (mode === "adjust") {
         payload.globalPriceAdjustPct = Number(globalPriceAdjust || 0)
@@ -587,16 +720,24 @@ const POSBarcodeManagerPage = () => {
         targetScope === "all" ||
         p.categories?.some((c: any) => c.id === targetScope)
       if (!matchesCat) return false
+
+      const info = rowEdits[p.id] || getProductDetails(p)
+      const matchesSede =
+        selectedSedeFilter === "all" ||
+        info.sede === selectedSedeFilter ||
+        info.sede === "Todas las Sedes"
+      if (!matchesSede) return false
+
       if (!search.trim()) return true
       const q = search.toLowerCase()
-      const info = getProductDetails(p)
       return (
         p.title?.toLowerCase().includes(q) ||
         info.barcode?.toLowerCase().includes(q) ||
-        info.categoryName?.toLowerCase().includes(q)
+        info.categoryName?.toLowerCase().includes(q) ||
+        info.sede?.toLowerCase().includes(q)
       )
     })
-  }, [products, search, targetScope])
+  }, [products, search, targetScope, selectedSedeFilter, rowEdits])
 
   // Industrial KPI Summary across filtered catalog
   const industrialKpis = useMemo(() => {
@@ -878,25 +1019,117 @@ const POSBarcodeManagerPage = () => {
           </Text>
         </Container>
       </div>
-      {/* FAST 1-LINE BARCODE ENTRY SCANNER */}
-      <Container className="p-6 border-2 border-emerald-600 bg-ui-bg-base shadow-md">
+      {/* SEDE / BRANCH ORGANIZATION BAR + LIVE AUTO-SAVE INDICATOR */}
+      <Container className="p-4 border bg-ui-bg-subtle">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <Text className="text-xs font-extrabold uppercase text-ui-fg-base">
+                🏢 Organización por Sede (Sucursales Colombia):
+              </Text>
+              <Badge color="purple">{autoSaveStatus}</Badge>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              <Button
+                variant={selectedSedeFilter === "all" ? "primary" : "secondary"}
+                size="small"
+                type="button"
+                onClick={() => setSelectedSedeFilter("all")}
+              >
+                🌎 Ver Todas ({products.length})
+              </Button>
+              {COLOMBIAN_SEDES.filter((s) => s !== "Todas las Sedes").map(
+                (sedeName) => {
+                  const countInSede = products.filter((p) => {
+                    const s =
+                      (rowEdits[p.id] || getProductDetails(p)).sede ||
+                      "Todas las Sedes"
+                    return s === sedeName || s === "Todas las Sedes"
+                  }).length
+                  return (
+                    <Button
+                      key={sedeName}
+                      variant={
+                        selectedSedeFilter === sedeName
+                          ? "primary"
+                          : "secondary"
+                      }
+                      size="small"
+                      type="button"
+                      onClick={() => setSelectedSedeFilter(sedeName)}
+                    >
+                      🏢 {sedeName} ({countInSede})
+                    </Button>
+                  )
+                }
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 bg-ui-bg-base px-3.5 py-2 rounded-xl border shrink-0">
+            <label className="flex items-center gap-2 cursor-pointer text-xs font-bold">
+              <input
+                type="checkbox"
+                checked={autoSaveEnabled}
+                onChange={(e) => {
+                  setAutoSaveEnabled(e.target.checked)
+                  setAutoSaveStatus(
+                    e.target.checked
+                      ? "✅ Auto-guardado activo (guarda mientras escribes)"
+                      : "⏸️ Auto-guardado pausado (modo manual)"
+                  )
+                }}
+              />
+              ⚡ Auto-Guardado en Vivo (Guarda solo al escribir)
+            </label>
+          </div>
+        </div>
+      </Container>
+
+      {/* FAST 1-LINE BARCODE ENTRY & EDIT-BY-BARCODE SCANNER */}
+      <Container
+        className={`p-6 border-2 bg-ui-bg-base shadow-md ${
+          fastMatchedProduct ? "border-amber-500" : "border-emerald-600"
+        }`}
+      >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1">
-              <Badge color="green">⚡ INGRESO RÁPIDO CON LECTOR DE CÓDIGO DE BARRAS</Badge>
+              {fastMatchedProduct ? (
+                <Badge color="orange">
+                  ✏️ MODO EDITAR POR CÓDIGO ACTIVO: {fastBarcode}
+                </Badge>
+              ) : (
+                <Badge color="green">
+                  ➕ MODO METER PRODUCTO NUEVO POR CÓDIGO 770
+                </Badge>
+              )}
               <Badge color="blue">
                 🏭 FÓRMULA GRANDES INDUSTRIAS: 20% = Costo ÷ 0.80 | 15% = Costo ÷ 0.85
               </Badge>
             </div>
             <Heading level="h1" className="text-xl font-bold">
-              Pistola POS: Escanea o Escribe el Código 770 → Pon el Costo → Enter para Guardar
+              {fastMatchedProduct
+                ? `✏️ Editando por Código "${fastMatchedProduct.title}" (${fastBarcode}) — Modifica y pulsa Enter`
+                : "Pistola POS: Escanea o Escribe el Código 770 → Asigna Sede y Costo → Enter para Guardar"}
             </Heading>
             <Text className="text-xs text-ui-fg-subtle">
-              Cálculo real de supermercados: <strong>Precio Venta = Costo ÷ (1 - %)</strong>. Al 20% divide entre <strong>0.80</strong> y al 15% divide entre <strong>0.85</strong>.
+              Si escribes o escaneas un código que ya existe, entra automáticamente en{" "}
+              <strong>Modo Editar por Código</strong>. Si es nuevo, lo crea en la Sede elegida.
             </Text>
           </div>
 
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-1.5 items-center">
+            {fastMatchedProduct && (
+              <Button
+                variant="secondary"
+                size="small"
+                type="button"
+                onClick={clearFastBarcodeBar}
+              >
+                🔄 Salir de Edición / Nuevo Código
+              </Button>
+            )}
             {Object.entries(COLOMBIAN_BARCODE_DICTIONARY).map(([code, item]) => (
               <Button
                 key={code}
@@ -917,7 +1150,7 @@ const POSBarcodeManagerPage = () => {
         >
           <div className="lg:col-span-2">
             <Text className="text-xs font-bold mb-1">
-              1️⃣ Código de Barras (770)
+              1️⃣ Código 770 (Buscar/Meter)
             </Text>
             <div className="flex gap-1">
               <Input
@@ -938,7 +1171,7 @@ const POSBarcodeManagerPage = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <Text className="text-xs font-bold mb-1">
               2️⃣ Nombre del Producto *
             </Text>
@@ -950,7 +1183,26 @@ const POSBarcodeManagerPage = () => {
           </div>
 
           <div className="lg:col-span-2">
-            <Text className="text-xs font-bold mb-1">3️⃣ Categoría</Text>
+            <Text className="text-xs font-bold mb-1">3️⃣ Sede / Sucursal</Text>
+            <Select
+              value={fastSede}
+              onValueChange={(val) => setFastSede(val)}
+            >
+              <Select.Trigger>
+                <Select.Value placeholder="Sede" />
+              </Select.Trigger>
+              <Select.Content>
+                {COLOMBIAN_SEDES.map((s) => (
+                  <Select.Item key={s} value={s}>
+                    🏢 {s}
+                  </Select.Item>
+                ))}
+              </Select.Content>
+            </Select>
+          </div>
+
+          <div className="lg:col-span-2">
+            <Text className="text-xs font-bold mb-1">4️⃣ Categoría</Text>
             <Select
               value={fastCategoryId}
               onValueChange={(val) => setFastCategoryId(val)}
@@ -969,7 +1221,7 @@ const POSBarcodeManagerPage = () => {
           </div>
 
           <div className="lg:col-span-1">
-            <Text className="text-xs font-bold mb-1">4️⃣ Costo ($)</Text>
+            <Text className="text-xs font-bold mb-1">5️⃣ Costo ($)</Text>
             <Input
               type="number"
               value={fastCostCop}
@@ -1009,9 +1261,12 @@ const POSBarcodeManagerPage = () => {
             />
           </div>
 
-          <div className="lg:col-span-2 flex gap-1.5 items-center">
-            <label className="cursor-pointer px-2.5 py-2 rounded-lg border bg-ui-bg-base hover:bg-ui-bg-base-hover text-xs font-bold shrink-0">
-              📷 Subir Foto
+          <div className="lg:col-span-1 flex gap-1 items-center">
+            <label
+              className="cursor-pointer px-2 py-2 rounded-lg border bg-ui-bg-base hover:bg-ui-bg-base-hover text-xs font-bold shrink-0"
+              title="Subir foto desde tu computador"
+            >
+              📷
               <input
                 type="file"
                 accept="image/*"
@@ -1025,7 +1280,7 @@ const POSBarcodeManagerPage = () => {
               isLoading={fastSaving}
               className="w-full"
             >
-              ➕ Ingresar (Enter)
+              {fastMatchedProduct ? "💾 Guardar" : "➕ Meter"}
             </Button>
           </div>
         </form>
@@ -1228,6 +1483,38 @@ const POSBarcodeManagerPage = () => {
 
             <div>
               <Text className="text-xs font-bold mb-1">
+                🏢 Sede / Sucursal Colombia
+              </Text>
+              <Select
+                value={formSede}
+                onValueChange={(val) => setFormSede(val)}
+              >
+                <Select.Trigger>
+                  <Select.Value placeholder="Sede" />
+                </Select.Trigger>
+                <Select.Content>
+                  {COLOMBIAN_SEDES.map((s) => (
+                    <Select.Item key={s} value={s}>
+                      🏢 {s}
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select>
+            </div>
+
+            <div>
+              <Text className="text-xs font-bold mb-1">
+                📦 Stock Disponible en Sede
+              </Text>
+              <Input
+                type="number"
+                value={formStockQty}
+                onChange={(e) => setFormStockQty(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <Text className="text-xs font-bold mb-1">
                 💵 Costo Base Unidad ($ COP)
               </Text>
               <Input
@@ -1419,12 +1706,13 @@ const POSBarcodeManagerPage = () => {
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Producto / Código 770</Table.HeaderCell>
+                <Table.HeaderCell>🏢 Sede / Stock</Table.HeaderCell>
                 <Table.HeaderCell>💵 Costo Base (COP)</Table.HeaderCell>
                 <Table.HeaderCell>🛍️ % Detal y Precio ($ COP)</Table.HeaderCell>
                 <Table.HeaderCell>📦 % Mayor y Precio ($ COP)</Table.HeaderCell>
                 <Table.HeaderCell>🏷️ % Desc.</Table.HeaderCell>
                 <Table.HeaderCell className="text-right">
-                  Guardar / Editar
+                  Guardar / Editar por Código
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -1457,6 +1745,46 @@ const POSBarcodeManagerPage = () => {
                           <span className="text-[11px] font-mono text-ui-fg-subtle">
                             ║▌║ {baseInfo.barcode} • {baseInfo.categoryName}
                           </span>
+                        </div>
+                      </div>
+                    </Table.Cell>
+
+                    <Table.Cell>
+                      <div className="flex flex-col gap-1 w-40">
+                        <Select
+                          size="small"
+                          value={current.sede || "Todas las Sedes"}
+                          onValueChange={(val) =>
+                            updateRowSedeOrStock(p, "sede", val)
+                          }
+                        >
+                          <Select.Trigger>
+                            <Select.Value placeholder="Sede" />
+                          </Select.Trigger>
+                          <Select.Content>
+                            {COLOMBIAN_SEDES.map((s) => (
+                              <Select.Item key={s} value={s}>
+                                🏢 {s}
+                              </Select.Item>
+                            ))}
+                          </Select.Content>
+                        </Select>
+                        <div className="flex items-center gap-1">
+                          <span className="text-[10px] font-bold text-ui-fg-subtle">
+                            Stock:
+                          </span>
+                          <Input
+                            type="number"
+                            size="small"
+                            value={current.stockQty ?? 150}
+                            onChange={(e) =>
+                              updateRowSedeOrStock(
+                                p,
+                                "stockQty",
+                                Number(e.target.value || 0)
+                              )
+                            }
+                          />
                         </div>
                       </div>
                     </Table.Cell>
@@ -1612,9 +1940,18 @@ const POSBarcodeManagerPage = () => {
                             isLoading={savingId === p.id}
                             onClick={() => handleSaveRowPercentage(p)}
                           >
-                            💾 Aplicar %
+                            💾 Guardar
                           </Button>
                         )}
+                        <Button
+                          variant="secondary"
+                          size="small"
+                          type="button"
+                          onClick={() => loadProductIntoBarcodeBar(p)}
+                          title="Cargar este código en el Escáner Superior para editarlo por código"
+                        >
+                          🎯 Por Código
+                        </Button>
                         <Button
                           variant="secondary"
                           size="small"

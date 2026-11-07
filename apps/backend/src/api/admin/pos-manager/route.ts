@@ -89,8 +89,12 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     mayorPriceCop,
     detalLabel,
     mayorLabel,
+    sede,
+    stockQty,
+    pasillo,
     // Bulk global percentage parameters
     targetScope,
+    targetSede,
     globalDetalMarginPct,
     globalMayorMarginPct,
     globalDiscountPct,
@@ -122,8 +126,17 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     })
 
     const targetProducts = allProducts.filter((p: any) => {
-      if (!targetScope || targetScope === "all") return true
-      return p.categories?.some((c: any) => c.id === targetScope)
+      const matchesCat =
+        !targetScope ||
+        targetScope === "all" ||
+        p.categories?.some((c: any) => c.id === targetScope)
+      const prodSede = p.metadata?.sede || "Todas las Sedes"
+      const matchesSede =
+        !targetSede ||
+        targetSede === "all" ||
+        prodSede === targetSede ||
+        prodSede === "Todas las Sedes"
+      return matchesCat && matchesSede
     })
 
     let updatedCount = 0
@@ -296,6 +309,9 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
       ...(discountPct !== undefined
         ? { discount_pct: Number(discountPct) }
         : {}),
+      ...(sede !== undefined ? { sede } : {}),
+      ...(stockQty !== undefined ? { stock_qty: Number(stockQty) } : {}),
+      ...(pasillo !== undefined ? { pasillo } : {}),
     }
 
     await updateProductsWorkflow(req.scope).run({
@@ -413,6 +429,9 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
             mayor_margin_pct: Number(mayorMarginPct ?? 15),
             mayor_units: Number(mayorUnits ?? 10),
             discount_pct: Number(discountPct ?? 0),
+            sede: sede || "Todas las Sedes",
+            stock_qty: Number(stockQty ?? 150),
+            pasillo: pasillo || "Góndola Central",
           },
           options: [
             {
