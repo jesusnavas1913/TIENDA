@@ -196,29 +196,37 @@ const PRODUCT_SPECS: Record<
 }
 
 const getSpecs = (product: HttpTypes.StoreProduct) => {
-  if (product.handle && PRODUCT_SPECS[product.handle]) {
-    return PRODUCT_SPECS[product.handle]
-  }
-  const meta = (product.metadata || {}) as Record<string, string>
+  const meta = (product.metadata || {}) as Record<string, any>
+  const preset = product.handle ? PRODUCT_SPECS[product.handle] : undefined
+  const units = Number(meta.mayor_units || 10)
   return {
-    detalFormat: meta.detal_label || "1 Unidad Estándar",
-    mayorFormat: meta.mayor_label || "Caja Mayorista x 12 uds",
-    savingPct: "Ahorra 20%",
-    rating: "4.9",
-    reviews: 85,
-    origin: "Calidad Certificada Súper Express",
+    detalFormat:
+      meta.detal_label || preset?.detalFormat || "1 Unidad Estándar",
+    mayorFormat:
+      meta.mayor_label ||
+      preset?.mayorFormat ||
+      `Caja Mayorista x ${units} uds`,
+    savingPct: preset?.savingPct || "Ahorro Mayorista",
+    rating: preset?.rating || "4.9",
+    reviews: preset?.reviews || 96,
+    origin: preset?.origin || "Calidad Certificada Súper Express",
+    sede: meta.sede || "Todas las Sedes",
+    stockQty: Number(meta.stock_qty ?? 150),
   }
 }
 
 export default function QuickSupermarketCatalog({
   products,
+  initialCategory = "all",
 }: {
   products: HttpTypes.StoreProduct[]
+  initialCategory?: string
 }) {
   const [globalSaleMode, setGlobalSaleMode] = useState<SaleMode>("detal")
   const [cardSaleModes, setCardSaleModes] = useState<Record<string, SaleMode>>({})
   const [viewLayout, setViewLayout] = useState<ViewLayout>("aisles")
-  const [selectedCategory, setSelectedCategory] = useState<string>("all")
+  const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory)
+  const [selectedSede, setSelectedSede] = useState<string>("all")
   const [searchQuery, setSearchQuery] = useState<string>("")
   const [sortBy, setSortBy] = useState<SortMode>("featured")
   const [addingId, setAddingId] = useState<string | null>(null)
@@ -317,8 +325,17 @@ export default function QuickSupermarketCatalog({
       const matchesCat =
         selectedCategory === "all" ||
         p.categories?.some(
-          (c) => c.id === selectedCategory || c.name === selectedCategory
+          (c) =>
+            c.id === selectedCategory ||
+            c.name === selectedCategory ||
+            c.handle === selectedCategory
         )
+      const prodSede =
+        ((p.metadata as any)?.sede as string) || "Todas las Sedes"
+      const matchesSede =
+        selectedSede === "all" ||
+        prodSede === selectedSede ||
+        prodSede === "Todas las Sedes"
       const q = searchQuery.trim().toLowerCase()
       const barcodeMeta = ((p.metadata as any)?.barcode || "").toLowerCase()
       const variantBarcode = (
@@ -333,7 +350,7 @@ export default function QuickSupermarketCatalog({
         barcodeMeta.includes(q) ||
         variantBarcode.includes(q) ||
         p.categories?.some((c) => c.name?.toLowerCase().includes(q))
-      return matchesCat && matchesSearch
+      return matchesCat && matchesSede && matchesSearch
     })
 
     return [...list].sort((a, b) => {
@@ -347,7 +364,15 @@ export default function QuickSupermarketCatalog({
         return (a.title || "").localeCompare(b.title || "")
       return 0
     })
-  }, [products, selectedCategory, searchQuery, sortBy, globalSaleMode, cardSaleModes])
+  }, [
+    products,
+    selectedCategory,
+    selectedSede,
+    searchQuery,
+    sortBy,
+    globalSaleMode,
+    cardSaleModes,
+  ])
 
   const groupedByCategory = useMemo(() => {
     const groups: {
@@ -537,6 +562,15 @@ export default function QuickSupermarketCatalog({
                 {product.title}
               </h3>
             </LocalizedClientLink>
+
+            <div className="mt-1 flex items-center justify-between text-[11px] text-slate-500">
+              <span className="truncate font-medium text-slate-600">
+                📍 {specs.sede}
+              </span>
+              <span className="text-emerald-700 font-bold shrink-0">
+                ● Disp: {specs.stockQty} uds
+              </span>
+            </div>
 
             {/* Format Specification Box */}
             <div
@@ -760,6 +794,19 @@ export default function QuickSupermarketCatalog({
                 </button>
               )}
             </div>
+
+            {/* Sede selector */}
+            <select
+              value={selectedSede}
+              onChange={(e) => setSelectedSede(e.target.value)}
+              className="rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm font-bold text-slate-700 focus:border-emerald-600 focus:bg-white focus:outline-none"
+            >
+              <option value="all">🏢 Todas las Sedes Colombia</option>
+              <option value="Bogotá - Corabastos">📍 Bogotá - Corabastos</option>
+              <option value="Medellín - Mayorista">📍 Medellín - Mayorista</option>
+              <option value="Cali - Cavasa">📍 Cali - Cavasa</option>
+              <option value="Barranquilla - Centro">📍 Barranquilla - Centro</option>
+            </select>
 
             {/* Sort selector */}
             <select

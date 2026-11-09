@@ -129,6 +129,7 @@ const POSBarcodeManagerPage = () => {
 
   // Auto-save & Sede organization states
   const [selectedSedeFilter, setSelectedSedeFilter] = useState<string>("all")
+  const [adminSortBy, setAdminSortBy] = useState<string>("default")
   const [autoSaveEnabled, setAutoSaveEnabled] = useState<boolean>(true)
   const [autoSaveStatus, setAutoSaveStatus] = useState<string>(
     "✅ Auto-guardado activo"
@@ -778,7 +779,7 @@ const POSBarcodeManagerPage = () => {
   }
 
   const filteredProducts = useMemo(() => {
-    return products.filter((p) => {
+    const list = products.filter((p) => {
       const matchesCat =
         targetScope === "all" ||
         p.categories?.some((c: any) => c.id === targetScope)
@@ -800,7 +801,34 @@ const POSBarcodeManagerPage = () => {
         info.sede?.toLowerCase().includes(q)
       )
     })
-  }, [products, search, targetScope, selectedSedeFilter, rowEdits])
+
+    return [...list].sort((a, b) => {
+      const infoA = rowEdits[a.id] || getProductDetails(a)
+      const infoB = rowEdits[b.id] || getProductDetails(b)
+      if (adminSortBy === "name-asc")
+        return (a.title || "").localeCompare(b.title || "")
+      if (adminSortBy === "barcode-asc")
+        return (infoA.barcode || "").localeCompare(infoB.barcode || "")
+      if (adminSortBy === "profit-desc")
+        return (
+          infoB.detalPrice -
+          infoB.costCop -
+          (infoA.detalPrice - infoA.costCop)
+        )
+      if (adminSortBy === "price-desc")
+        return infoB.detalPrice - infoA.detalPrice
+      if (adminSortBy === "stock-asc")
+        return (infoA.stockQty ?? 150) - (infoB.stockQty ?? 150)
+      return 0
+    })
+  }, [
+    products,
+    search,
+    targetScope,
+    selectedSedeFilter,
+    adminSortBy,
+    rowEdits,
+  ])
 
   // Industrial KPI Summary across filtered catalog
   const industrialKpis = useMemo(() => {
@@ -1460,12 +1488,44 @@ const POSBarcodeManagerPage = () => {
       {/* Search Bar for Individual Product Lookup */}
       <Container className="p-4">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="w-full sm:w-96">
-            <Input
-              placeholder="🔍 Buscar en inventario por nombre o código 770..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto sm:flex-1 max-w-2xl">
+            <div className="w-full sm:w-80">
+              <Input
+                placeholder="🔍 Buscar por nombre, sede o código 770..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <div className="w-full sm:w-64">
+              <Select
+                value={adminSortBy}
+                onValueChange={(val) => setAdminSortBy(val)}
+              >
+                <Select.Trigger>
+                  <Select.Value placeholder="Ordenar inventario" />
+                </Select.Trigger>
+                <Select.Content>
+                  <Select.Item value="default">
+                    📋 Orden Original de Catálogo
+                  </Select.Item>
+                  <Select.Item value="name-asc">
+                    🔤 Ordenar por Nombre (A - Z)
+                  </Select.Item>
+                  <Select.Item value="barcode-asc">
+                    ║▌║ Ordenar por Código 770
+                  </Select.Item>
+                  <Select.Item value="profit-desc">
+                    💰 Mayor Ganancia Neta ($)
+                  </Select.Item>
+                  <Select.Item value="price-desc">
+                    💎 Mayor Precio de Venta
+                  </Select.Item>
+                  <Select.Item value="stock-asc">
+                    📦 Menor Stock (Reabastecer)
+                  </Select.Item>
+                </Select.Content>
+              </Select>
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             {Object.keys(rowEdits).length > 0 && (
