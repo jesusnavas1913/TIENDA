@@ -1040,6 +1040,161 @@ const POSBarcodeManagerPage = () => {
     win.document.close()
   }
 
+  // Import Bulk Excel/CSV File to Create or Update Products by Barcode 770
+  const handleImportExcelCsv = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setApplyingBulk(true)
+    setAutoSaveStatus("⏳ Importando archivo Excel/CSV...")
+    try {
+      const text = await file.text()
+      const lines = text
+        .split(/\r?\n/)
+        .map((l) => l.trim())
+        .filter(Boolean)
+
+      if (lines.length < 2) {
+        toast.error("El archivo CSV está vacío o no tiene filas de datos")
+        return
+      }
+
+      let importedCount = 0
+      // Skip header row (line 0)
+      for (let i = 1; i < lines.length; i++) {
+        const sep = lines[i].includes(";") ? ";" : ","
+        const cols = lines[i]
+          .split(sep)
+          .map((c) => c.replace(/^"|"$/g, "").trim())
+        if (cols.length < 2) continue
+
+        const bc = cols[0] || generateColombianBarcode()
+        const title = cols[1] || `Producto ${bc}`
+        const catName = cols[2] || ""
+        const costCop = Number(cols[3]) || 5000
+        const dPct = Number(cols[4]) || 20
+        const mUnits = Number(cols[8]) || 10
+        const mPct = Number(cols[9]) || 15
+
+        const matchedCat =
+          categories.find(
+            (c) => c.name?.toLowerCase() === catName.toLowerCase()
+          ) || categories[0]
+
+        const dPrice = calcIndustrialPrice(costCop, dPct, 0)
+        const mPrice = calcIndustrialPrice(costCop * mUnits, mPct, 0)
+
+        const res = await fetch("/admin/pos-manager", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "create",
+            barcode: bc,
+            title,
+            categoryId: matchedCat?.id,
+            sede:
+              selectedSedeFilter !== "all"
+                ? selectedSedeFilter
+                : "Todas las Sedes",
+            stockQty: 150,
+            costCop,
+            detalMarginPct: dPct,
+            mayorMarginPct: mPct,
+            mayorUnits: mUnits,
+            detalPriceCop: dPrice,
+            mayorPriceCop: mPrice,
+          }),
+        })
+        if (res.ok) importedCount++
+      }
+
+      toast.success(
+        `✅ Se importaron/actualizaron ${importedCount} productos desde Excel (.CSV)`
+      )
+      setAutoSaveStatus(`✅ ${importedCount} productos importados desde CSV`)
+      await loadData()
+    } catch {
+      toast.error("Error procesando el archivo CSV")
+    } finally {
+      setApplyingBulk(false)
+      e.target.value = ""
+    }
+  }
+
+  // Print Official Wholesale & Retail Price List / Quote PDF
+  const handlePrintPriceList = () => {
+    const win = window.open("", "_blank", "width=1000,height=750")
+    if (!win) {
+      toast.error("Permite las ventanas emergentes para imprimir la lista")
+      return
+    }
+    const rowsHtml = filteredProducts
+      .map((p, idx) => {
+        const base = getProductDetails(p)
+        const cur = rowEdits[p.id] || base
+        const pum = Math.round(cur.mayorPrice / Math.max(1, cur.mayorUnits))
+        return `
+        <tr>
+          <td>${idx + 1}</td>
+          <td class="mono">${base.barcode}</td>
+          <td><strong>${p.title}</strong><br/><small>${base.categoryName} • ${cur.sede}</small></td>
+          <td class="right">$ ${cur.detalPrice.toLocaleString("es-CO")} COP</td>
+          <td class="center">Caja x ${cur.mayorUnits} uds</td>
+          <td class="right mayor">$ ${cur.mayorPrice.toLocaleString("es-CO")} COP</td>
+          <td class="right">$ ${pum.toLocaleString("es-CO")} / ud</td>
+        </tr>`
+      })
+      .join("")
+
+    win.document.write(`
+      <html>
+        <head>
+          <title>Lista Oficial de Precios Mayor y Detal - Súper Express Colombia</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 24px; color: #0f172a; }
+            .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #047857; padding-bottom: 14px; margin-bottom: 18px; }
+            h1 { margin: 0; font-size: 22px; color: #064e3b; }
+            table { width: 100%; border-collapse: collapse; font-size: 12px; }
+            th { background: #064e3b; color: white; padding: 9px; text-align: left; }
+            td { padding: 8px; border-bottom: 1px solid #cbd5e1; }
+            .right { text-align: right; font-weight: bold; }
+            .center { text-align: center; }
+            .mono { font-family: monospace; font-weight: bold; }
+            .mayor { color: #b45309; background: #fffbeb; }
+            .btn { background: #047857; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+            @media print { .no-print { display: none; } }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div>
+              <h1>🛒 SÚPER EXPRESS COLOMBIA — LISTA DE PRECIOS MAYOR Y DETAL</h1>
+              <div>NIT: 901.452.880-9 • Sede: ${selectedSedeFilter === "all" ? "Todas las Sedes Colombia" : selectedSedeFilter} • Fecha: ${new Date().toLocaleDateString("es-CO")}</div>
+            </div>
+            <button class="btn no-print" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Código GS1 770</th>
+                <th>Producto / Departamento</th>
+                <th class="right">Precio Al Detal (1 Ud)</th>
+                <th class="center">Embalaje Mayor</th>
+                <th class="right">Precio Mayorista</th>
+                <th class="right">PUM (Sale a)</th>
+              </tr>
+            </thead>
+            <tbody>${rowsHtml}</tbody>
+          </table>
+        </body>
+      </html>
+    `)
+    win.document.close()
+  }
+
   return (
     <div className="flex flex-col gap-y-6 p-4">
       {/* EXECUTIVE INDUSTRIAL KPI BAR */}
@@ -1068,6 +1223,15 @@ const POSBarcodeManagerPage = () => {
             >
               📥 Exportar Excel/CSV
             </Button>
+            <label className="cursor-pointer inline-flex items-center px-2.5 py-1 rounded-md border bg-ui-bg-subtle hover:bg-ui-bg-base-hover text-xs font-medium">
+              📤 Subir CSV
+              <input
+                type="file"
+                accept=".csv,text/csv"
+                className="hidden"
+                onChange={handleImportExcelCsv}
+              />
+            </label>
             <Button
               variant="secondary"
               size="small"
@@ -1075,6 +1239,14 @@ const POSBarcodeManagerPage = () => {
               onClick={handlePrintShelfLabels}
             >
               🖨️ Etiquetas Góndola
+            </Button>
+            <Button
+              variant="secondary"
+              size="small"
+              type="button"
+              onClick={handlePrintPriceList}
+            >
+              🧾 Lista Precios PDF
             </Button>
           </div>
         </Container>
