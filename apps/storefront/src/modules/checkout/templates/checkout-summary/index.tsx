@@ -1,6 +1,7 @@
 import { Heading } from "@modules/common/components/ui"
 
 import ItemsPreviewTemplate from "@modules/cart/templates/preview"
+import WhatsAppCartButton from "@modules/cart/components/whatsapp-cart-button"
 import DiscountCode from "@modules/checkout/components/discount-code"
 import CartTotals from "@modules/common/components/cart-totals"
 import Divider from "@modules/common/components/divider"
@@ -13,12 +14,15 @@ const CheckoutSummary = ({ cart }: { cart: HttpTypes.StoreCart }) => {
         <Divider className="my-6 small:hidden" />
         <Heading
           level="h2"
-          className="flex flex-row text-3xl-regular items-baseline"
+          className="flex flex-row text-3xl-regular items-baseline font-extrabold text-slate-900"
         >
-          In your Cart
+          🛒 Resumen de tu Mercado
         </Heading>
         <Divider className="my-6" />
         <CartTotals totals={cart} />
+        <div className="my-4">
+          <WhatsAppCartButton cart={cart} />
+        </div>
         <ItemsPreviewTemplate cart={cart} />
         <div className="my-6">
           <DiscountCode cart={cart} />

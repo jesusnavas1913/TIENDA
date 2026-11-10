@@ -17,19 +17,20 @@ export default function CheckoutLayout({
             data-testid="back-to-cart-link"
           >
             <ChevronDown className="rotate-90" size={16} />
-            <span className="mt-px hidden small:block txt-compact-plus text-ui-fg-subtle hover:text-ui-fg-base ">
-              Back to shopping cart
+            <span className="mt-px hidden small:block txt-compact-plus text-ui-fg-subtle hover:text-ui-fg-base font-bold">
+              Volver al Carrito
             </span>
-            <span className="mt-px block small:hidden txt-compact-plus text-ui-fg-subtle hover:text-ui-fg-base">
-              Back
+            <span className="mt-px block small:hidden txt-compact-plus text-ui-fg-subtle hover:text-ui-fg-base font-bold">
+              Volver
             </span>
           </LocalizedClientLink>
           <LocalizedClientLink
             href="/"
-            className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
+            className="txt-compact-xlarge-plus text-slate-900 hover:text-emerald-700 uppercase font-extrabold flex items-center gap-2"
             data-testid="store-link"
           >
-            Medusa Store
+            <span className="bg-emerald-600 text-white px-2 py-0.5 rounded-lg text-sm">🛒</span>
+            SÚPER EXPRESS COLOMBIA
           </LocalizedClientLink>
           <div className="flex-1 basis-0" />
         </nav>

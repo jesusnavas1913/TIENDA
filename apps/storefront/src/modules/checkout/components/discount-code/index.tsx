@@ -61,10 +61,10 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               type="button"
-              className="txt-medium text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
+              className="txt-medium text-emerald-700 font-bold hover:text-emerald-800"
               data-testid="add-discount-button"
             >
-              Add Promotion Code(s)
+              🏷️ ¿Tienes un código o cupón de descuento?
             </button>
 
             {/* <Tooltip content="You can add multiple promotion codes">
@@ -80,6 +80,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
                   id="promotion-input"
                   name="code"
                   type="text"
+                  placeholder="Ingresa tu cupón..."
                   autoFocus={false}
                   data-testid="discount-input"
                 />
@@ -87,7 +88,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
                   variant="secondary"
                   data-testid="discount-apply-button"
                 >
-                  Apply
+                  Aplicar
                 </SubmitButton>
               </div>
 
@@ -103,7 +104,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
           <div className="w-full flex items-center">
             <div className="flex flex-col w-full">
               <Heading className="txt-medium mb-2">
-                Promotion(s) applied:
+                Descuentos aplicados:
               </Heading>
 
               {promotions.map((promotion) => {

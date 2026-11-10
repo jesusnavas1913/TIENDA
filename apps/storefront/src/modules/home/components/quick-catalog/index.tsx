@@ -1004,6 +1004,15 @@ export default function QuickSupermarketCatalog({
                   {quickViewProduct.title}
                 </h3>
 
+                <div className="flex flex-wrap items-center gap-2 mt-2">
+                  <span className="text-[11px] font-mono font-bold bg-slate-100 text-slate-800 px-2.5 py-0.5 rounded border border-slate-200">
+                    ║▌║ GS1: {(quickViewProduct.metadata as any)?.barcode || quickViewProduct.variants?.[0]?.barcode || "7701001"}
+                  </span>
+                  <span className="text-[11px] font-bold bg-emerald-50 text-emerald-800 px-2.5 py-0.5 rounded border border-emerald-200">
+                    📍 {getSpecs(quickViewProduct).sede} • Stock: {getSpecs(quickViewProduct).stockQty} uds
+                  </span>
+                </div>
+
                 <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
                   {quickViewProduct.description}
                 </p>
