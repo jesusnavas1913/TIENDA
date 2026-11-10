@@ -21,9 +21,9 @@ export async function generateMetadata(props: {
   const [origin, regions] = await Promise.all([getSiteOrigin(), listRegions()])
 
   return {
-    title: "Medusa Next.js Starter Template",
+    title: "Súper Express Colombia | Supermercado Online Al Detal y Al por Mayor (COP)",
     description:
-      "A performant frontend ecommerce starter template with Next.js 16 and Medusa.",
+      "Compra tu mercado por unidad al detal o por caja y bulto mayorista en Pesos Colombianos (COP) con entrega en 30 minutos.",
     alternates: {
       canonical: `${origin}/${countryCode}`,
       languages: {
@@ -109,13 +109,6 @@ export default async function Home(props: {
       <Hero />
       <QuickSupermarketCatalog products={allProducts || []} />
       <StoreLocatorColombia />
-      {region && collections && collections.length > 0 && (
-        <div className="py-12">
-          <ul className="flex flex-col gap-x-6">
-            <FeaturedProducts collections={collections} region={region} />
-          </ul>
-        </div>
-      )}
     </>
   )
 }

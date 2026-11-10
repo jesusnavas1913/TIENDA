@@ -46,6 +46,7 @@ export default function ProductActions({
   )
   const [isUrlVariantApplied, setIsUrlVariantApplied] = useState(false)
   const [isAdding, setIsAdding] = useState(false)
+  const [quantity, setQuantity] = useState(1)
   const countryCode = useParams().countryCode as string
 
   const selectedVariant = useMemo(() => {
@@ -122,7 +123,7 @@ export default function ProductActions({
 
     await addToCart({
       variantId: selectedVariant.id,
-      quantity: 1,
+      quantity,
       countryCode,
     })
     notifyCartUpdated()
@@ -135,14 +136,25 @@ export default function ProductActions({
     handleAddToCart()
   }
 
+  const meta = (product.metadata || {}) as Record<string, any>
+  const mayorUnits = Math.max(1, Number(meta.mayor_units || 10))
+  const isMayorSelected =
+    selectedVariant?.title?.toLowerCase().includes("mayor") ||
+    selectedVariant?.sku?.toUpperCase().startsWith("MAYOR")
+  const selectedAmount =
+    (selectedVariant as any)?.calculated_price?.calculated_amount || 0
+  const pumUnitCop = isMayorSelected
+    ? Math.round(selectedAmount / mayorUnits)
+    : selectedAmount
+
   return (
     <>
-      <div className="flex flex-col gap-y-2" ref={actionsRef}>
+      <div className="flex flex-col gap-y-3" ref={actionsRef}>
         <form
           method="post"
           action={`/${countryCode}/cart/add`}
           onSubmit={handleSubmit}
-          className="flex flex-col gap-y-2"
+          className="flex flex-col gap-y-3"
           {...{
             toolname: "add_to_cart",
             tooldescription:
@@ -155,7 +167,7 @@ export default function ProductActions({
             name="variant_id"
             value={isValidVariant ? selectedVariant?.id ?? "" : ""}
           />
-          <input type="hidden" name="quantity" value="1" />
+          <input type="hidden" name="quantity" value={String(quantity)} />
           <div>
             {(product.variants?.length ?? 0) > 1 && (
               <div className="flex flex-col gap-y-4">
@@ -166,7 +178,7 @@ export default function ProductActions({
                         option={option}
                         current={options[option.id]}
                         updateOption={setOptionValue}
-                        title={option.title ?? ""}
+                        title={option.title ?? "Modalidad de Compra"}
                         name={`options[${option.id}]`}
                         data-testid="product-options"
                         disabled={!!disabled || isAdding}
@@ -181,35 +193,79 @@ export default function ProductActions({
 
           <ProductPrice product={product} variant={selectedVariant} />
 
+          {selectedAmount > 0 && (
+            <div className="rounded-xl bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-900">
+              {isMayorSelected ? (
+                <span>
+                  📦 <strong>Embalaje Mayorista x {mayorUnits} uds</strong> •
+                  PUM: Sale a{" "}
+                  <strong>$ {pumUnitCop.toLocaleString("es-CO")} COP</strong>{" "}
+                  por unidad
+                </span>
+              ) : (
+                <span>
+                  🛍️ <strong>Venta al Detal por Unidad</strong> • Disponible
+                  también por caja mayorista ({mayorUnits} uds)
+                </span>
+              )}
+            </div>
+          )}
+
           {selectedVariant && isValidVariant && (
             <p
-              className="text-small-regular text-ui-fg-subtle"
+              className="text-small-regular text-emerald-700 font-semibold"
               data-testid="product-availability"
             >
-              {inStock ? "In stock" : "Out of stock"}
+              {inStock
+                ? `● Disponible en inventario (${meta.sede || "Todas las Sedes"})`
+                : "Agotado temporalmente"}
             </p>
           )}
 
-          <Button
-            type="submit"
-            disabled={
-              !inStock ||
-              !selectedVariant ||
-              !!disabled ||
-              isAdding ||
-              !isValidVariant
-            }
-            variant="primary"
-            className="w-full h-10"
-            isLoading={isAdding}
-            data-testid="add-product-button"
-          >
-            {!selectedVariant
-              ? "Select variant"
-              : !inStock || !isValidVariant
-              ? "Out of stock"
-              : "Add to cart"}
-          </Button>
+          <div className="flex items-center gap-2 pt-1">
+            <div className="flex items-center border border-slate-300 rounded-xl bg-slate-50 h-11">
+              <button
+                type="button"
+                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                className="w-9 h-full font-extrabold text-slate-700 hover:bg-slate-200 rounded-l-xl"
+              >
+                −
+              </button>
+              <span className="w-10 text-center font-extrabold text-sm text-slate-900">
+                {quantity}
+              </span>
+              <button
+                type="button"
+                onClick={() => setQuantity((q) => q + 1)}
+                className="w-9 h-full font-extrabold text-slate-700 hover:bg-slate-200 rounded-r-xl"
+              >
+                +
+              </button>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={
+                !inStock ||
+                !selectedVariant ||
+                !!disabled ||
+                isAdding ||
+                !isValidVariant
+              }
+              variant="primary"
+              className="flex-1 h-11 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold rounded-xl"
+              isLoading={isAdding}
+              data-testid="add-product-button"
+            >
+              {!selectedVariant
+                ? "Selecciona modalidad"
+                : !inStock || !isValidVariant
+                ? "Agotado"
+                : isMayorSelected
+                ? `📦 Llevar por Mayor (${quantity})`
+                : `🛒 Llevar al Detal (${quantity})`}
+            </Button>
+          </div>
         </form>
         <MobileActions
           product={product}

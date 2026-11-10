@@ -129,6 +129,7 @@ const POSBarcodeManagerPage = () => {
 
   // Auto-save & Sede organization states
   const [selectedSedeFilter, setSelectedSedeFilter] = useState<string>("all")
+  const [adminQuickFilter, setAdminQuickFilter] = useState<string>("all")
   const [adminSortBy, setAdminSortBy] = useState<string>("default")
   const [autoSaveEnabled, setAutoSaveEnabled] = useState<boolean>(true)
   const [autoSaveStatus, setAutoSaveStatus] = useState<string>(
@@ -792,6 +793,13 @@ const POSBarcodeManagerPage = () => {
         info.sede === "Todas las Sedes"
       if (!matchesSede) return false
 
+      if (adminQuickFilter === "promo" && (info.discountPct || 0) <= 0)
+        return false
+      if (adminQuickFilter === "low-stock" && (info.stockQty ?? 150) >= 50)
+        return false
+      if (adminQuickFilter === "high-margin" && (info.detalPct ?? 20) < 25)
+        return false
+
       if (!search.trim()) return true
       const q = search.toLowerCase()
       return (
@@ -826,6 +834,7 @@ const POSBarcodeManagerPage = () => {
     search,
     targetScope,
     selectedSedeFilter,
+    adminQuickFilter,
     adminSortBy,
     rowEdits,
   ])
@@ -1715,6 +1724,45 @@ const POSBarcodeManagerPage = () => {
               <strong>Precio $ COP</strong> (manual) en cada fila.
             </Text>
           </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t">
+          <Text className="text-xs font-bold text-ui-fg-subtle mr-1">
+            🔎 Auditoría Rápida:
+          </Text>
+          <Button
+            size="small"
+            variant={adminQuickFilter === "all" ? "primary" : "secondary"}
+            type="button"
+            onClick={() => setAdminQuickFilter("all")}
+          >
+            📦 Todos ({products.length})
+          </Button>
+          <Button
+            size="small"
+            variant={adminQuickFilter === "promo" ? "primary" : "secondary"}
+            type="button"
+            onClick={() => setAdminQuickFilter("promo")}
+          >
+            🔥 En Oferta / Descuento
+          </Button>
+          <Button
+            size="small"
+            variant={adminQuickFilter === "low-stock" ? "primary" : "secondary"}
+            type="button"
+            onClick={() => setAdminQuickFilter("low-stock")}
+          >
+            ⚠️ Stock Bajo (&lt; 50 uds)
+          </Button>
+          <Button
+            size="small"
+            variant={
+              adminQuickFilter === "high-margin" ? "primary" : "secondary"
+            }
+            type="button"
+            onClick={() => setAdminQuickFilter("high-margin")}
+          >
+            💎 Margen Alto (&ge; 25%)
+          </Button>
         </div>
       </Container>
 

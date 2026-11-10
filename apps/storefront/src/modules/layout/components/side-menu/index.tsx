@@ -13,10 +13,16 @@ import { Locale } from "@lib/data/locales"
 
 
 const SideMenuItems = {
-  "🏠 Inicio": "/",
-  "🛒 Supermercado": "/store",
-  "👤 Mi Cuenta": "/account",
-  "🛍️ Mi Carrito": "/cart",
+  "🏠 Inicio Supermercado": "/",
+  "🛒 Catálogo Mayor y Detal": "/store",
+  "🥑 Frutas y Verduras": "/categories/frutas-y-verduras",
+  "🌾 Despensa y Abarrotes": "/categories/despensa-y-abarrotes",
+  "🥛 Lácteos y Huevos": "/categories/lacteos-y-huevos",
+  "🥩 Carnes y Charcutería": "/categories/carnes-y-charcuteria",
+  "🧃 Bebidas y Licores": "/categories/bebidas-y-licores",
+  "🧼 Aseo y Hogar": "/categories/aseo-y-hogar",
+  "🛍️ Mi Carrito y Factura": "/cart",
+  "👤 Mi Cuenta Mayorista": "/account",
 }
 
 type SideMenuProps = {
@@ -38,9 +44,10 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
               <div className="relative flex h-full">
                 <Popover.Button
                   data-testid="nav-menu-button"
-                  className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-ui-fg-base"
+                  className="relative h-full flex items-center gap-1.5 font-extrabold text-slate-800 hover:text-emerald-700 transition-all ease-out duration-200 focus:outline-none"
                 >
-                  Menu
+                  <span>☰</span>
+                  <span>Pasillos</span>
                 </Popover.Button>
               </div>
 
@@ -131,8 +138,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                         />
                       </div>
                       <Text className="flex justify-between txt-compact-small">
-                        © {new Date().getFullYear()} Medusa Store. All rights
-                        reserved.
+                        © {new Date().getFullYear()} Súper Express Colombia — Mayor y Detal.
                       </Text>
                     </div>
                   </div>
