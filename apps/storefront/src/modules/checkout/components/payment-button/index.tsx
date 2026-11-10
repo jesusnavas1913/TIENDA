@@ -51,7 +51,7 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
         <ManualTestPaymentButton notReady={notReady} data-testid={dataTestId} />
       )
     default:
-      return <Button disabled>Select a payment method</Button>
+      return <Button disabled>Selecciona un medio de pago</Button>
   }
 }
 
@@ -197,9 +197,10 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
         isLoading={submitting}
         onClick={handlePayment}
         size="large"
+        className="bg-emerald-700 hover:bg-emerald-800 text-white font-black text-base px-8 py-4"
         data-testid="submit-order-button"
       >
-        Place order
+        ✅ Confirmar Pedido Ahora ($ COP)
       </Button>
       <ErrorMessage
         error={errorMessage}

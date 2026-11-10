@@ -10,7 +10,7 @@ export const paymentInfoMap: Record<
   { title: string; icon: React.JSX.Element }
 > = {
   pp_stripe_stripe: {
-    title: "Credit card",
+    title: "Tarjeta de Crédito / Débito",
     icon: <CreditCard />,
   },
   "pp_stripe-ideal_stripe": {
@@ -26,7 +26,7 @@ export const paymentInfoMap: Record<
     icon: <PayPal />,
   },
   pp_system_default: {
-    title: "Manual Payment",
+    title: "Pago Contra Entrega / Nequi / Daviplata / PSE ($ COP)",
     icon: <CreditCard />,
   },
   // Add more payment providers here

@@ -116,24 +116,24 @@ const Payment = ({
         <Heading
           level="h2"
           className={clx(
-            "flex flex-row text-3xl-regular gap-x-2 items-baseline",
+            "flex flex-row text-2xl font-black text-emerald-950 gap-x-2 items-baseline",
             {
               "opacity-50 pointer-events-none select-none":
                 !isOpen && !paymentReady,
             }
           )}
         >
-          Payment
-          {!isOpen && paymentReady && <CheckCircleSolid />}
+          💳 3. Medio de Pago ($ COP)
+          {!isOpen && paymentReady && <CheckCircleSolid className="text-emerald-600" />}
         </Heading>
         {!isOpen && paymentReady && (
           <Text>
             <button
               onClick={handleEdit}
-              className="text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
+              className="text-emerald-700 hover:text-emerald-900 font-bold underline"
               data-testid="edit-payment-button"
             >
-              Edit
+              Editar pago
             </button>
           </Text>
         )}
@@ -169,14 +169,14 @@ const Payment = ({
 
           {paidByGiftcard && (
             <div className="flex flex-col w-1/3">
-              <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                Payment method
+              <Text className="txt-medium-plus text-gray-900 font-bold mb-1">
+                Medio de pago
               </Text>
               <Text
                 className="txt-medium text-ui-fg-subtle"
                 data-testid="payment-method-summary"
               >
-                Gift card
+                Bono / Tarjeta de Regalo
               </Text>
             </div>
           )}
@@ -188,7 +188,7 @@ const Payment = ({
 
           <Button
             size="large"
-            className="mt-6"
+            className="mt-6 bg-emerald-700 hover:bg-emerald-800 text-white font-bold"
             onClick={handleSubmit}
             isLoading={isLoading}
             disabled={
@@ -198,8 +198,8 @@ const Payment = ({
             data-testid="submit-payment-button"
           >
             {!activeSession && isStripeLike(selectedPaymentMethod)
-              ? "Enter payment details"
-              : "Continue to review"}
+              ? "Ingresar datos de tarjeta"
+              : "Continuar a Revisión del Pedido →"}
           </Button>
         </div>
 
@@ -207,8 +207,8 @@ const Payment = ({
           {cart && paymentReady && activeSession ? (
             <div className="flex items-start gap-x-1 w-full">
               <div className="flex flex-col w-1/3">
-                <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                  Payment method
+                <Text className="txt-medium-plus text-gray-900 font-bold mb-1">
+                  Medio de Pago
                 </Text>
                 <Text
                   className="txt-medium text-ui-fg-subtle"
@@ -219,8 +219,8 @@ const Payment = ({
                 </Text>
               </div>
               <div className="flex flex-col w-1/3">
-                <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                  Payment details
+                <Text className="txt-medium-plus text-gray-900 font-bold mb-1">
+                  Estado de Confirmación
                 </Text>
                 <div
                   className="flex gap-2 txt-medium text-ui-fg-subtle items-center"
@@ -231,20 +231,20 @@ const Payment = ({
                       <CreditCard />
                     )}
                   </Container>
-                  <Text>Another step will appear</Text>
+                  <Text>Listo para confirmar en el siguiente paso</Text>
                 </div>
               </div>
             </div>
           ) : paidByGiftcard ? (
             <div className="flex flex-col w-1/3">
-              <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                Payment method
+              <Text className="txt-medium-plus text-gray-900 font-bold mb-1">
+                Medio de Pago
               </Text>
               <Text
                 className="txt-medium text-ui-fg-subtle"
                 data-testid="payment-method-summary"
               >
-                Gift card
+                Bono / Tarjeta de Regalo
               </Text>
             </div>
           ) : null}

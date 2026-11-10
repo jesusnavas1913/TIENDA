@@ -14,11 +14,11 @@ const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
   }
 
   return (
-    <div>
+    <div className="bg-emerald-50/70 border border-emerald-200 rounded-xl p-4">
       <Text>
-        We have sent the order confirmation details to{" "}
+        Hemos enviado los detalles de confirmación de tu pedido al correo{" "}
         <span
-          className="text-ui-fg-medium-plus font-semibold"
+          className="text-emerald-900 font-bold"
           data-testid="order-email"
         >
           {order.email}
@@ -26,26 +26,30 @@ const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
         .
       </Text>
       <Text className="mt-2">
-        Order date:{" "}
-        <span data-testid="order-date">
-          {new Date(order.created_at).toDateString()}
+        Fecha del pedido:{" "}
+        <span className="font-semibold" data-testid="order-date">
+          {new Date(order.created_at).toLocaleDateString("es-CO", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
         </span>
       </Text>
-      <Text className="mt-2 text-ui-fg-interactive">
-        Order number: <span data-testid="order-id">{order.display_id}</span>
+      <Text className="mt-2 text-emerald-800 font-bold">
+        Número de Pedido / Remisión: #<span data-testid="order-id">{order.display_id}</span>
       </Text>
 
       <div className="flex items-center text-compact-small gap-x-4 mt-4">
         {showStatus && (
           <>
             <Text>
-              Order status:{" "}
+              Estado de despacho:{" "}
               <span className="text-ui-fg-subtle " data-testid="order-status">
                 {formatStatus(order.fulfillment_status)}
               </span>
             </Text>
             <Text>
-              Payment status:{" "}
+              Estado de pago:{" "}
               <span
                 className="text-ui-fg-subtle "
                 sata-testid="order-payment-status"

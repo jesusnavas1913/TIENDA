@@ -320,16 +320,26 @@ export default function QuickSupermarketCatalog({
     return Array.from(map.values())
   }, [products])
 
+  const offersCount = useMemo(
+    () =>
+      products.filter((p) => Number((p.metadata as any)?.discount_pct || 0) > 0)
+        .length,
+    [products]
+  )
+
   const filteredProducts = useMemo(() => {
     const list = products.filter((p) => {
       const matchesCat =
-        selectedCategory === "all" ||
-        p.categories?.some(
-          (c) =>
-            c.id === selectedCategory ||
-            c.name === selectedCategory ||
-            c.handle === selectedCategory
-        )
+        selectedCategory === "all"
+          ? true
+          : selectedCategory === "offers"
+            ? Number((p.metadata as any)?.discount_pct || 0) > 0
+            : p.categories?.some(
+                (c) =>
+                  c.id === selectedCategory ||
+                  c.name === selectedCategory ||
+                  c.handle === selectedCategory
+              )
       const prodSede =
         ((p.metadata as any)?.sede as string) || "Todas las Sedes"
       const matchesSede =
@@ -834,6 +844,17 @@ export default function QuickSupermarketCatalog({
             }`}
           >
             🛒 Todos los Departamentos ({products.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedCategory("offers")}
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold whitespace-nowrap transition-all flex items-center gap-1.5 ${
+              selectedCategory === "offers"
+                ? "bg-rose-600 text-white shadow-md shadow-rose-600/25"
+                : "bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100"
+            }`}
+          >
+            🔥 Ofertas del Día ({offersCount})
           </button>
           {categories.map((cat) => {
             const style = CATEGORY_STYLES[cat.name]

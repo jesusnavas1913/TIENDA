@@ -26,24 +26,21 @@ const Review = ({ cart }: { cart: HttpTypes.StoreCart }) => {
         <Heading
           level="h2"
           className={clx(
-            "flex flex-row text-3xl-regular gap-x-2 items-baseline",
+            "flex flex-row text-2xl font-black text-emerald-950 gap-x-2 items-baseline",
             {
               "opacity-50 pointer-events-none select-none": !isOpen,
             }
           )}
         >
-          Review
+          ✅ 4. Revisar y Confirmar Pedido
         </Heading>
       </div>
       {isOpen && previousStepsCompleted && (
         <>
           <div className="flex items-start gap-x-1 w-full mb-6">
-            <div className="w-full">
-              <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                By clicking the Place Order button, you confirm that you have
-                read, understand and accept our Terms of Use, Terms of Sale and
-                Returns Policy and acknowledge that you have read Medusa
-                Store&apos;s Privacy Policy.
+            <div className="w-full bg-emerald-50/70 border border-emerald-200 rounded-xl p-4">
+              <Text className="txt-medium-plus text-emerald-950 mb-1">
+                Al hacer clic en <strong>Confirmar Pedido Ahora ($ COP)</strong>, confirmas que los productos (Al Detal o Al por Mayor) y los datos de entrega en Colombia son correctos, aceptando los Términos de Venta y Política de Garantía de Frescura de Súper Express.
               </Text>
             </div>
           </div>

@@ -1204,6 +1204,91 @@ const POSBarcodeManagerPage = () => {
     win.document.close()
   }
 
+  // Print 80mm Thermal POS Ticket / Cotización Express
+  const handlePrintThermalReceipt80mm = () => {
+    const win = window.open("", "_blank", "width=420,height=780")
+    if (!win) {
+      toast.error("Permite las ventanas emergentes para imprimir la tirilla POS 80mm")
+      return
+    }
+    const itemsHtml = filteredProducts
+      .map((p) => {
+        const base = getProductDetails(p)
+        const cur = rowEdits[p.id] || base
+        const pum = Math.round(cur.mayorPrice / Math.max(1, cur.mayorUnits))
+        return `
+          <div class="item">
+            <div class="title">${p.title}</div>
+            <div class="meta">GS1: ${base.barcode} | Sede: ${cur.sede}</div>
+            <div class="prices">
+              <span>DETAL: $ ${cur.detalPrice.toLocaleString("es-CO")}</span>
+              <span>MAYOR (x${cur.mayorUnits}): $ ${cur.mayorPrice.toLocaleString("es-CO")}</span>
+            </div>
+            <div class="pum">PUM Mayorista: $ ${pum.toLocaleString("es-CO")} COP / ud</div>
+          </div>
+        `
+      })
+      .join("")
+
+    win.document.write(`
+      <html>
+        <head>
+          <title>Tirilla POS 80mm - Súper Express Colombia</title>
+          <style>
+            @page { size: 80mm auto; margin: 2mm; }
+            body {
+              font-family: "Courier New", Courier, monospace;
+              width: 76mm;
+              margin: 0 auto;
+              padding: 8px;
+              color: #000;
+              font-size: 11px;
+            }
+            .center { text-align: center; }
+            .bold { font-weight: bold; }
+            .divider { border-top: 1px dashed #000; margin: 6px 0; }
+            .item { padding: 4px 0; border-bottom: 1px dotted #999; }
+            .title { font-weight: bold; font-size: 12px; }
+            .meta { font-size: 10px; color: #333; }
+            .prices { display: flex; justify-content: space-between; font-weight: bold; margin-top: 2px; }
+            .pum { font-size: 10px; }
+            .btn {
+              width: 100%;
+              background: #047857;
+              color: #fff;
+              border: none;
+              padding: 8px;
+              font-weight: bold;
+              border-radius: 6px;
+              cursor: pointer;
+              margin-bottom: 8px;
+            }
+            @media print { .no-print { display: none; } }
+          </style>
+        </head>
+        <body>
+          <button class="btn no-print" onclick="window.print()">🖨️ IMPRIMIR TIRILLA TÉRMICA 80MM</button>
+          <div class="center bold" style="font-size:14px;">SÚPER EXPRESS COLOMBIA</div>
+          <div class="center">CENTRAL MAYORISTA Y AL DETAL</div>
+          <div class="center">NIT: 901.452.880-9 • REG. COMÚN</div>
+          <div class="center">Sede: ${selectedSedeFilter === "all" ? "Todas las Sedes" : selectedSedeFilter}</div>
+          <div class="center">Fecha: ${new Date().toLocaleString("es-CO")}</div>
+          <div class="divider"></div>
+          <div class="center bold">COTIZACIÓN / TIRILLA POS (${filteredProducts.length} SKUs)</div>
+          <div class="divider"></div>
+          ${itemsHtml}
+          <div class="divider"></div>
+          <div class="bold">TOTAL 1 UD DETAL C/U: $ ${industrialKpis.totalDetalRev.toLocaleString("es-CO")} COP</div>
+          <div class="bold">TOTAL 1 CAJA MAYOR C/U: $ ${industrialKpis.totalMayorRev.toLocaleString("es-CO")} COP</div>
+          <div class="divider"></div>
+          <div class="center">¡GRACIAS POR SU COMPRA MAYORISTA!</div>
+          <div class="center">Pedidos WhatsApp: +57 300 123 4567</div>
+        </body>
+      </html>
+    `)
+    win.document.close()
+  }
+
   return (
     <div className="flex flex-col gap-y-6 p-4">
       {/* EXECUTIVE INDUSTRIAL KPI BAR */}
@@ -1256,6 +1341,14 @@ const POSBarcodeManagerPage = () => {
               onClick={handlePrintPriceList}
             >
               🧾 Lista Precios PDF
+            </Button>
+            <Button
+              variant="secondary"
+              size="small"
+              type="button"
+              onClick={handlePrintThermalReceipt80mm}
+            >
+              🖨️ Tirilla POS 80mm
             </Button>
           </div>
         </Container>
