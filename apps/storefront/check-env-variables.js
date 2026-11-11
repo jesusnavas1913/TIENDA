@@ -33,7 +33,15 @@ function checkEnvVariables() {
       )
     );
 
-    process.exit(1);
+    if (process.env.VERCEL || process.env.CI) {
+      console.warn(
+        c.yellow.bold(
+          "⚠️ Nota Vercel: Se recomienda configurar NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY en el panel de Vercel (Settings > Environment Variables) para conectar tu tienda al backend."
+        )
+      );
+    } else {
+      process.exit(1);
+    }
   }
 }
 
