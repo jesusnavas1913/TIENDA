@@ -72,7 +72,7 @@ const ProductInfoTab = ({ product }: ProductTabsProps) => {
           </div>
           <div>
             <span className="font-semibold">Sede / Sucursal</span>
-            <p>{meta.sede || "Todas las Sedes Colombia"}</p>
+            <p>{meta.sede || "Sede Principal"}</p>
           </div>
         </div>
       </div>

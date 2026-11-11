@@ -10,7 +10,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
   const meta = (product.metadata || {}) as Record<string, any>
   const barcode =
     meta.barcode || product.variants?.[0]?.barcode || "7701001001"
-  const sede = meta.sede || "Todas las Sedes"
+  const sede = meta.sede || "Sede Principal"
   const stockQty = meta.stock_qty ?? 150
 
   return (

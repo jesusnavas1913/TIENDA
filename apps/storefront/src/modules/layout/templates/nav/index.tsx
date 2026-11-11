@@ -32,7 +32,7 @@ export default async function Nav() {
                 Pasillos
               </a>
               <a href="#mapa-sedes-colombia" className="hover:text-emerald-600 transition-colors flex items-center gap-1 text-emerald-700 font-bold">
-                📍 Sedes Colombia
+                📍 Sede Principal
               </a>
             </div>
           </div>

@@ -43,11 +43,7 @@ const formatCop = (val: number) =>
   `$ ${Math.round(val || 0).toLocaleString("es-CO")}`
 
 const COLOMBIAN_SEDES = [
-  "Todas las Sedes",
-  "Bogotá - Corabastos",
-  "Medellín - Mayorista",
-  "Cali - Cavasa",
-  "Barranquilla - Centro",
+  "Sede Principal",
 ]
 
 // Built-in Colombian GS1 770 Dictionary so scanning or typing common barcodes auto-fills the product!
@@ -169,7 +165,7 @@ const POSBarcodeManagerPage = () => {
   const [formImage, setFormImage] = useState("")
   const [formDescription, setFormDescription] = useState("")
   const [formCategoryId, setFormCategoryId] = useState("")
-  const [formSede, setFormSede] = useState("Todas las Sedes")
+  const [formSede, setFormSede] = useState("Sede Principal")
   const [formStockQty, setFormStockQty] = useState("150")
   const [formCostCop, setFormCostCop] = useState("5000")
   const [formDetalMargin, setFormDetalMargin] = useState("20")
@@ -269,7 +265,7 @@ const POSBarcodeManagerPage = () => {
       mayorLabel: meta.mayor_label || "Caja Mayorista",
       categoryName: p.categories?.[0]?.name || "Sin Categoría",
       categoryId: p.categories?.[0]?.id || "",
-      sede: meta.sede || "Todas las Sedes",
+      sede: meta.sede || "Sede Principal",
       stockQty: meta.stock_qty !== undefined ? Number(meta.stock_qty) : 150,
     }
   }
@@ -515,9 +511,7 @@ const POSBarcodeManagerPage = () => {
     setFormImage("")
     setFormDescription("Producto fresco disponible al detal y al por mayor.")
     setFormCategoryId(categories[0]?.id || "")
-    setFormSede(
-      selectedSedeFilter !== "all" ? selectedSedeFilter : "Todas las Sedes"
-    )
+    setFormSede("Sede Principal")
     setFormStockQty("150")
     setFormCostCop("5000")
     setFormDetalMargin("20")
@@ -539,7 +533,7 @@ const POSBarcodeManagerPage = () => {
     setFormImage(p.thumbnail || p.images?.[0]?.url || "")
     setFormDescription(p.description || "")
     setFormCategoryId(info.categoryId || categories[0]?.id || "")
-    setFormSede(info.sede || "Todas las Sedes")
+    setFormSede(info.sede || "Sede Principal")
     setFormStockQty(String(info.stockQty ?? 150))
     setFormCostCop(String(info.costCop))
     setFormDetalMargin(String(info.detalPct))
@@ -1398,44 +1392,13 @@ const POSBarcodeManagerPage = () => {
           <div>
             <div className="flex items-center gap-2 mb-1.5">
               <Text className="text-xs font-extrabold uppercase text-ui-fg-base">
-                🏢 Organización por Sede (Sucursales Colombia):
+                🏢 Sede Única Oficial:
               </Text>
-              <Badge color="purple">{autoSaveStatus}</Badge>
+              <Badge color="purple">📍 Sede Principal ({products.length} productos asignados)</Badge>
+              <Badge color="green">{autoSaveStatus}</Badge>
             </div>
-            <div className="flex flex-wrap gap-1.5">
-              <Button
-                variant={selectedSedeFilter === "all" ? "primary" : "secondary"}
-                size="small"
-                type="button"
-                onClick={() => setSelectedSedeFilter("all")}
-              >
-                🌎 Ver Todas ({products.length})
-              </Button>
-              {COLOMBIAN_SEDES.filter((s) => s !== "Todas las Sedes").map(
-                (sedeName) => {
-                  const countInSede = products.filter((p) => {
-                    const s =
-                      (rowEdits[p.id] || getProductDetails(p)).sede ||
-                      "Todas las Sedes"
-                    return s === sedeName || s === "Todas las Sedes"
-                  }).length
-                  return (
-                    <Button
-                      key={sedeName}
-                      variant={
-                        selectedSedeFilter === sedeName
-                          ? "primary"
-                          : "secondary"
-                      }
-                      size="small"
-                      type="button"
-                      onClick={() => setSelectedSedeFilter(sedeName)}
-                    >
-                      🏢 {sedeName} ({countInSede})
-                    </Button>
-                  )
-                }
-              )}
+            <div className="flex items-center gap-2 text-xs text-ui-fg-subtle">
+              <span>Todo el inventario pertenece a la <strong>Sede Principal</strong> (Central Mayorista & Autoservicio). Ningún producto sin sede.</span>
             </div>
           </div>
 

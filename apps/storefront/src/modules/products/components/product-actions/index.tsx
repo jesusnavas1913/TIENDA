@@ -217,7 +217,7 @@ export default function ProductActions({
               data-testid="product-availability"
             >
               {inStock
-                ? `● Disponible en inventario (${meta.sede || "Todas las Sedes"})`
+                ? `● Disponible en inventario (${meta.sede || "Sede Principal"})`
                 : "Agotado temporalmente"}
             </p>
           )}

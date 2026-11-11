@@ -2,48 +2,15 @@ import React from "react"
 
 const BRANCHES = [
   {
-    city: "Bogotá D.C.",
-    name: "Sede Principal Corabastos & Cedritos",
-    address: "Av. Carrera 80 # 2-51 / Calle 140 # 15-22",
-    hours: "Lunes a Domingo: 6:00 AM - 10:00 PM",
-    coverage: "Chapinero, Usaquén, Suba, Kennedy, Engativá y Soacha",
-    phone: "+57 (601) 580-9000",
-    type: "Central Mayorista y Punto Detal",
+    city: "Sede Principal",
+    name: "Sede Principal - Central Mayorista y Autoservicio Súper Express",
+    address: "Av. Principal Mayorista # 10-50 (Punto Físico y Despachos)",
+    hours: "Lunes a Sábado: 6:00 AM - 8:30 PM | Domingos y Festivos: 7:00 AM - 4:00 PM",
+    coverage: "Despachos express locales en 30 minutos y envíos mayoristas a todo el país",
+    phone: "+57 300 123 4567",
+    type: "Sede Única Oficial: Central Mayorista y Detal",
     mapEmbed:
       "https://www.openstreetmap.org/export/embed.html?bbox=-74.165%2C4.605%2C-74.035%2C4.715&layer=mapnik&marker=4.6533%2C-74.0836",
-  },
-  {
-    city: "Medellín",
-    name: "Sede Central Mayorista & El Poblado",
-    address: "Calle 85 # 48-01 Itagüí / Carrera 43A # 10-50",
-    hours: "Lunes a Domingo: 6:00 AM - 9:30 PM",
-    coverage: "El Poblado, Laureles, Envigado, Sabaneta, Itagüí y Bello",
-    phone: "+57 (604) 444-8500",
-    type: "Bodega Mayorista y Supermercado",
-    mapEmbed:
-      "https://www.openstreetmap.org/export/embed.html?bbox=-75.620%2C6.165%2C-75.540%2C6.275&layer=mapnik&marker=6.2442%2C-75.5812",
-  },
-  {
-    city: "Cali",
-    name: "Sede Cavasa & Ciudad Jardín",
-    address: " Avenida Pasoancho # 66-15 / Calle 18 # 105-30",
-    hours: "Lunes a Sábado: 6:30 AM - 9:00 PM",
-    coverage: "Sur, Norte, Oeste, Jamundí, Yumbo y Palmira",
-    phone: "+57 (602) 380-7200",
-    type: "Centro de Distribución Valle",
-    mapEmbed:
-      "https://www.openstreetmap.org/export/embed.html?bbox=-76.575%2C3.375%2C-76.495%2C3.485&layer=mapnik&marker=3.4516%2C-76.5320",
-  },
-  {
-    city: "Barranquilla",
-    name: "Sede Granabastos & Alto Prado",
-    address: "Carrera 51B # 82-120 / Vía Circunvalar",
-    hours: "Lunes a Domingo: 6:30 AM - 9:00 PM",
-    coverage: "Norte Centro Histórico, Riomar, Soledad y Puerto Colombia",
-    phone: "+57 (605) 310-6400",
-    type: "Bodega Costa Caribe",
-    mapEmbed:
-      "https://www.openstreetmap.org/export/embed.html?bbox=-74.845%2C10.955%2C-74.765%2C11.035&layer=mapnik&marker=10.9878%2C-74.7889",
   },
 ]
 
@@ -57,14 +24,14 @@ const StoreLocatorColombia = () => {
         {/* Section Header */}
         <div className="flex flex-col small:flex-row small:items-end justify-between gap-6 mb-10">
           <div>
-            <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-900 border border-amber-300 px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider mb-2">
-              🇨🇴 Cobertura Nacional en Colombia
+            <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-900 border border-emerald-300 px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider mb-2">
+              🏢 Sede Única Oficial Súper Express
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
-              Mapa de Sedes, Bodegas Mayoristas y Cobertura
+              Sede Principal y Centro de Distribución
             </h2>
             <p className="text-slate-600 text-sm sm:text-base mt-1 max-w-2xl">
-              Compra en línea con despacho a domicilio en <strong>30 minutos</strong> o recoge tu pedido mayorista directamente en nuestras sedes de Bogotá, Medellín, Cali y Barranquilla.
+              Visítanos directamente en nuestra <strong>Sede Principal</strong> para compras al por mayor y al detal, o pide en línea con entrega express a tu negocio o domicilio en <strong>30 minutos</strong>.
             </p>
           </div>
 
@@ -91,7 +58,7 @@ const StoreLocatorColombia = () => {
         </div>
 
         {/* Branches & Interactive Maps Grid */}
-        <div className="grid grid-cols-1 small:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 max-w-3xl mx-auto gap-6">
           {BRANCHES.map((branch) => (
             <div
               key={branch.city}

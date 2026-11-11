@@ -130,13 +130,13 @@ export default async function Footer() {
             </div>
             <div className="flex flex-col gap-y-2">
               <span className="txt-small-plus txt-ui-fg-base font-bold text-slate-900">
-                Sedes Colombia
+                Sede Principal
               </span>
               <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
-                <li>📍 Bogotá - Corabastos</li>
-                <li>📍 Medellín - Central Mayorista</li>
-                <li>📍 Cali - Cavasa / Santa Elena</li>
-                <li>📍 Barranquilla - Granabastos</li>
+                <li>📍 Sede Principal - Central Mayorista</li>
+                <li>🚚 Despachos locales y nacionales</li>
+                <li>⏰ Lun - Sáb: 6:00 AM - 8:00 PM</li>
+                <li>📲 WhatsApp: +57 300 123 4567</li>
               </ul>
             </div>
           </div>

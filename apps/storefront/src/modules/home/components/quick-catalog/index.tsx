@@ -210,7 +210,7 @@ const getSpecs = (product: HttpTypes.StoreProduct) => {
     rating: preset?.rating || "4.9",
     reviews: preset?.reviews || 96,
     origin: preset?.origin || "Calidad Certificada Súper Express",
-    sede: meta.sede || "Todas las Sedes",
+    sede: meta.sede || "Sede Principal",
     stockQty: Number(meta.stock_qty ?? 150),
   }
 }
@@ -341,11 +341,11 @@ export default function QuickSupermarketCatalog({
                   c.handle === selectedCategory
               )
       const prodSede =
-        ((p.metadata as any)?.sede as string) || "Todas las Sedes"
+        ((p.metadata as any)?.sede as string) || "Sede Principal"
       const matchesSede =
         selectedSede === "all" ||
         prodSede === selectedSede ||
-        prodSede === "Todas las Sedes"
+        prodSede === "Sede Principal"
       const q = searchQuery.trim().toLowerCase()
       const barcodeMeta = ((p.metadata as any)?.barcode || "").toLowerCase()
       const variantBarcode = (
@@ -805,18 +805,10 @@ export default function QuickSupermarketCatalog({
               )}
             </div>
 
-            {/* Sede selector */}
-            <select
-              value={selectedSede}
-              onChange={(e) => setSelectedSede(e.target.value)}
-              className="rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm font-bold text-slate-700 focus:border-emerald-600 focus:bg-white focus:outline-none"
-            >
-              <option value="all">🏢 Todas las Sedes Colombia</option>
-              <option value="Bogotá - Corabastos">📍 Bogotá - Corabastos</option>
-              <option value="Medellín - Mayorista">📍 Medellín - Mayorista</option>
-              <option value="Cali - Cavasa">📍 Cali - Cavasa</option>
-              <option value="Barranquilla - Centro">📍 Barranquilla - Centro</option>
-            </select>
+            {/* Sede única badge */}
+            <div className="rounded-xl border border-emerald-300 bg-emerald-50/80 px-3.5 py-2.5 text-xs font-extrabold text-emerald-900 flex items-center gap-1.5 shrink-0 shadow-sm">
+              🏢 Sede Principal
+            </div>
 
             {/* Sort selector */}
             <select
