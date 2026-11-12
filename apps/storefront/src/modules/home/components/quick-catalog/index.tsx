@@ -475,44 +475,45 @@ export default function QuickSupermarketCatalog({
     return (
       <div
         key={product.id}
-        className={`group bg-white rounded-2xl border transition-all duration-200 flex flex-col justify-between overflow-hidden ${
+        className={`group bg-white rounded-3xl border transition-all duration-300 flex flex-col justify-between overflow-hidden hover:-translate-y-1.5 ${
           mode === "mayor"
-            ? "border-amber-300/90 shadow-md hover:shadow-xl hover:border-amber-500"
-            : "border-slate-200/90 shadow-sm hover:shadow-xl hover:border-emerald-500/50"
+            ? "border-amber-300 shadow-md hover:shadow-2xl hover:border-amber-500 ring-1 ring-amber-200/50"
+            : "border-slate-200 shadow-sm hover:shadow-2xl hover:border-emerald-500/60 ring-1 ring-slate-100"
         }`}
       >
         <div>
           {/* Product Image & Badges */}
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden bg-slate-50">
             <LocalizedClientLink href={`/products/${product.handle}`}>
-              <div className="aspect-[4/3] w-full overflow-hidden bg-slate-100 group-hover:scale-105 transition-transform duration-300">
+              <div className="aspect-[4/3] w-full overflow-hidden bg-slate-100 group-hover:scale-105 transition-transform duration-500 ease-out">
                 <Thumbnail
                   thumbnail={product.thumbnail}
                   images={product.images}
                   alt={product.title}
                   size="full"
-                  className="!rounded-none !shadow-none !p-0 h-full w-full"
+                  className="!rounded-none !shadow-none !p-0 h-full w-full object-cover"
                 />
               </div>
             </LocalizedClientLink>
 
-            <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+            {/* Top Badges */}
+            <div className="absolute top-3 left-3 flex flex-col gap-1.5 pointer-events-none">
               {metaDiscount > 0 && (
-                <span className="bg-rose-600 text-white text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow-md">
+                <span className="bg-gradient-to-r from-rose-600 to-red-600 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-lg shadow-rose-600/30 tracking-tight">
                   🔥 OFERTA -{metaDiscount}% OFF
                 </span>
               )}
               {mode === "mayor" ? (
-                <span className="bg-amber-500 text-slate-950 text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow-md">
+                <span className="bg-amber-400 text-slate-950 text-[11px] font-black px-3 py-1 rounded-full shadow-md tracking-tight flex items-center gap-1">
                   📦 MAYORISTA • {specs.savingPct}
                 </span>
               ) : (
-                <span className="bg-emerald-600 text-white text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow-md">
+                <span className="bg-emerald-600 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-md tracking-tight flex items-center gap-1">
                   🛍️ VENTA AL DETAL
                 </span>
               )}
               <span
-                className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border w-fit backdrop-blur-md bg-white/95 text-slate-800`}
+                className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow-sm border w-fit backdrop-blur-md bg-white/95 text-slate-800"
               >
                 {catStyle.emoji} {categoryName}
               </span>
@@ -521,154 +522,146 @@ export default function QuickSupermarketCatalog({
             <button
               type="button"
               onClick={() => setQuickViewProduct(product)}
-              className="absolute top-3 right-3 bg-white/90 hover:bg-slate-900 hover:text-white text-slate-800 text-xs font-bold px-3 py-1.5 rounded-full shadow-md backdrop-blur-md transition-all"
+              className="absolute top-3 right-3 bg-white/95 hover:bg-slate-900 hover:text-white text-slate-800 text-xs font-black px-3 py-1.5 rounded-full shadow-md backdrop-blur-md transition-all duration-200 hover:scale-105 active:scale-95"
             >
-              👁️ Ver
+              👁️ Ficha
             </button>
           </div>
 
           {/* Card Content */}
-          <div className="p-4">
-            {/* Individual Detal / Mayor Selector inside Card */}
-            <div className="grid grid-cols-2 gap-1 p-1 bg-slate-100 rounded-xl mb-3 border border-slate-200/70">
+          <div className="p-4 sm:p-5">
+            {/* Interactive Detal / Mayor Mode Switcher Inside Card */}
+            <div className="grid grid-cols-2 gap-1 p-1 bg-slate-100/90 rounded-2xl mb-3.5 border border-slate-200">
               <button
                 type="button"
                 onClick={() => setProductMode(product.id, "detal")}
-                className={`py-1.5 px-2 rounded-lg text-[11px] font-extrabold transition-all ${
+                className={`py-1.5 px-2 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1 ${
                   mode === "detal"
-                    ? "bg-white text-emerald-700 shadow-sm"
+                    ? "bg-white text-emerald-800 shadow-sm ring-1 ring-emerald-500/20"
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                🛍️ Al Detal
+                <span>🛍️</span> <span>Al Detal</span>
               </button>
               <button
                 type="button"
                 onClick={() => setProductMode(product.id, "mayor")}
-                className={`py-1.5 px-2 rounded-lg text-[11px] font-extrabold transition-all ${
+                className={`py-1.5 px-2 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1 ${
                   mode === "mayor"
-                    ? "bg-amber-500 text-slate-950 shadow-sm"
+                    ? "bg-amber-400 text-slate-950 shadow-sm ring-1 ring-amber-500/30"
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                📦 Por Mayor
+                <span>📦</span> <span>Por Mayor</span>
               </button>
             </div>
 
-            <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
-              <span className="font-bold text-amber-500">
+            <div className="flex items-center justify-between text-xs text-slate-500 mb-1.5">
+              <span className="font-extrabold text-amber-500 flex items-center gap-1">
                 ★ {specs.rating}{" "}
-                <span className="text-slate-400 font-normal">
+                <span className="text-slate-400 font-medium">
                   ({specs.reviews})
                 </span>
               </span>
-              <span className="text-[10px] font-mono bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200">
+              <span className="text-[10px] font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md border border-slate-200">
                 ║▌║ {(product.metadata as any)?.barcode || product.variants?.[0]?.barcode || "7701001"}
               </span>
             </div>
 
             <LocalizedClientLink href={`/products/${product.handle}`}>
-              <h3 className="font-extrabold text-slate-900 text-base group-hover:text-emerald-700 transition-colors line-clamp-1">
+              <h3 className="font-black text-slate-900 text-base sm:text-lg group-hover:text-emerald-700 transition-colors line-clamp-1 leading-snug">
                 {product.title}
               </h3>
             </LocalizedClientLink>
 
-            <div className="mt-1 flex items-center justify-between text-[11px] text-slate-500">
-              <span className="truncate font-medium text-slate-600">
+            <div className="mt-1.5 flex items-center justify-between text-xs text-slate-500">
+              <span className="truncate font-semibold text-slate-600">
                 📍 {specs.sede}
               </span>
-              <span className="text-emerald-700 font-bold shrink-0">
-                ● Disp: {specs.stockQty} uds
+              <span className="text-emerald-700 font-extrabold shrink-0 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">
+                ● Stock: {specs.stockQty} uds
               </span>
             </div>
 
-            {/* Format Specification Box */}
+            {/* Packaging Format Specification Pill */}
             <div
-              className={`mt-2 px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between ${
+              className={`mt-2.5 px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between transition-colors ${
                 mode === "mayor"
-                  ? "bg-amber-50 text-amber-900 border border-amber-200"
-                  : "bg-emerald-50/70 text-emerald-900 border border-emerald-200/60"
+                  ? "bg-amber-50/80 text-amber-950 border border-amber-200"
+                  : "bg-emerald-50/70 text-emerald-950 border border-emerald-200/70"
               }`}
             >
-              <span>
-                {mode === "mayor" ? "📦 Formato Mayor:" : "🛍️ Formato Detal:"}
+              <span className="text-slate-600 font-medium">
+                {mode === "mayor" ? "📦 Embalaje Mayor:" : "🛍️ Presentación:"}
               </span>
-              <span className="font-extrabold">
+              <span className="font-black">
                 {mode === "mayor" ? specs.mayorFormat : specs.detalFormat}
               </span>
             </div>
 
-            {/* Price Display */}
-            <div className="mt-3 pt-3 border-t border-slate-100 flex items-baseline justify-between">
-              <div>
-                <span className="text-[11px] text-slate-400 block">
-                  {mode === "mayor"
-                    ? "Precio Caja / Bulto Mayorista"
-                    : "Precio Unidad al Detal"}
+            {/* Price Box */}
+            <div className="mt-3.5 pt-3.5 border-t border-slate-100">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+                {mode === "mayor"
+                  ? "Precio Caja / Bulto Mayorista"
+                  : "Precio Unidad al Detal"}
+              </span>
+              <div className="flex items-baseline gap-2 flex-wrap mt-0.5">
+                <span className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
+                  {formatCurrency(priceNum, currency)}
                 </span>
-                <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-2xl font-extrabold text-slate-900">
-                    {formatCurrency(priceNum, currency)}
+                {oldPriceCop && (
+                  <span className="text-xs text-slate-400 line-through font-bold">
+                    {formatCurrency(oldPriceCop, currency)}
                   </span>
-                  {oldPriceCop && (
-                    <span className="text-xs text-slate-400 line-through font-semibold">
-                      {formatCurrency(oldPriceCop, currency)}
-                    </span>
-                  )}
-                  {mode === "mayor" && (
-                    <span className="text-[11px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">
-                      {specs.savingPct}
-                    </span>
-                  )}
-                </div>
-                <div className="mt-1 text-[11px] font-semibold">
-                  {mode === "mayor" ? (
-                    <span className="text-amber-800">
-                      🏭 PUM: Sale a{" "}
-                      <strong>{formatCurrency(pumMayorUnit, currency)}</strong>{" "}
-                      / ud
-                      {unitSavingsCop > 0
-                        ? ` (Ahorras ${formatCurrency(unitSavingsCop, currency)}/ud)`
-                        : ""}
-                    </span>
-                  ) : (
-                    <span className="text-emerald-700">
-                      💡 En paca mayorista (x{mayorUnitsCount}u) sale a{" "}
-                      <strong>{formatCurrency(pumMayorUnit, currency)}</strong>{" "}
-                      / ud
-                    </span>
-                  )}
-                </div>
+                )}
+                {mode === "mayor" && (
+                  <span className="text-[11px] font-black text-amber-900 bg-amber-100 px-2 py-0.5 rounded-md border border-amber-200">
+                    {specs.savingPct}
+                  </span>
+                )}
               </div>
-              <button
-                type="button"
-                onClick={() => setQuickViewProduct(product)}
-                className="text-xs font-bold text-emerald-700 hover:underline"
-              >
-                Ficha +
-              </button>
+
+              {/* Dynamic PUM Savings Indicator */}
+              <div className="mt-2 text-xs font-bold">
+                {mode === "mayor" ? (
+                  <div className="bg-amber-100/70 border border-amber-300 text-amber-950 px-2.5 py-1.5 rounded-xl flex items-center justify-between">
+                    <span>🏭 PUM: Sale a</span>
+                    <span className="font-black">
+                      {formatCurrency(pumMayorUnit, currency)} / ud
+                    </span>
+                  </div>
+                ) : (
+                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 px-2.5 py-1.5 rounded-xl flex items-center justify-between">
+                    <span>💡 En paca mayorista (x{mayorUnitsCount}u):</span>
+                    <span className="font-black">
+                      {formatCurrency(pumMayorUnit, currency)} / ud
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Add to Cart Bar */}
-        <div className="p-4 pt-0 flex items-center gap-2">
-          <div className="flex items-center border border-slate-200 rounded-xl bg-slate-50">
+        {/* Add to Cart Stepper & CTA */}
+        <div className="p-4 sm:p-5 pt-0 flex items-center gap-2.5">
+          <div className="flex items-center border-2 border-slate-200 rounded-2xl bg-slate-50 overflow-hidden shadow-inner">
             <button
               type="button"
               onClick={() => changeQty(product.id, -1)}
-              className="w-8 h-9 flex items-center justify-center text-slate-700 hover:bg-slate-200 rounded-l-xl font-bold"
+              className="w-9 h-10 flex items-center justify-center text-slate-700 hover:bg-slate-200 transition-colors font-black text-base active:bg-slate-300"
               aria-label="Disminuir cantidad"
             >
               −
             </button>
-            <span className="w-8 text-center text-sm font-bold text-slate-900">
+            <span className="w-9 text-center text-sm font-black text-slate-900">
               {qty}
             </span>
             <button
               type="button"
               onClick={() => changeQty(product.id, 1)}
-              className="w-8 h-9 flex items-center justify-center text-slate-700 hover:bg-slate-200 rounded-r-xl font-bold"
+              className="w-9 h-10 flex items-center justify-center text-slate-700 hover:bg-slate-200 transition-colors font-black text-base active:bg-slate-300"
               aria-label="Aumentar cantidad"
             >
               +
@@ -679,18 +672,21 @@ export default function QuickSupermarketCatalog({
             type="button"
             disabled={isAdding}
             onClick={() => handleQuickAdd(product)}
-            className={`flex-1 h-9 rounded-xl font-extrabold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 shadow-sm ${
+            className={`flex-1 h-10 rounded-2xl font-black text-xs sm:text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-95 ${
               isAdded
-                ? "bg-emerald-800 text-white"
+                ? "bg-emerald-800 text-white shadow-emerald-800/30"
                 : mode === "mayor"
-                ? "bg-amber-500 hover:bg-amber-400 text-slate-950 active:scale-[0.98]"
-                : "bg-emerald-600 hover:bg-emerald-500 text-white active:scale-[0.98]"
+                ? "bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-amber-400/30"
+                : "bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/30"
             }`}
           >
             {isAdding ? (
-              "Agregando..."
+              <span className="flex items-center gap-1.5">
+                <span className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
+                Agregando...
+              </span>
             ) : isAdded ? (
-              "✓ ¡Agregado!"
+              "✓ ¡Agregado con Éxito!"
             ) : mode === "mayor" ? (
               <>📦 Llevar por Mayor</>
             ) : (
@@ -1127,6 +1123,19 @@ export default function QuickSupermarketCatalog({
                       : "🛒 Agregar Unidad al Detal"}
                   </button>
                 </div>
+
+                <a
+                  href={`https://wa.me/573001234567?text=${encodeURIComponent(
+                    `Hola Súper Express, deseo pedir ${getQty(quickViewProduct.id)} ${
+                      getProductMode(quickViewProduct.id) === "mayor" ? "Caja(s) Mayorista(s)" : "Unidad(es) al Detal"
+                    } de: ${quickViewProduct.title} (Código: ${(quickViewProduct.metadata as any)?.barcode || "770"}). Sede Principal.`
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full mt-2 h-10 rounded-xl font-bold text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <span>📲 Pedir / Cotizar por WhatsApp Directo</span>
+                </a>
               </div>
             </div>
           </div>

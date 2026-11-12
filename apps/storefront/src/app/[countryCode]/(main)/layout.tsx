@@ -40,7 +40,7 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
       )}
       {props.children}
       <a
-        href="https://wa.me/573000000000?text=Hola%20S%C3%BAper%20Express%20Colombia%2C%20quiero%20hacer%20un%20pedido%20al%20detal%20o%20por%20mayor"
+        href="https://wa.me/573001234567?text=Hola%20S%C3%BAper%20Express%20Colombia%2C%20quiero%20hacer%20un%20pedido%20al%20detal%20o%20por%20mayor"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-5 right-5 z-40 bg-[#25D366] hover:bg-[#1ebe5d] text-slate-950 font-extrabold text-xs sm:text-sm px-4 py-3 rounded-full shadow-2xl border-2 border-white flex items-center gap-2 transition-transform hover:scale-105"
