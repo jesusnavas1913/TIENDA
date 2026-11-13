@@ -1,0 +1,686 @@
+
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style>
+    th { background-color: #047857; color: #ffffff; font-family: Segoe UI, Arial; font-size: 11pt; font-weight: bold; border: 1px solid #065f46; padding: 8px; text-align: center; }
+    td { font-family: Segoe UI, Arial; font-size: 10pt; border: 1px solid #cbd5e1; padding: 6px 8px; }
+    .num { text-align: right; }
+    .center { text-align: center; }
+    .cat { font-weight: bold; color: #065f46; }
+  </style>
+</head>
+<body>
+  <h2>SUPERMERCADO SÚPER EXPRESS - CATÁLOGO MAESTRO COMPLETO (38 REFERENCIAS)</h2>
+  <p>Verduras, Carnes, Arroces, Víveres, Granos, Lácteos, Aseo y Bebidas • Sede Principal</p>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Código GS1 770</th>
+        <th>Nombre del Producto</th>
+        <th>Departamento / Categoría</th>
+        <th>Sede</th>
+        <th>Pres. Detal</th>
+        <th>Costo COP</th>
+        <th>Margen Detal</th>
+        <th>Precio Detal COP</th>
+        <th>Pres. Mayor</th>
+        <th>Uds x Empaque</th>
+        <th>Margen Mayor</th>
+        <th>Precio Mayor COP</th>
+        <th>PUM Mayor COP</th>
+        <th>Ahorro Unitario COP</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td class="center font-mono"><b>7702010123932</b></td>
+        <td><b>Jabón Puro Hortensias y Flores Blancas Barra 180g</b></td>
+        <td class="cat">Aseo y Hogar</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 2.400</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 3.000</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 70.600</td>
+        <td class="num">$ 7.060</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7703010103388</b></td>
+        <td><b>Gaseosa Big Cola 1.75L - Promo Especial Bonificada (Paca x 8)</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 2.320</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 2.900</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 21.600</td>
+        <td class="num">$ 2.160</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 740</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7703010100363</b></td>
+        <td><b>Bebida Cifrut Citrus Cítricos 250ml (Paca x 15)</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 960</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 1.200</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 16.900</td>
+        <td class="num">$ 1.690</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7703010103371</b></td>
+        <td><b>Gaseosa Big Cola 1.75 Litros No Retornable (Paca x 8)</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 3.200</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 4.000</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 30.100</td>
+        <td class="num">$ 3.010</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 990</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7702010123925</b></td>
+        <td><b>Desodorante Rexona Women Clinical Classic Tubo 30g</b></td>
+        <td class="cat">Aseo y Hogar</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 9.600</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 12.000</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 135.500</td>
+        <td class="num">$ 13.550</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7703010100158</b></td>
+        <td><b>Gaseosa Big Sabor Uva 400ml PET (Paca x 12)</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 1.200</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 1.500</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 16.900</td>
+        <td class="num">$ 1.690</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7702010123901</b></td>
+        <td><b>Desodorante Rexona Women Clinical Classic Tubo 60g</b></td>
+        <td class="cat">Aseo y Hogar</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 16.000</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 20.000</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 225.900</td>
+        <td class="num">$ 22.590</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7702010123918</b></td>
+        <td><b>Desodorante Rexona Men Clinical Clean Tubo 60g</b></td>
+        <td class="cat">Aseo y Hogar</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 16.000</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 20.000</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 225.900</td>
+        <td class="num">$ 22.590</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7703010103517</b></td>
+        <td><b>Gaseosa Big Sabor Manzana 400ml No Retornable (Paca x 12)</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 1.200</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 1.500</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 16.900</td>
+        <td class="num">$ 1.690</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7703010100639</b></td>
+        <td><b>Bebida Cifrut Sabor Mora 250ml (Paca x 15)</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 960</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 1.200</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 16.900</td>
+        <td class="num">$ 1.690</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7703010103524</b></td>
+        <td><b>Gaseosa Big Sabor Manzana 400ml - Promo Bonificación x 12</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 880</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 1.100</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 12.000</td>
+        <td class="num">$ 1.200</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7703010100776</b></td>
+        <td><b>Gaseosa Big Sabor Piña Tropical 400ml (Paca x 12)</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 1.200</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 1.500</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 16.900</td>
+        <td class="num">$ 1.690</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7703010100745</b></td>
+        <td><b>Bebida Cifrut Fruit Ponche de Frutas 250ml (Paca x 15)</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 960</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 1.200</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 16.900</td>
+        <td class="num">$ 1.690</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7703010103104</b></td>
+        <td><b>Agua Pura de Mesa Vida 620ml (Bonificación Paca x 20)</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 720</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 900</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 16.000</td>
+        <td class="num">$ 1.600</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100043</b></td>
+        <td><b>Plátano Verde Hartón Guineo</b></td>
+        <td class="cat">Frutas y Verduras</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 2.480</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 3.100</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 58.800</td>
+        <td class="num">$ 5.880</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100067</b></td>
+        <td><b>Pechuga de Pollo Fresca Campesina</b></td>
+        <td class="cat">Carnes y Charcutería</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 12.000</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 15.000</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 141.200</td>
+        <td class="num">$ 14.120</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 880</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100029</b></td>
+        <td><b>Tomate Chonto Maduro de Primera</b></td>
+        <td class="cat">Frutas y Verduras</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 2.800</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 3.500</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 65.900</td>
+        <td class="num">$ 6.590</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100012</b></td>
+        <td><b>Papa Pastusa Seleccionada Limpia</b></td>
+        <td class="cat">Frutas y Verduras</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 2.240</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 2.800</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 64.700</td>
+        <td class="num">$ 6.470</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100050</b></td>
+        <td><b>Aguacate Hass Extra Calidad Exportación</b></td>
+        <td class="cat">Frutas y Verduras</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 4.800</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 6.000</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 56.500</td>
+        <td class="num">$ 5.650</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 350</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100036</b></td>
+        <td><b>Cebolla Cabezona Blanca Seleccionada</b></td>
+        <td class="cat">Frutas y Verduras</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 2.400</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 3.000</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 70.600</td>
+        <td class="num">$ 7.060</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100111</b></td>
+        <td><b>Arroz Roa Flor Huila Superior</b></td>
+        <td class="cat">Despensa y Abarrotes</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 4.000</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 5.000</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 117.600</td>
+        <td class="num">$ 11.760</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100128</b></td>
+        <td><b>Frijol Bola Roja Nacional Seleccionado</b></td>
+        <td class="cat">Despensa y Abarrotes</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 4.480</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 5.600</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 127.100</td>
+        <td class="num">$ 12.710</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100104</b></td>
+        <td><b>Arroz Diana Blanco Seleccionado Grano Entero</b></td>
+        <td class="cat">Despensa y Abarrotes</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 3.840</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 4.800</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 111.800</td>
+        <td class="num">$ 11.180</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100142</b></td>
+        <td><b>Aceite Vegetal Diana / Premier Puro</b></td>
+        <td class="cat">Despensa y Abarrotes</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 7.840</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 9.800</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 110.100</td>
+        <td class="num">$ 11.010</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100180</b></td>
+        <td><b>Huevos Frescos Santa Anita Tipo AA</b></td>
+        <td class="cat">Lácteos y Huevos</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 14.000</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 17.500</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 197.600</td>
+        <td class="num">$ 19.760</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100227</b></td>
+        <td><b>Blanqueador Desinfectante Clorox Triple Acción</b></td>
+        <td class="cat">Aseo y Hogar</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 3.840</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 4.800</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 53.600</td>
+        <td class="num">$ 5.360</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100135</b></td>
+        <td><b>Lenteja Pardina Especial Grano Suave</b></td>
+        <td class="cat">Despensa y Abarrotes</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 2.800</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 3.500</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 79.100</td>
+        <td class="num">$ 7.910</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100159</b></td>
+        <td><b>Azúcar Blanca Refinada Manuelita</b></td>
+        <td class="cat">Despensa y Abarrotes</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 3.600</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 4.500</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 105.900</td>
+        <td class="num">$ 10.590</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100074</b></td>
+        <td><b>Carne de Res Molida Especial Magra</b></td>
+        <td class="cat">Carnes y Charcutería</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 14.000</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 17.500</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 164.700</td>
+        <td class="num">$ 16.470</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 1.030</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100241</b></td>
+        <td><b>Gaseosa Postobón Manzana Mega 3.125 Litros</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 5.200</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 6.500</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 36.700</td>
+        <td class="num">$ 3.670</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 2.830</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100173</b></td>
+        <td><b>Chocolate Corona Tradicional en Pastillas</b></td>
+        <td class="cat">Despensa y Abarrotes</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 6.240</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 7.800</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 87.500</td>
+        <td class="num">$ 8.750</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100203</b></td>
+        <td><b>Queso Campesino Fresco del Huila</b></td>
+        <td class="cat">Lácteos y Huevos</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 8.480</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 10.600</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 100.000</td>
+        <td class="num">$ 10.000</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 600</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100210</b></td>
+        <td><b>Detergente en Polvo Ariel Doble Poder</b></td>
+        <td class="cat">Aseo y Hogar</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 9.200</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 11.500</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 86.600</td>
+        <td class="num">$ 8.660</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 2.840</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100098</b></td>
+        <td><b>Costilla de Res Especial para Sancocho</b></td>
+        <td class="cat">Carnes y Charcutería</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 11.040</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 13.800</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 129.400</td>
+        <td class="num">$ 12.940</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 860</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100234</b></td>
+        <td><b>Cerveza Águila Original Colombiana</b></td>
+        <td class="cat">Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 2.400</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 3.000</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 67.800</td>
+        <td class="num">$ 6.780</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100197</b></td>
+        <td><b>Leche Entera Larga Vida Alquería / Colanta</b></td>
+        <td class="cat">Lácteos y Huevos</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 3.200</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 4.000</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 22.600</td>
+        <td class="num">$ 2.260</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 1.740</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100081</b></td>
+        <td><b>Lomo de Cerdo Fresco en Filetes</b></td>
+        <td class="cat">Carnes y Charcutería</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 13.520</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 16.900</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 158.800</td>
+        <td class="num">$ 15.880</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 1.020</td>
+      </tr>
+      
+      <tr>
+        <td class="center font-mono"><b>7701010100166</b></td>
+        <td><b>Café Tostado y Molido Sello Rojo</b></td>
+        <td class="cat">Despensa y Abarrotes</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad</td>
+        <td class="num">$ 11.520</td>
+        <td class="center">20%</td>
+        <td class="num" style="background:#ecfdf5;font-weight:bold;color:#065f46;">$ 14.400</td>
+        <td class="center">Empaque x 10</td>
+        <td class="center">10</td>
+        <td class="center">15%</td>
+        <td class="num" style="background:#eff6ff;font-weight:bold;color:#1e40af;">$ 162.400</td>
+        <td class="num">$ 16.240</td>
+        <td class="num" style="color:#059669;font-weight:bold;">+$ 0</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</body>
+</html>
