@@ -16,877 +16,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-ALTER TABLE IF EXISTS ONLY public.store_locale DROP CONSTRAINT IF EXISTS store_locale_store_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.store_currency DROP CONSTRAINT IF EXISTS store_currency_store_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.stock_location DROP CONSTRAINT IF EXISTS stock_location_address_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.shipping_option DROP CONSTRAINT IF EXISTS shipping_option_shipping_profile_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.shipping_option DROP CONSTRAINT IF EXISTS shipping_option_shipping_option_type_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.shipping_option DROP CONSTRAINT IF EXISTS shipping_option_service_zone_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.shipping_option_rule DROP CONSTRAINT IF EXISTS shipping_option_rule_shipping_option_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.shipping_option DROP CONSTRAINT IF EXISTS shipping_option_provider_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.service_zone DROP CONSTRAINT IF EXISTS service_zone_fulfillment_set_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.search_index_version DROP CONSTRAINT IF EXISTS search_index_version_search_index_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.search_index_sync DROP CONSTRAINT IF EXISTS search_index_sync_search_index_version_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.return_reason DROP CONSTRAINT IF EXISTS return_reason_parent_return_reason_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.reservation_item DROP CONSTRAINT IF EXISTS reservation_item_inventory_item_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.region_country DROP CONSTRAINT IF EXISTS region_country_region_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.refund DROP CONSTRAINT IF EXISTS refund_payment_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.provider_identity DROP CONSTRAINT IF EXISTS provider_identity_auth_identity_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.promotion_rule_value DROP CONSTRAINT IF EXISTS promotion_rule_value_promotion_rule_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.promotion_promotion_rule DROP CONSTRAINT IF EXISTS promotion_promotion_rule_promotion_rule_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.promotion_promotion_rule DROP CONSTRAINT IF EXISTS promotion_promotion_rule_promotion_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.promotion DROP CONSTRAINT IF EXISTS promotion_campaign_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.promotion_campaign_budget_usage DROP CONSTRAINT IF EXISTS promotion_campaign_budget_usage_budget_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.promotion_campaign_budget DROP CONSTRAINT IF EXISTS promotion_campaign_budget_campaign_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.promotion_application_method DROP CONSTRAINT IF EXISTS promotion_application_method_promotion_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_variant_product_image DROP CONSTRAINT IF EXISTS product_variant_product_image_image_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_variant DROP CONSTRAINT IF EXISTS product_variant_product_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_variant_option DROP CONSTRAINT IF EXISTS product_variant_option_variant_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_variant_option DROP CONSTRAINT IF EXISTS product_variant_option_option_value_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product DROP CONSTRAINT IF EXISTS product_type_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_tags DROP CONSTRAINT IF EXISTS product_tags_product_tag_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_tags DROP CONSTRAINT IF EXISTS product_tags_product_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_product_option_value DROP CONSTRAINT IF EXISTS product_product_option_value_product_product_option_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_product_option_value DROP CONSTRAINT IF EXISTS product_product_option_value_product_option_value_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_product_option DROP CONSTRAINT IF EXISTS product_product_option_product_option_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_product_option DROP CONSTRAINT IF EXISTS product_product_option_product_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_option_value DROP CONSTRAINT IF EXISTS product_option_value_option_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product DROP CONSTRAINT IF EXISTS product_collection_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_category_product DROP CONSTRAINT IF EXISTS product_category_product_product_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_category_product DROP CONSTRAINT IF EXISTS product_category_product_product_category_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.product_category DROP CONSTRAINT IF EXISTS product_category_parent_category_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.price_rule DROP CONSTRAINT IF EXISTS price_rule_price_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.price DROP CONSTRAINT IF EXISTS price_price_set_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.price DROP CONSTRAINT IF EXISTS price_price_list_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.price_list_rule DROP CONSTRAINT IF EXISTS price_list_rule_price_list_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.payment_session DROP CONSTRAINT IF EXISTS payment_session_payment_collection_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.payment DROP CONSTRAINT IF EXISTS payment_payment_collection_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.payment_collection_payment_providers DROP CONSTRAINT IF EXISTS payment_collection_payment_providers_payment_pro_2d555_foreign;
-ALTER TABLE IF EXISTS ONLY public.payment_collection_payment_providers DROP CONSTRAINT IF EXISTS payment_collection_payment_providers_payment_col_aa276_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_transaction DROP CONSTRAINT IF EXISTS order_transaction_order_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_summary DROP CONSTRAINT IF EXISTS order_summary_order_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_shipping DROP CONSTRAINT IF EXISTS order_shipping_order_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_shipping_method_tax_line DROP CONSTRAINT IF EXISTS order_shipping_method_tax_line_shipping_method_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_shipping_method_adjustment DROP CONSTRAINT IF EXISTS order_shipping_method_adjustment_shipping_method_id_foreign;
-ALTER TABLE IF EXISTS ONLY public."order" DROP CONSTRAINT IF EXISTS order_shipping_address_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_line_item DROP CONSTRAINT IF EXISTS order_line_item_totals_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_line_item_tax_line DROP CONSTRAINT IF EXISTS order_line_item_tax_line_item_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_line_item_adjustment DROP CONSTRAINT IF EXISTS order_line_item_adjustment_item_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_item DROP CONSTRAINT IF EXISTS order_item_order_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_item DROP CONSTRAINT IF EXISTS order_item_item_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_credit_line DROP CONSTRAINT IF EXISTS order_credit_line_order_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_change DROP CONSTRAINT IF EXISTS order_change_order_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.order_change_action DROP CONSTRAINT IF EXISTS order_change_action_order_change_id_foreign;
-ALTER TABLE IF EXISTS ONLY public."order" DROP CONSTRAINT IF EXISTS order_billing_address_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.notification DROP CONSTRAINT IF EXISTS notification_provider_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.inventory_level DROP CONSTRAINT IF EXISTS inventory_level_inventory_item_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.image DROP CONSTRAINT IF EXISTS image_product_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.geo_zone DROP CONSTRAINT IF EXISTS geo_zone_service_zone_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.fulfillment DROP CONSTRAINT IF EXISTS fulfillment_shipping_option_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.fulfillment DROP CONSTRAINT IF EXISTS fulfillment_provider_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.fulfillment_label DROP CONSTRAINT IF EXISTS fulfillment_label_fulfillment_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.fulfillment_item DROP CONSTRAINT IF EXISTS fulfillment_item_fulfillment_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.fulfillment DROP CONSTRAINT IF EXISTS fulfillment_delivery_address_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.customer_group_customer DROP CONSTRAINT IF EXISTS customer_group_customer_customer_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.customer_group_customer DROP CONSTRAINT IF EXISTS customer_group_customer_customer_group_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.customer_address DROP CONSTRAINT IF EXISTS customer_address_customer_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.credit_line DROP CONSTRAINT IF EXISTS credit_line_cart_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.cart_shipping_method_tax_line DROP CONSTRAINT IF EXISTS cart_shipping_method_tax_line_shipping_method_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.cart_shipping_method DROP CONSTRAINT IF EXISTS cart_shipping_method_cart_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.cart_shipping_method_adjustment DROP CONSTRAINT IF EXISTS cart_shipping_method_adjustment_shipping_method_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.cart DROP CONSTRAINT IF EXISTS cart_shipping_address_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.cart_line_item_tax_line DROP CONSTRAINT IF EXISTS cart_line_item_tax_line_item_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.cart_line_item DROP CONSTRAINT IF EXISTS cart_line_item_cart_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.cart_line_item_adjustment DROP CONSTRAINT IF EXISTS cart_line_item_adjustment_item_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.cart DROP CONSTRAINT IF EXISTS cart_billing_address_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.capture DROP CONSTRAINT IF EXISTS capture_payment_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.auth_verification DROP CONSTRAINT IF EXISTS auth_verification_auth_identity_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.auth_password_reset_token DROP CONSTRAINT IF EXISTS auth_password_reset_token_provider_identity_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.auth_password_reset_token DROP CONSTRAINT IF EXISTS auth_password_reset_token_auth_identity_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.auth_mfa_recovery_code DROP CONSTRAINT IF EXISTS auth_mfa_recovery_code_auth_identity_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.auth_mfa_factor DROP CONSTRAINT IF EXISTS auth_mfa_factor_auth_identity_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.application_method_target_rules DROP CONSTRAINT IF EXISTS application_method_target_rules_promotion_rule_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.application_method_target_rules DROP CONSTRAINT IF EXISTS application_method_target_rules_application_method_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.application_method_buy_rules DROP CONSTRAINT IF EXISTS application_method_buy_rules_promotion_rule_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.application_method_buy_rules DROP CONSTRAINT IF EXISTS application_method_buy_rules_application_method_id_foreign;
-ALTER TABLE IF EXISTS ONLY public.tax_region DROP CONSTRAINT IF EXISTS "FK_tax_region_provider_id";
-ALTER TABLE IF EXISTS ONLY public.tax_region DROP CONSTRAINT IF EXISTS "FK_tax_region_parent_id";
-ALTER TABLE IF EXISTS ONLY public.tax_rate DROP CONSTRAINT IF EXISTS "FK_tax_rate_tax_region_id";
-ALTER TABLE IF EXISTS ONLY public.tax_rate_rule DROP CONSTRAINT IF EXISTS "FK_tax_rate_rule_tax_rate_id";
-DROP INDEX IF EXISTS public.search_pg_product_v1_trgm_idx;
-DROP INDEX IF EXISTS public.search_pg_product_v1_indexed_idx;
-DROP INDEX IF EXISTS public.search_pg_product_v1_fts_idx;
-DROP INDEX IF EXISTS public.idx_script_name_unique;
-DROP INDEX IF EXISTS public."IDX_workflow_execution_workflow_id_transaction_id_run_id_unique";
-DROP INDEX IF EXISTS public."IDX_workflow_execution_workflow_id_transaction_id";
-DROP INDEX IF EXISTS public."IDX_workflow_execution_workflow_id";
-DROP INDEX IF EXISTS public."IDX_workflow_execution_updated_at_retention_time";
-DROP INDEX IF EXISTS public."IDX_workflow_execution_transaction_id";
-DROP INDEX IF EXISTS public."IDX_workflow_execution_state_updated_at";
-DROP INDEX IF EXISTS public."IDX_workflow_execution_state";
-DROP INDEX IF EXISTS public."IDX_workflow_execution_run_id";
-DROP INDEX IF EXISTS public."IDX_workflow_execution_retention_time_updated_at_state";
-DROP INDEX IF EXISTS public."IDX_workflow_execution_id";
-DROP INDEX IF EXISTS public."IDX_workflow_execution_deleted_at";
-DROP INDEX IF EXISTS public."IDX_view_configuration_user_id";
-DROP INDEX IF EXISTS public."IDX_view_configuration_entity_user_id";
-DROP INDEX IF EXISTS public."IDX_view_configuration_entity_is_system_default";
-DROP INDEX IF EXISTS public."IDX_view_configuration_deleted_at";
-DROP INDEX IF EXISTS public."IDX_variant_id_52b23597";
-DROP INDEX IF EXISTS public."IDX_variant_id_17b4c4e35";
-DROP INDEX IF EXISTS public."IDX_user_preference_user_id_key_unique";
-DROP INDEX IF EXISTS public."IDX_user_preference_user_id";
-DROP INDEX IF EXISTS public."IDX_user_preference_deleted_at";
-DROP INDEX IF EXISTS public."IDX_user_id_64ff0c4c";
-DROP INDEX IF EXISTS public."IDX_user_email_unique";
-DROP INDEX IF EXISTS public."IDX_user_deleted_at";
-DROP INDEX IF EXISTS public."IDX_unique_promotion_code";
-DROP INDEX IF EXISTS public."IDX_type_value_unique";
-DROP INDEX IF EXISTS public."IDX_tax_region_unique_country_province";
-DROP INDEX IF EXISTS public."IDX_tax_region_unique_country_nullable_province";
-DROP INDEX IF EXISTS public."IDX_tax_region_provider_id";
-DROP INDEX IF EXISTS public."IDX_tax_region_parent_id";
-DROP INDEX IF EXISTS public."IDX_tax_region_deleted_at";
-DROP INDEX IF EXISTS public."IDX_tax_rate_tax_region_id";
-DROP INDEX IF EXISTS public."IDX_tax_rate_rule_unique_rate_reference";
-DROP INDEX IF EXISTS public."IDX_tax_rate_rule_tax_rate_id";
-DROP INDEX IF EXISTS public."IDX_tax_rate_rule_reference_id";
-DROP INDEX IF EXISTS public."IDX_tax_rate_rule_deleted_at";
-DROP INDEX IF EXISTS public."IDX_tax_rate_deleted_at";
-DROP INDEX IF EXISTS public."IDX_tax_provider_deleted_at";
-DROP INDEX IF EXISTS public."IDX_tag_value_unique";
-DROP INDEX IF EXISTS public."IDX_store_locale_store_id";
-DROP INDEX IF EXISTS public."IDX_store_locale_deleted_at";
-DROP INDEX IF EXISTS public."IDX_store_deleted_at";
-DROP INDEX IF EXISTS public."IDX_store_currency_store_id";
-DROP INDEX IF EXISTS public."IDX_store_currency_deleted_at";
-DROP INDEX IF EXISTS public."IDX_stock_location_id_26d06f470";
-DROP INDEX IF EXISTS public."IDX_stock_location_id_-e88adb96";
-DROP INDEX IF EXISTS public."IDX_stock_location_id_-1e5992737";
-DROP INDEX IF EXISTS public."IDX_stock_location_deleted_at";
-DROP INDEX IF EXISTS public."IDX_stock_location_address_id_unique";
-DROP INDEX IF EXISTS public."IDX_stock_location_address_deleted_at";
-DROP INDEX IF EXISTS public."IDX_single_default_region";
-DROP INDEX IF EXISTS public."IDX_shipping_profile_name_unique";
-DROP INDEX IF EXISTS public."IDX_shipping_profile_id_17a262437";
-DROP INDEX IF EXISTS public."IDX_shipping_profile_deleted_at";
-DROP INDEX IF EXISTS public."IDX_shipping_option_type_deleted_at";
-DROP INDEX IF EXISTS public."IDX_shipping_option_shipping_profile_id";
-DROP INDEX IF EXISTS public."IDX_shipping_option_shipping_option_type_id";
-DROP INDEX IF EXISTS public."IDX_shipping_option_service_zone_id";
-DROP INDEX IF EXISTS public."IDX_shipping_option_rule_shipping_option_id";
-DROP INDEX IF EXISTS public."IDX_shipping_option_rule_deleted_at";
-DROP INDEX IF EXISTS public."IDX_shipping_option_provider_id";
-DROP INDEX IF EXISTS public."IDX_shipping_option_id_ba32fa9c";
-DROP INDEX IF EXISTS public."IDX_shipping_option_deleted_at";
-DROP INDEX IF EXISTS public."IDX_shipping_method_tax_line_tax_rate_id";
-DROP INDEX IF EXISTS public."IDX_shipping_method_option_id";
-DROP INDEX IF EXISTS public."IDX_shipping_method_adjustment_promotion_id";
-DROP INDEX IF EXISTS public."IDX_service_zone_name_unique";
-DROP INDEX IF EXISTS public."IDX_service_zone_fulfillment_set_id";
-DROP INDEX IF EXISTS public."IDX_service_zone_deleted_at";
-DROP INDEX IF EXISTS public."IDX_search_index_version_search_index_id_version";
-DROP INDEX IF EXISTS public."IDX_search_index_version_search_index_id";
-DROP INDEX IF EXISTS public."IDX_search_index_version_deleted_at";
-DROP INDEX IF EXISTS public."IDX_search_index_sync_search_index_version_id";
-DROP INDEX IF EXISTS public."IDX_search_index_sync_job_id";
-DROP INDEX IF EXISTS public."IDX_search_index_sync_deleted_at";
-DROP INDEX IF EXISTS public."IDX_search_index_name";
-DROP INDEX IF EXISTS public."IDX_search_index_deleted_at";
-DROP INDEX IF EXISTS public."IDX_sales_channel_id_26d06f470";
-DROP INDEX IF EXISTS public."IDX_sales_channel_id_20b454295";
-DROP INDEX IF EXISTS public."IDX_sales_channel_id_-1d67bae40";
-DROP INDEX IF EXISTS public."IDX_sales_channel_deleted_at";
-DROP INDEX IF EXISTS public."IDX_return_reason_value";
-DROP INDEX IF EXISTS public."IDX_return_reason_parent_return_reason_id";
-DROP INDEX IF EXISTS public."IDX_return_order_id";
-DROP INDEX IF EXISTS public."IDX_return_item_return_id";
-DROP INDEX IF EXISTS public."IDX_return_item_reason_id";
-DROP INDEX IF EXISTS public."IDX_return_item_item_id";
-DROP INDEX IF EXISTS public."IDX_return_item_deleted_at";
-DROP INDEX IF EXISTS public."IDX_return_id_-31ea43a";
-DROP INDEX IF EXISTS public."IDX_return_exchange_id";
-DROP INDEX IF EXISTS public."IDX_return_display_id";
-DROP INDEX IF EXISTS public."IDX_return_claim_id";
-DROP INDEX IF EXISTS public."IDX_reservation_item_location_id";
-DROP INDEX IF EXISTS public."IDX_reservation_item_line_item_id";
-DROP INDEX IF EXISTS public."IDX_reservation_item_inventory_item_id";
-DROP INDEX IF EXISTS public."IDX_reservation_item_deleted_at";
-DROP INDEX IF EXISTS public."IDX_region_id_1c934dab0";
-DROP INDEX IF EXISTS public."IDX_region_deleted_at";
-DROP INDEX IF EXISTS public."IDX_region_country_region_id_iso_2_unique";
-DROP INDEX IF EXISTS public."IDX_region_country_region_id";
-DROP INDEX IF EXISTS public."IDX_region_country_deleted_at";
-DROP INDEX IF EXISTS public."IDX_refund_refund_reason_id";
-DROP INDEX IF EXISTS public."IDX_refund_reason_deleted_at";
-DROP INDEX IF EXISTS public."IDX_refund_payment_id_idempotency_key_unique";
-DROP INDEX IF EXISTS public."IDX_refund_payment_id";
-DROP INDEX IF EXISTS public."IDX_refund_deleted_at";
-DROP INDEX IF EXISTS public."IDX_rbac_role_id_64ff0c4c";
-DROP INDEX IF EXISTS public."IDX_rbac_role_id_-85069d44";
-DROP INDEX IF EXISTS public."IDX_publishable_key_id_-1d67bae40";
-DROP INDEX IF EXISTS public."IDX_provider_identity_provider_entity_id";
-DROP INDEX IF EXISTS public."IDX_provider_identity_deleted_at";
-DROP INDEX IF EXISTS public."IDX_provider_identity_auth_identity_id";
-DROP INDEX IF EXISTS public."IDX_property_label_entity_property_unique";
-DROP INDEX IF EXISTS public."IDX_property_label_entity";
-DROP INDEX IF EXISTS public."IDX_property_label_deleted_at";
-DROP INDEX IF EXISTS public."IDX_promotion_type";
-DROP INDEX IF EXISTS public."IDX_promotion_status";
-DROP INDEX IF EXISTS public."IDX_promotion_rule_value_value";
-DROP INDEX IF EXISTS public."IDX_promotion_rule_value_rule_id_value";
-DROP INDEX IF EXISTS public."IDX_promotion_rule_value_promotion_rule_id";
-DROP INDEX IF EXISTS public."IDX_promotion_rule_value_deleted_at";
-DROP INDEX IF EXISTS public."IDX_promotion_rule_operator";
-DROP INDEX IF EXISTS public."IDX_promotion_rule_deleted_at";
-DROP INDEX IF EXISTS public."IDX_promotion_rule_attribute_operator_id";
-DROP INDEX IF EXISTS public."IDX_promotion_rule_attribute_operator";
-DROP INDEX IF EXISTS public."IDX_promotion_rule_attribute";
-DROP INDEX IF EXISTS public."IDX_promotion_is_automatic";
-DROP INDEX IF EXISTS public."IDX_promotion_id_-a9d4a70b";
-DROP INDEX IF EXISTS public."IDX_promotion_id_-71518339";
-DROP INDEX IF EXISTS public."IDX_promotion_deleted_at";
-DROP INDEX IF EXISTS public."IDX_promotion_campaign_id";
-DROP INDEX IF EXISTS public."IDX_promotion_campaign_deleted_at";
-DROP INDEX IF EXISTS public."IDX_promotion_campaign_campaign_identifier_unique";
-DROP INDEX IF EXISTS public."IDX_promotion_campaign_budget_usage_deleted_at";
-DROP INDEX IF EXISTS public."IDX_promotion_campaign_budget_usage_budget_id";
-DROP INDEX IF EXISTS public."IDX_promotion_campaign_budget_usage_attribute_value_budget_id_u";
-DROP INDEX IF EXISTS public."IDX_promotion_campaign_budget_deleted_at";
-DROP INDEX IF EXISTS public."IDX_promotion_campaign_budget_campaign_id_unique";
-DROP INDEX IF EXISTS public."IDX_promotion_application_method_promotion_id_unique";
-DROP INDEX IF EXISTS public."IDX_promotion_application_method_deleted_at";
-DROP INDEX IF EXISTS public."IDX_promotion_application_method_currency_code";
-DROP INDEX IF EXISTS public."IDX_product_variant_upc_unique";
-DROP INDEX IF EXISTS public."IDX_product_variant_sku_unique";
-DROP INDEX IF EXISTS public."IDX_product_variant_product_image_variant_id";
-DROP INDEX IF EXISTS public."IDX_product_variant_product_image_image_id";
-DROP INDEX IF EXISTS public."IDX_product_variant_product_image_deleted_at";
-DROP INDEX IF EXISTS public."IDX_product_variant_product_id";
-DROP INDEX IF EXISTS public."IDX_product_variant_id_product_id";
-DROP INDEX IF EXISTS public."IDX_product_variant_ean_unique";
-DROP INDEX IF EXISTS public."IDX_product_variant_deleted_at";
-DROP INDEX IF EXISTS public."IDX_product_variant_barcode_unique";
-DROP INDEX IF EXISTS public."IDX_product_type_id";
-DROP INDEX IF EXISTS public."IDX_product_type_deleted_at";
-DROP INDEX IF EXISTS public."IDX_product_tag_deleted_at";
-DROP INDEX IF EXISTS public."IDX_product_status";
-DROP INDEX IF EXISTS public."IDX_product_product_option_value_product_product_option_id_fk";
-DROP INDEX IF EXISTS public."IDX_product_product_option_value_product_product_option_id";
-DROP INDEX IF EXISTS public."IDX_product_product_option_value_product_option_value_id";
-DROP INDEX IF EXISTS public."IDX_product_product_option_value_deleted_at";
-DROP INDEX IF EXISTS public."IDX_product_product_option_product_option_id";
-DROP INDEX IF EXISTS public."IDX_product_product_option_product_id";
-DROP INDEX IF EXISTS public."IDX_product_product_option_deleted_at";
-DROP INDEX IF EXISTS public."IDX_product_option_value_option_id";
-DROP INDEX IF EXISTS public."IDX_product_option_value_deleted_at";
-DROP INDEX IF EXISTS public."IDX_product_option_global_title_unique";
-DROP INDEX IF EXISTS public."IDX_product_option_deleted_at";
-DROP INDEX IF EXISTS public."IDX_product_image_url_rank_product_id";
-DROP INDEX IF EXISTS public."IDX_product_image_url";
-DROP INDEX IF EXISTS public."IDX_product_image_rank_product_id";
-DROP INDEX IF EXISTS public."IDX_product_image_rank";
-DROP INDEX IF EXISTS public."IDX_product_id_20b454295";
-DROP INDEX IF EXISTS public."IDX_product_id_17a262437";
-DROP INDEX IF EXISTS public."IDX_product_handle_unique";
-DROP INDEX IF EXISTS public."IDX_product_deleted_at";
-DROP INDEX IF EXISTS public."IDX_product_collection_id";
-DROP INDEX IF EXISTS public."IDX_product_collection_deleted_at";
-DROP INDEX IF EXISTS public."IDX_product_category_path";
-DROP INDEX IF EXISTS public."IDX_product_category_parent_category_id";
-DROP INDEX IF EXISTS public."IDX_price_set_id_ba32fa9c";
-DROP INDEX IF EXISTS public."IDX_price_set_id_52b23597";
-DROP INDEX IF EXISTS public."IDX_price_set_deleted_at";
-DROP INDEX IF EXISTS public."IDX_price_rule_price_id_attribute_operator_unique";
-DROP INDEX IF EXISTS public."IDX_price_rule_price_id";
-DROP INDEX IF EXISTS public."IDX_price_rule_operator_value";
-DROP INDEX IF EXISTS public."IDX_price_rule_operator";
-DROP INDEX IF EXISTS public."IDX_price_rule_deleted_at";
-DROP INDEX IF EXISTS public."IDX_price_rule_attribute_value_price_id";
-DROP INDEX IF EXISTS public."IDX_price_rule_attribute_value";
-DROP INDEX IF EXISTS public."IDX_price_rule_attribute";
-DROP INDEX IF EXISTS public."IDX_price_price_set_id";
-DROP INDEX IF EXISTS public."IDX_price_price_list_id";
-DROP INDEX IF EXISTS public."IDX_price_preference_deleted_at";
-DROP INDEX IF EXISTS public."IDX_price_preference_attribute_value";
-DROP INDEX IF EXISTS public."IDX_price_list_rule_value";
-DROP INDEX IF EXISTS public."IDX_price_list_rule_price_list_id";
-DROP INDEX IF EXISTS public."IDX_price_list_rule_deleted_at";
-DROP INDEX IF EXISTS public."IDX_price_list_rule_attribute";
-DROP INDEX IF EXISTS public."IDX_price_list_id_status_starts_at_ends_at";
-DROP INDEX IF EXISTS public."IDX_price_list_deleted_at";
-DROP INDEX IF EXISTS public."IDX_price_deleted_at";
-DROP INDEX IF EXISTS public."IDX_price_currency_code";
-DROP INDEX IF EXISTS public."IDX_payment_session_payment_collection_id";
-DROP INDEX IF EXISTS public."IDX_payment_session_deleted_at";
-DROP INDEX IF EXISTS public."IDX_payment_provider_id_1c934dab0";
-DROP INDEX IF EXISTS public."IDX_payment_provider_id";
-DROP INDEX IF EXISTS public."IDX_payment_provider_deleted_at";
-DROP INDEX IF EXISTS public."IDX_payment_payment_session_id_unique";
-DROP INDEX IF EXISTS public."IDX_payment_payment_session_id";
-DROP INDEX IF EXISTS public."IDX_payment_payment_collection_id";
-DROP INDEX IF EXISTS public."IDX_payment_deleted_at";
-DROP INDEX IF EXISTS public."IDX_payment_collection_id_f42b9949";
-DROP INDEX IF EXISTS public."IDX_payment_collection_id_-4a39f6c9";
-DROP INDEX IF EXISTS public."IDX_payment_collection_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_transaction_return_id";
-DROP INDEX IF EXISTS public."IDX_order_transaction_reference_id";
-DROP INDEX IF EXISTS public."IDX_order_transaction_order_id_version";
-DROP INDEX IF EXISTS public."IDX_order_transaction_order_id";
-DROP INDEX IF EXISTS public."IDX_order_transaction_exchange_id";
-DROP INDEX IF EXISTS public."IDX_order_transaction_currency_code";
-DROP INDEX IF EXISTS public."IDX_order_transaction_claim_id";
-DROP INDEX IF EXISTS public."IDX_order_summary_order_id_version";
-DROP INDEX IF EXISTS public."IDX_order_summary_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_shipping_shipping_method_id";
-DROP INDEX IF EXISTS public."IDX_order_shipping_return_id";
-DROP INDEX IF EXISTS public."IDX_order_shipping_order_id_version";
-DROP INDEX IF EXISTS public."IDX_order_shipping_order_id";
-DROP INDEX IF EXISTS public."IDX_order_shipping_method_tax_line_shipping_method_id";
-DROP INDEX IF EXISTS public."IDX_order_shipping_method_shipping_option_id";
-DROP INDEX IF EXISTS public."IDX_order_shipping_method_adjustment_version_shipping_method";
-DROP INDEX IF EXISTS public."IDX_order_shipping_method_adjustment_shipping_method_id";
-DROP INDEX IF EXISTS public."IDX_order_shipping_item_id";
-DROP INDEX IF EXISTS public."IDX_order_shipping_exchange_id";
-DROP INDEX IF EXISTS public."IDX_order_shipping_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_shipping_claim_id";
-DROP INDEX IF EXISTS public."IDX_order_shipping_address_id";
-DROP INDEX IF EXISTS public."IDX_order_sales_channel_id";
-DROP INDEX IF EXISTS public."IDX_order_region_id";
-DROP INDEX IF EXISTS public."IDX_order_line_item_variant_id";
-DROP INDEX IF EXISTS public."IDX_order_line_item_tax_line_item_id";
-DROP INDEX IF EXISTS public."IDX_order_line_item_product_id";
-DROP INDEX IF EXISTS public."IDX_order_line_item_adjustment_item_id";
-DROP INDEX IF EXISTS public."IDX_order_item_order_id_version";
-DROP INDEX IF EXISTS public."IDX_order_item_order_id";
-DROP INDEX IF EXISTS public."IDX_order_item_item_id";
-DROP INDEX IF EXISTS public."IDX_order_item_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_is_draft_order";
-DROP INDEX IF EXISTS public."IDX_order_id_f42b9949";
-DROP INDEX IF EXISTS public."IDX_order_id_-e8d2543e";
-DROP INDEX IF EXISTS public."IDX_order_id_-71518339";
-DROP INDEX IF EXISTS public."IDX_order_id_-71069c16";
-DROP INDEX IF EXISTS public."IDX_order_exchange_return_id";
-DROP INDEX IF EXISTS public."IDX_order_exchange_order_id";
-DROP INDEX IF EXISTS public."IDX_order_exchange_item_item_id";
-DROP INDEX IF EXISTS public."IDX_order_exchange_item_exchange_id";
-DROP INDEX IF EXISTS public."IDX_order_exchange_item_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_exchange_display_id";
-DROP INDEX IF EXISTS public."IDX_order_exchange_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_display_id";
-DROP INDEX IF EXISTS public."IDX_order_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_customer_id";
-DROP INDEX IF EXISTS public."IDX_order_custom_display_id";
-DROP INDEX IF EXISTS public."IDX_order_currency_code";
-DROP INDEX IF EXISTS public."IDX_order_credit_line_order_id_version";
-DROP INDEX IF EXISTS public."IDX_order_credit_line_order_id";
-DROP INDEX IF EXISTS public."IDX_order_credit_line_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_claim_return_id";
-DROP INDEX IF EXISTS public."IDX_order_claim_order_id";
-DROP INDEX IF EXISTS public."IDX_order_claim_item_item_id";
-DROP INDEX IF EXISTS public."IDX_order_claim_item_image_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_claim_item_image_claim_item_id";
-DROP INDEX IF EXISTS public."IDX_order_claim_item_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_claim_item_claim_id";
-DROP INDEX IF EXISTS public."IDX_order_claim_display_id";
-DROP INDEX IF EXISTS public."IDX_order_claim_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_change_version";
-DROP INDEX IF EXISTS public."IDX_order_change_status";
-DROP INDEX IF EXISTS public."IDX_order_change_return_id";
-DROP INDEX IF EXISTS public."IDX_order_change_order_id_version";
-DROP INDEX IF EXISTS public."IDX_order_change_order_id";
-DROP INDEX IF EXISTS public."IDX_order_change_exchange_id";
-DROP INDEX IF EXISTS public."IDX_order_change_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_change_claim_id";
-DROP INDEX IF EXISTS public."IDX_order_change_change_type";
-DROP INDEX IF EXISTS public."IDX_order_change_action_return_id";
-DROP INDEX IF EXISTS public."IDX_order_change_action_ordering";
-DROP INDEX IF EXISTS public."IDX_order_change_action_order_id";
-DROP INDEX IF EXISTS public."IDX_order_change_action_order_change_id";
-DROP INDEX IF EXISTS public."IDX_order_change_action_exchange_id";
-DROP INDEX IF EXISTS public."IDX_order_change_action_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_change_action_claim_id";
-DROP INDEX IF EXISTS public."IDX_order_billing_address_id";
-DROP INDEX IF EXISTS public."IDX_order_address_deleted_at";
-DROP INDEX IF EXISTS public."IDX_order_address_customer_id";
-DROP INDEX IF EXISTS public."IDX_option_value_option_id_unique";
-DROP INDEX IF EXISTS public."IDX_notification_receiver_id";
-DROP INDEX IF EXISTS public."IDX_notification_provider_id";
-DROP INDEX IF EXISTS public."IDX_notification_provider_deleted_at";
-DROP INDEX IF EXISTS public."IDX_notification_idempotency_key_unique";
-DROP INDEX IF EXISTS public."IDX_notification_deleted_at";
-DROP INDEX IF EXISTS public."IDX_line_item_variant_id";
-DROP INDEX IF EXISTS public."IDX_line_item_tax_line_tax_rate_id";
-DROP INDEX IF EXISTS public."IDX_line_item_product_type_id";
-DROP INDEX IF EXISTS public."IDX_line_item_product_id";
-DROP INDEX IF EXISTS public."IDX_line_item_adjustment_promotion_id";
-DROP INDEX IF EXISTS public."IDX_layout_configuration_zone_user_id_unique";
-DROP INDEX IF EXISTS public."IDX_layout_configuration_zone_unique";
-DROP INDEX IF EXISTS public."IDX_layout_configuration_deleted_at";
-DROP INDEX IF EXISTS public."IDX_invite_token";
-DROP INDEX IF EXISTS public."IDX_invite_id_-85069d44";
-DROP INDEX IF EXISTS public."IDX_invite_email_unique";
-DROP INDEX IF EXISTS public."IDX_invite_deleted_at";
-DROP INDEX IF EXISTS public."IDX_inventory_level_location_id_inventory_item_id";
-DROP INDEX IF EXISTS public."IDX_inventory_level_location_id";
-DROP INDEX IF EXISTS public."IDX_inventory_level_inventory_item_id";
-DROP INDEX IF EXISTS public."IDX_inventory_level_deleted_at";
-DROP INDEX IF EXISTS public."IDX_inventory_item_sku";
-DROP INDEX IF EXISTS public."IDX_inventory_item_id_17b4c4e35";
-DROP INDEX IF EXISTS public."IDX_inventory_item_deleted_at";
-DROP INDEX IF EXISTS public."IDX_image_product_id";
-DROP INDEX IF EXISTS public."IDX_image_deleted_at";
-DROP INDEX IF EXISTS public."IDX_id_f42b9949";
-DROP INDEX IF EXISTS public."IDX_id_ba32fa9c";
-DROP INDEX IF EXISTS public."IDX_id_64ff0c4c";
-DROP INDEX IF EXISTS public."IDX_id_5cb3a0c0";
-DROP INDEX IF EXISTS public."IDX_id_52b23597";
-DROP INDEX IF EXISTS public."IDX_id_26d06f470";
-DROP INDEX IF EXISTS public."IDX_id_20b454295";
-DROP INDEX IF EXISTS public."IDX_id_1c934dab0";
-DROP INDEX IF EXISTS public."IDX_id_17b4c4e35";
-DROP INDEX IF EXISTS public."IDX_id_17a262437";
-DROP INDEX IF EXISTS public."IDX_id_-e8d2543e";
-DROP INDEX IF EXISTS public."IDX_id_-e88adb96";
-DROP INDEX IF EXISTS public."IDX_id_-a9d4a70b";
-DROP INDEX IF EXISTS public."IDX_id_-85069d44";
-DROP INDEX IF EXISTS public."IDX_id_-71518339";
-DROP INDEX IF EXISTS public."IDX_id_-71069c16";
-DROP INDEX IF EXISTS public."IDX_id_-4a39f6c9";
-DROP INDEX IF EXISTS public."IDX_id_-31ea43a";
-DROP INDEX IF EXISTS public."IDX_id_-1e5992737";
-DROP INDEX IF EXISTS public."IDX_id_-1d67bae40";
-DROP INDEX IF EXISTS public."IDX_geo_zone_service_zone_id";
-DROP INDEX IF EXISTS public."IDX_geo_zone_province_code";
-DROP INDEX IF EXISTS public."IDX_geo_zone_deleted_at";
-DROP INDEX IF EXISTS public."IDX_geo_zone_country_code";
-DROP INDEX IF EXISTS public."IDX_geo_zone_city";
-DROP INDEX IF EXISTS public."IDX_fulfillment_shipping_option_id";
-DROP INDEX IF EXISTS public."IDX_fulfillment_set_name_unique";
-DROP INDEX IF EXISTS public."IDX_fulfillment_set_id_-e88adb96";
-DROP INDEX IF EXISTS public."IDX_fulfillment_set_deleted_at";
-DROP INDEX IF EXISTS public."IDX_fulfillment_provider_id_-1e5992737";
-DROP INDEX IF EXISTS public."IDX_fulfillment_provider_deleted_at";
-DROP INDEX IF EXISTS public."IDX_fulfillment_location_id";
-DROP INDEX IF EXISTS public."IDX_fulfillment_label_fulfillment_id";
-DROP INDEX IF EXISTS public."IDX_fulfillment_label_deleted_at";
-DROP INDEX IF EXISTS public."IDX_fulfillment_item_line_item_id";
-DROP INDEX IF EXISTS public."IDX_fulfillment_item_inventory_item_id";
-DROP INDEX IF EXISTS public."IDX_fulfillment_item_fulfillment_id";
-DROP INDEX IF EXISTS public."IDX_fulfillment_item_deleted_at";
-DROP INDEX IF EXISTS public."IDX_fulfillment_id_-e8d2543e";
-DROP INDEX IF EXISTS public."IDX_fulfillment_id_-31ea43a";
-DROP INDEX IF EXISTS public."IDX_fulfillment_deleted_at";
-DROP INDEX IF EXISTS public."IDX_fulfillment_address_deleted_at";
-DROP INDEX IF EXISTS public."IDX_deleted_at_f42b9949";
-DROP INDEX IF EXISTS public."IDX_deleted_at_ba32fa9c";
-DROP INDEX IF EXISTS public."IDX_deleted_at_64ff0c4c";
-DROP INDEX IF EXISTS public."IDX_deleted_at_5cb3a0c0";
-DROP INDEX IF EXISTS public."IDX_deleted_at_52b23597";
-DROP INDEX IF EXISTS public."IDX_deleted_at_26d06f470";
-DROP INDEX IF EXISTS public."IDX_deleted_at_20b454295";
-DROP INDEX IF EXISTS public."IDX_deleted_at_1c934dab0";
-DROP INDEX IF EXISTS public."IDX_deleted_at_17b4c4e35";
-DROP INDEX IF EXISTS public."IDX_deleted_at_17a262437";
-DROP INDEX IF EXISTS public."IDX_deleted_at_-e8d2543e";
-DROP INDEX IF EXISTS public."IDX_deleted_at_-e88adb96";
-DROP INDEX IF EXISTS public."IDX_deleted_at_-a9d4a70b";
-DROP INDEX IF EXISTS public."IDX_deleted_at_-85069d44";
-DROP INDEX IF EXISTS public."IDX_deleted_at_-71518339";
-DROP INDEX IF EXISTS public."IDX_deleted_at_-71069c16";
-DROP INDEX IF EXISTS public."IDX_deleted_at_-4a39f6c9";
-DROP INDEX IF EXISTS public."IDX_deleted_at_-31ea43a";
-DROP INDEX IF EXISTS public."IDX_deleted_at_-1e5992737";
-DROP INDEX IF EXISTS public."IDX_deleted_at_-1d67bae40";
-DROP INDEX IF EXISTS public."IDX_customer_id_5cb3a0c0";
-DROP INDEX IF EXISTS public."IDX_customer_group_name_unique";
-DROP INDEX IF EXISTS public."IDX_customer_group_deleted_at";
-DROP INDEX IF EXISTS public."IDX_customer_group_customer_deleted_at";
-DROP INDEX IF EXISTS public."IDX_customer_group_customer_customer_id";
-DROP INDEX IF EXISTS public."IDX_customer_group_customer_customer_group_id";
-DROP INDEX IF EXISTS public."IDX_customer_email_has_account_unique";
-DROP INDEX IF EXISTS public."IDX_customer_deleted_at";
-DROP INDEX IF EXISTS public."IDX_customer_address_unique_customer_shipping";
-DROP INDEX IF EXISTS public."IDX_customer_address_unique_customer_billing";
-DROP INDEX IF EXISTS public."IDX_customer_address_deleted_at";
-DROP INDEX IF EXISTS public."IDX_customer_address_customer_id";
-DROP INDEX IF EXISTS public."IDX_credit_line_deleted_at";
-DROP INDEX IF EXISTS public."IDX_credit_line_cart_id";
-DROP INDEX IF EXISTS public."IDX_collection_handle_unique";
-DROP INDEX IF EXISTS public."IDX_category_handle_unique";
-DROP INDEX IF EXISTS public."IDX_cart_shipping_method_tax_line_shipping_method_id";
-DROP INDEX IF EXISTS public."IDX_cart_shipping_method_tax_line_deleted_at";
-DROP INDEX IF EXISTS public."IDX_cart_shipping_method_deleted_at";
-DROP INDEX IF EXISTS public."IDX_cart_shipping_method_cart_id";
-DROP INDEX IF EXISTS public."IDX_cart_shipping_method_adjustment_shipping_method_id";
-DROP INDEX IF EXISTS public."IDX_cart_shipping_method_adjustment_deleted_at";
-DROP INDEX IF EXISTS public."IDX_cart_shipping_address_id";
-DROP INDEX IF EXISTS public."IDX_cart_sales_channel_id";
-DROP INDEX IF EXISTS public."IDX_cart_region_id";
-DROP INDEX IF EXISTS public."IDX_cart_line_item_tax_line_item_id";
-DROP INDEX IF EXISTS public."IDX_cart_line_item_tax_line_deleted_at";
-DROP INDEX IF EXISTS public."IDX_cart_line_item_deleted_at";
-DROP INDEX IF EXISTS public."IDX_cart_line_item_cart_id";
-DROP INDEX IF EXISTS public."IDX_cart_line_item_adjustment_item_id";
-DROP INDEX IF EXISTS public."IDX_cart_line_item_adjustment_deleted_at";
-DROP INDEX IF EXISTS public."IDX_cart_id_-a9d4a70b";
-DROP INDEX IF EXISTS public."IDX_cart_id_-71069c16";
-DROP INDEX IF EXISTS public."IDX_cart_id_-4a39f6c9";
-DROP INDEX IF EXISTS public."IDX_cart_deleted_at";
-DROP INDEX IF EXISTS public."IDX_cart_customer_id";
-DROP INDEX IF EXISTS public."IDX_cart_currency_code";
-DROP INDEX IF EXISTS public."IDX_cart_credit_line_reference_reference_id";
-DROP INDEX IF EXISTS public."IDX_cart_billing_address_id";
-DROP INDEX IF EXISTS public."IDX_cart_address_deleted_at";
-DROP INDEX IF EXISTS public."IDX_capture_payment_id";
-DROP INDEX IF EXISTS public."IDX_capture_deleted_at";
-DROP INDEX IF EXISTS public."IDX_campaign_budget_type";
-DROP INDEX IF EXISTS public."IDX_auth_verification_unique_auth_identity_entity_id_entity_typ";
-DROP INDEX IF EXISTS public."IDX_auth_verification_deleted_at";
-DROP INDEX IF EXISTS public."IDX_auth_verification_auth_identity_id";
-DROP INDEX IF EXISTS public."IDX_auth_password_reset_token_token_hash";
-DROP INDEX IF EXISTS public."IDX_auth_password_reset_token_provider_identity_id";
-DROP INDEX IF EXISTS public."IDX_auth_password_reset_token_expires_at";
-DROP INDEX IF EXISTS public."IDX_auth_password_reset_token_deleted_at";
-DROP INDEX IF EXISTS public."IDX_auth_password_reset_token_auth_identity_id";
-DROP INDEX IF EXISTS public."IDX_auth_mfa_recovery_code_deleted_at";
-DROP INDEX IF EXISTS public."IDX_auth_mfa_recovery_code_auth_identity_id";
-DROP INDEX IF EXISTS public."IDX_auth_mfa_recovery_code_auth_identity_code_hash";
-DROP INDEX IF EXISTS public."IDX_auth_mfa_factor_deleted_at";
-DROP INDEX IF EXISTS public."IDX_auth_mfa_factor_auth_identity_provider_active";
-DROP INDEX IF EXISTS public."IDX_auth_mfa_factor_auth_identity_id";
-DROP INDEX IF EXISTS public."IDX_auth_identity_deleted_at";
-DROP INDEX IF EXISTS public."IDX_application_method_type";
-DROP INDEX IF EXISTS public."IDX_application_method_target_type";
-DROP INDEX IF EXISTS public."IDX_application_method_allocation";
-DROP INDEX IF EXISTS public."IDX_api_key_type";
-DROP INDEX IF EXISTS public."IDX_api_key_token_unique";
-DROP INDEX IF EXISTS public."IDX_api_key_revoked_at";
-DROP INDEX IF EXISTS public."IDX_api_key_redacted";
-DROP INDEX IF EXISTS public."IDX_api_key_deleted_at";
-DROP INDEX IF EXISTS public."IDX_account_holder_provider_id_external_id_unique";
-DROP INDEX IF EXISTS public."IDX_account_holder_id_5cb3a0c0";
-DROP INDEX IF EXISTS public."IDX_account_holder_deleted_at";
-ALTER TABLE IF EXISTS ONLY public.workflow_execution DROP CONSTRAINT IF EXISTS workflow_execution_pkey;
-ALTER TABLE IF EXISTS ONLY public.view_configuration DROP CONSTRAINT IF EXISTS view_configuration_pkey;
-ALTER TABLE IF EXISTS ONLY public.user_rbac_role DROP CONSTRAINT IF EXISTS user_rbac_role_pkey;
-ALTER TABLE IF EXISTS ONLY public.user_preference DROP CONSTRAINT IF EXISTS user_preference_pkey;
-ALTER TABLE IF EXISTS ONLY public."user" DROP CONSTRAINT IF EXISTS user_pkey;
-ALTER TABLE IF EXISTS ONLY public.tax_region DROP CONSTRAINT IF EXISTS tax_region_pkey;
-ALTER TABLE IF EXISTS ONLY public.tax_rate_rule DROP CONSTRAINT IF EXISTS tax_rate_rule_pkey;
-ALTER TABLE IF EXISTS ONLY public.tax_rate DROP CONSTRAINT IF EXISTS tax_rate_pkey;
-ALTER TABLE IF EXISTS ONLY public.tax_provider DROP CONSTRAINT IF EXISTS tax_provider_pkey;
-ALTER TABLE IF EXISTS ONLY public.store DROP CONSTRAINT IF EXISTS store_pkey;
-ALTER TABLE IF EXISTS ONLY public.store_locale DROP CONSTRAINT IF EXISTS store_locale_pkey;
-ALTER TABLE IF EXISTS ONLY public.store_currency DROP CONSTRAINT IF EXISTS store_currency_pkey;
-ALTER TABLE IF EXISTS ONLY public.stock_location DROP CONSTRAINT IF EXISTS stock_location_pkey;
-ALTER TABLE IF EXISTS ONLY public.stock_location_address DROP CONSTRAINT IF EXISTS stock_location_address_pkey;
-ALTER TABLE IF EXISTS ONLY public.shipping_profile DROP CONSTRAINT IF EXISTS shipping_profile_pkey;
-ALTER TABLE IF EXISTS ONLY public.shipping_option_type DROP CONSTRAINT IF EXISTS shipping_option_type_pkey;
-ALTER TABLE IF EXISTS ONLY public.shipping_option_rule DROP CONSTRAINT IF EXISTS shipping_option_rule_pkey;
-ALTER TABLE IF EXISTS ONLY public.shipping_option_price_set DROP CONSTRAINT IF EXISTS shipping_option_price_set_pkey;
-ALTER TABLE IF EXISTS ONLY public.shipping_option DROP CONSTRAINT IF EXISTS shipping_option_pkey;
-ALTER TABLE IF EXISTS ONLY public.service_zone DROP CONSTRAINT IF EXISTS service_zone_pkey;
-ALTER TABLE IF EXISTS ONLY public.search_postgres_index DROP CONSTRAINT IF EXISTS search_postgres_index_pkey;
-ALTER TABLE IF EXISTS ONLY public.search_pg_product_v1 DROP CONSTRAINT IF EXISTS search_pg_product_v1_pkey;
-ALTER TABLE IF EXISTS ONLY public.search_index_version DROP CONSTRAINT IF EXISTS search_index_version_pkey;
-ALTER TABLE IF EXISTS ONLY public.search_index_sync DROP CONSTRAINT IF EXISTS search_index_sync_pkey;
-ALTER TABLE IF EXISTS ONLY public.search_index DROP CONSTRAINT IF EXISTS search_index_pkey;
-ALTER TABLE IF EXISTS ONLY public.script_migrations DROP CONSTRAINT IF EXISTS script_migrations_pkey;
-ALTER TABLE IF EXISTS ONLY public.sales_channel_stock_location DROP CONSTRAINT IF EXISTS sales_channel_stock_location_pkey;
-ALTER TABLE IF EXISTS ONLY public.sales_channel DROP CONSTRAINT IF EXISTS sales_channel_pkey;
-ALTER TABLE IF EXISTS ONLY public.return_reason DROP CONSTRAINT IF EXISTS return_reason_pkey;
-ALTER TABLE IF EXISTS ONLY public.return DROP CONSTRAINT IF EXISTS return_pkey;
-ALTER TABLE IF EXISTS ONLY public.return_item DROP CONSTRAINT IF EXISTS return_item_pkey;
-ALTER TABLE IF EXISTS ONLY public.return_fulfillment DROP CONSTRAINT IF EXISTS return_fulfillment_pkey;
-ALTER TABLE IF EXISTS ONLY public.reservation_item DROP CONSTRAINT IF EXISTS reservation_item_pkey;
-ALTER TABLE IF EXISTS ONLY public.region DROP CONSTRAINT IF EXISTS region_pkey;
-ALTER TABLE IF EXISTS ONLY public.region_payment_provider DROP CONSTRAINT IF EXISTS region_payment_provider_pkey;
-ALTER TABLE IF EXISTS ONLY public.region_country DROP CONSTRAINT IF EXISTS region_country_pkey;
-ALTER TABLE IF EXISTS ONLY public.refund_reason DROP CONSTRAINT IF EXISTS refund_reason_pkey;
-ALTER TABLE IF EXISTS ONLY public.refund DROP CONSTRAINT IF EXISTS refund_pkey;
-ALTER TABLE IF EXISTS ONLY public.publishable_api_key_sales_channel DROP CONSTRAINT IF EXISTS publishable_api_key_sales_channel_pkey;
-ALTER TABLE IF EXISTS ONLY public.provider_identity DROP CONSTRAINT IF EXISTS provider_identity_pkey;
-ALTER TABLE IF EXISTS ONLY public.property_label DROP CONSTRAINT IF EXISTS property_label_pkey;
-ALTER TABLE IF EXISTS ONLY public.promotion_rule_value DROP CONSTRAINT IF EXISTS promotion_rule_value_pkey;
-ALTER TABLE IF EXISTS ONLY public.promotion_rule DROP CONSTRAINT IF EXISTS promotion_rule_pkey;
-ALTER TABLE IF EXISTS ONLY public.promotion_promotion_rule DROP CONSTRAINT IF EXISTS promotion_promotion_rule_pkey;
-ALTER TABLE IF EXISTS ONLY public.promotion DROP CONSTRAINT IF EXISTS promotion_pkey;
-ALTER TABLE IF EXISTS ONLY public.promotion_campaign DROP CONSTRAINT IF EXISTS promotion_campaign_pkey;
-ALTER TABLE IF EXISTS ONLY public.promotion_campaign_budget_usage DROP CONSTRAINT IF EXISTS promotion_campaign_budget_usage_pkey;
-ALTER TABLE IF EXISTS ONLY public.promotion_campaign_budget DROP CONSTRAINT IF EXISTS promotion_campaign_budget_pkey;
-ALTER TABLE IF EXISTS ONLY public.promotion_application_method DROP CONSTRAINT IF EXISTS promotion_application_method_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_variant_product_image DROP CONSTRAINT IF EXISTS product_variant_product_image_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_variant_price_set DROP CONSTRAINT IF EXISTS product_variant_price_set_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_variant DROP CONSTRAINT IF EXISTS product_variant_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_variant_option DROP CONSTRAINT IF EXISTS product_variant_option_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_variant_inventory_item DROP CONSTRAINT IF EXISTS product_variant_inventory_item_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_type DROP CONSTRAINT IF EXISTS product_type_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_tags DROP CONSTRAINT IF EXISTS product_tags_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_tag DROP CONSTRAINT IF EXISTS product_tag_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_shipping_profile DROP CONSTRAINT IF EXISTS product_shipping_profile_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_sales_channel DROP CONSTRAINT IF EXISTS product_sales_channel_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_product_option_value DROP CONSTRAINT IF EXISTS product_product_option_value_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_product_option DROP CONSTRAINT IF EXISTS product_product_option_pkey;
-ALTER TABLE IF EXISTS ONLY public.product DROP CONSTRAINT IF EXISTS product_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_option_value DROP CONSTRAINT IF EXISTS product_option_value_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_option DROP CONSTRAINT IF EXISTS product_option_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_collection DROP CONSTRAINT IF EXISTS product_collection_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_category_product DROP CONSTRAINT IF EXISTS product_category_product_pkey;
-ALTER TABLE IF EXISTS ONLY public.product_category DROP CONSTRAINT IF EXISTS product_category_pkey;
-ALTER TABLE IF EXISTS ONLY public.price_set DROP CONSTRAINT IF EXISTS price_set_pkey;
-ALTER TABLE IF EXISTS ONLY public.price_rule DROP CONSTRAINT IF EXISTS price_rule_pkey;
-ALTER TABLE IF EXISTS ONLY public.price_preference DROP CONSTRAINT IF EXISTS price_preference_pkey;
-ALTER TABLE IF EXISTS ONLY public.price DROP CONSTRAINT IF EXISTS price_pkey;
-ALTER TABLE IF EXISTS ONLY public.price_list_rule DROP CONSTRAINT IF EXISTS price_list_rule_pkey;
-ALTER TABLE IF EXISTS ONLY public.price_list DROP CONSTRAINT IF EXISTS price_list_pkey;
-ALTER TABLE IF EXISTS ONLY public.payment_session DROP CONSTRAINT IF EXISTS payment_session_pkey;
-ALTER TABLE IF EXISTS ONLY public.payment_provider DROP CONSTRAINT IF EXISTS payment_provider_pkey;
-ALTER TABLE IF EXISTS ONLY public.payment DROP CONSTRAINT IF EXISTS payment_pkey;
-ALTER TABLE IF EXISTS ONLY public.payment_collection DROP CONSTRAINT IF EXISTS payment_collection_pkey;
-ALTER TABLE IF EXISTS ONLY public.payment_collection_payment_providers DROP CONSTRAINT IF EXISTS payment_collection_payment_providers_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_transaction DROP CONSTRAINT IF EXISTS order_transaction_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_summary DROP CONSTRAINT IF EXISTS order_summary_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_shipping DROP CONSTRAINT IF EXISTS order_shipping_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_shipping_method_tax_line DROP CONSTRAINT IF EXISTS order_shipping_method_tax_line_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_shipping_method DROP CONSTRAINT IF EXISTS order_shipping_method_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_shipping_method_adjustment DROP CONSTRAINT IF EXISTS order_shipping_method_adjustment_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_promotion DROP CONSTRAINT IF EXISTS order_promotion_pkey;
-ALTER TABLE IF EXISTS ONLY public."order" DROP CONSTRAINT IF EXISTS order_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_payment_collection DROP CONSTRAINT IF EXISTS order_payment_collection_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_line_item_tax_line DROP CONSTRAINT IF EXISTS order_line_item_tax_line_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_line_item DROP CONSTRAINT IF EXISTS order_line_item_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_line_item_adjustment DROP CONSTRAINT IF EXISTS order_line_item_adjustment_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_item DROP CONSTRAINT IF EXISTS order_item_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_fulfillment DROP CONSTRAINT IF EXISTS order_fulfillment_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_exchange DROP CONSTRAINT IF EXISTS order_exchange_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_exchange_item DROP CONSTRAINT IF EXISTS order_exchange_item_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_credit_line DROP CONSTRAINT IF EXISTS order_credit_line_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_claim DROP CONSTRAINT IF EXISTS order_claim_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_claim_item DROP CONSTRAINT IF EXISTS order_claim_item_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_claim_item_image DROP CONSTRAINT IF EXISTS order_claim_item_image_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_change DROP CONSTRAINT IF EXISTS order_change_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_change_action DROP CONSTRAINT IF EXISTS order_change_action_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_cart DROP CONSTRAINT IF EXISTS order_cart_pkey;
-ALTER TABLE IF EXISTS ONLY public.order_address DROP CONSTRAINT IF EXISTS order_address_pkey;
-ALTER TABLE IF EXISTS ONLY public.notification_provider DROP CONSTRAINT IF EXISTS notification_provider_pkey;
-ALTER TABLE IF EXISTS ONLY public.notification DROP CONSTRAINT IF EXISTS notification_pkey;
-ALTER TABLE IF EXISTS ONLY public.mikro_orm_migrations DROP CONSTRAINT IF EXISTS mikro_orm_migrations_pkey;
-ALTER TABLE IF EXISTS ONLY public.location_fulfillment_set DROP CONSTRAINT IF EXISTS location_fulfillment_set_pkey;
-ALTER TABLE IF EXISTS ONLY public.location_fulfillment_provider DROP CONSTRAINT IF EXISTS location_fulfillment_provider_pkey;
-ALTER TABLE IF EXISTS ONLY public.link_module_migrations DROP CONSTRAINT IF EXISTS link_module_migrations_table_name_key;
-ALTER TABLE IF EXISTS ONLY public.link_module_migrations DROP CONSTRAINT IF EXISTS link_module_migrations_pkey;
-ALTER TABLE IF EXISTS ONLY public.layout_configuration DROP CONSTRAINT IF EXISTS layout_configuration_pkey;
-ALTER TABLE IF EXISTS ONLY public.invite_rbac_role DROP CONSTRAINT IF EXISTS invite_rbac_role_pkey;
-ALTER TABLE IF EXISTS ONLY public.invite DROP CONSTRAINT IF EXISTS invite_pkey;
-ALTER TABLE IF EXISTS ONLY public.inventory_level DROP CONSTRAINT IF EXISTS inventory_level_pkey;
-ALTER TABLE IF EXISTS ONLY public.inventory_item DROP CONSTRAINT IF EXISTS inventory_item_pkey;
-ALTER TABLE IF EXISTS ONLY public.image DROP CONSTRAINT IF EXISTS image_pkey;
-ALTER TABLE IF EXISTS ONLY public.geo_zone DROP CONSTRAINT IF EXISTS geo_zone_pkey;
-ALTER TABLE IF EXISTS ONLY public.fulfillment_set DROP CONSTRAINT IF EXISTS fulfillment_set_pkey;
-ALTER TABLE IF EXISTS ONLY public.fulfillment_provider DROP CONSTRAINT IF EXISTS fulfillment_provider_pkey;
-ALTER TABLE IF EXISTS ONLY public.fulfillment DROP CONSTRAINT IF EXISTS fulfillment_pkey;
-ALTER TABLE IF EXISTS ONLY public.fulfillment_label DROP CONSTRAINT IF EXISTS fulfillment_label_pkey;
-ALTER TABLE IF EXISTS ONLY public.fulfillment_item DROP CONSTRAINT IF EXISTS fulfillment_item_pkey;
-ALTER TABLE IF EXISTS ONLY public.fulfillment_address DROP CONSTRAINT IF EXISTS fulfillment_address_pkey;
-ALTER TABLE IF EXISTS ONLY public.customer DROP CONSTRAINT IF EXISTS customer_pkey;
-ALTER TABLE IF EXISTS ONLY public.customer_group DROP CONSTRAINT IF EXISTS customer_group_pkey;
-ALTER TABLE IF EXISTS ONLY public.customer_group_customer DROP CONSTRAINT IF EXISTS customer_group_customer_pkey;
-ALTER TABLE IF EXISTS ONLY public.customer_address DROP CONSTRAINT IF EXISTS customer_address_pkey;
-ALTER TABLE IF EXISTS ONLY public.customer_account_holder DROP CONSTRAINT IF EXISTS customer_account_holder_pkey;
-ALTER TABLE IF EXISTS ONLY public.currency DROP CONSTRAINT IF EXISTS currency_pkey;
-ALTER TABLE IF EXISTS ONLY public.credit_line DROP CONSTRAINT IF EXISTS credit_line_pkey;
-ALTER TABLE IF EXISTS ONLY public.cart_shipping_method_tax_line DROP CONSTRAINT IF EXISTS cart_shipping_method_tax_line_pkey;
-ALTER TABLE IF EXISTS ONLY public.cart_shipping_method DROP CONSTRAINT IF EXISTS cart_shipping_method_pkey;
-ALTER TABLE IF EXISTS ONLY public.cart_shipping_method_adjustment DROP CONSTRAINT IF EXISTS cart_shipping_method_adjustment_pkey;
-ALTER TABLE IF EXISTS ONLY public.cart_promotion DROP CONSTRAINT IF EXISTS cart_promotion_pkey;
-ALTER TABLE IF EXISTS ONLY public.cart DROP CONSTRAINT IF EXISTS cart_pkey;
-ALTER TABLE IF EXISTS ONLY public.cart_payment_collection DROP CONSTRAINT IF EXISTS cart_payment_collection_pkey;
-ALTER TABLE IF EXISTS ONLY public.cart_line_item_tax_line DROP CONSTRAINT IF EXISTS cart_line_item_tax_line_pkey;
-ALTER TABLE IF EXISTS ONLY public.cart_line_item DROP CONSTRAINT IF EXISTS cart_line_item_pkey;
-ALTER TABLE IF EXISTS ONLY public.cart_line_item_adjustment DROP CONSTRAINT IF EXISTS cart_line_item_adjustment_pkey;
-ALTER TABLE IF EXISTS ONLY public.cart_address DROP CONSTRAINT IF EXISTS cart_address_pkey;
-ALTER TABLE IF EXISTS ONLY public.capture DROP CONSTRAINT IF EXISTS capture_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_verification DROP CONSTRAINT IF EXISTS auth_verification_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_password_reset_token DROP CONSTRAINT IF EXISTS auth_password_reset_token_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_mfa_recovery_code DROP CONSTRAINT IF EXISTS auth_mfa_recovery_code_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_mfa_factor DROP CONSTRAINT IF EXISTS auth_mfa_factor_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_identity DROP CONSTRAINT IF EXISTS auth_identity_pkey;
-ALTER TABLE IF EXISTS ONLY public.application_method_target_rules DROP CONSTRAINT IF EXISTS application_method_target_rules_pkey;
-ALTER TABLE IF EXISTS ONLY public.application_method_buy_rules DROP CONSTRAINT IF EXISTS application_method_buy_rules_pkey;
-ALTER TABLE IF EXISTS ONLY public.api_key DROP CONSTRAINT IF EXISTS api_key_pkey;
-ALTER TABLE IF EXISTS ONLY public.account_holder DROP CONSTRAINT IF EXISTS account_holder_pkey;
-ALTER TABLE IF EXISTS public.script_migrations ALTER COLUMN id DROP DEFAULT;
-ALTER TABLE IF EXISTS public.return ALTER COLUMN display_id DROP DEFAULT;
-ALTER TABLE IF EXISTS public.order_exchange ALTER COLUMN display_id DROP DEFAULT;
-ALTER TABLE IF EXISTS public.order_claim ALTER COLUMN display_id DROP DEFAULT;
-ALTER TABLE IF EXISTS public.order_change_action ALTER COLUMN ordering DROP DEFAULT;
-ALTER TABLE IF EXISTS public."order" ALTER COLUMN display_id DROP DEFAULT;
-ALTER TABLE IF EXISTS public.mikro_orm_migrations ALTER COLUMN id DROP DEFAULT;
-ALTER TABLE IF EXISTS public.link_module_migrations ALTER COLUMN id DROP DEFAULT;
-DROP TABLE IF EXISTS public.workflow_execution;
-DROP TABLE IF EXISTS public.view_configuration;
-DROP TABLE IF EXISTS public.user_rbac_role;
-DROP TABLE IF EXISTS public.user_preference;
-DROP TABLE IF EXISTS public."user";
-DROP TABLE IF EXISTS public.tax_region;
-DROP TABLE IF EXISTS public.tax_rate_rule;
-DROP TABLE IF EXISTS public.tax_rate;
-DROP TABLE IF EXISTS public.tax_provider;
-DROP TABLE IF EXISTS public.store_locale;
-DROP TABLE IF EXISTS public.store_currency;
-DROP TABLE IF EXISTS public.store;
-DROP TABLE IF EXISTS public.stock_location_address;
-DROP TABLE IF EXISTS public.stock_location;
-DROP TABLE IF EXISTS public.shipping_profile;
-DROP TABLE IF EXISTS public.shipping_option_type;
-DROP TABLE IF EXISTS public.shipping_option_rule;
-DROP TABLE IF EXISTS public.shipping_option_price_set;
-DROP TABLE IF EXISTS public.shipping_option;
-DROP TABLE IF EXISTS public.service_zone;
-DROP TABLE IF EXISTS public.search_postgres_index;
-DROP TABLE IF EXISTS public.search_pg_product_v1;
-DROP TABLE IF EXISTS public.search_index_version;
-DROP TABLE IF EXISTS public.search_index_sync;
-DROP TABLE IF EXISTS public.search_index;
-DROP SEQUENCE IF EXISTS public.script_migrations_id_seq;
-DROP TABLE IF EXISTS public.script_migrations;
-DROP TABLE IF EXISTS public.sales_channel_stock_location;
-DROP TABLE IF EXISTS public.sales_channel;
-DROP TABLE IF EXISTS public.return_reason;
-DROP TABLE IF EXISTS public.return_item;
-DROP TABLE IF EXISTS public.return_fulfillment;
-DROP SEQUENCE IF EXISTS public.return_display_id_seq;
-DROP TABLE IF EXISTS public.return;
-DROP TABLE IF EXISTS public.reservation_item;
-DROP TABLE IF EXISTS public.region_payment_provider;
-DROP TABLE IF EXISTS public.region_country;
-DROP TABLE IF EXISTS public.region;
-DROP TABLE IF EXISTS public.refund_reason;
-DROP TABLE IF EXISTS public.refund;
-DROP TABLE IF EXISTS public.publishable_api_key_sales_channel;
-DROP TABLE IF EXISTS public.provider_identity;
-DROP TABLE IF EXISTS public.property_label;
-DROP TABLE IF EXISTS public.promotion_rule_value;
-DROP TABLE IF EXISTS public.promotion_rule;
-DROP TABLE IF EXISTS public.promotion_promotion_rule;
-DROP TABLE IF EXISTS public.promotion_campaign_budget_usage;
-DROP TABLE IF EXISTS public.promotion_campaign_budget;
-DROP TABLE IF EXISTS public.promotion_campaign;
-DROP TABLE IF EXISTS public.promotion_application_method;
-DROP TABLE IF EXISTS public.promotion;
-DROP TABLE IF EXISTS public.product_variant_product_image;
-DROP TABLE IF EXISTS public.product_variant_price_set;
-DROP TABLE IF EXISTS public.product_variant_option;
-DROP TABLE IF EXISTS public.product_variant_inventory_item;
-DROP TABLE IF EXISTS public.product_variant;
-DROP TABLE IF EXISTS public.product_type;
-DROP TABLE IF EXISTS public.product_tags;
-DROP TABLE IF EXISTS public.product_tag;
-DROP TABLE IF EXISTS public.product_shipping_profile;
-DROP TABLE IF EXISTS public.product_sales_channel;
-DROP TABLE IF EXISTS public.product_product_option_value;
-DROP TABLE IF EXISTS public.product_product_option;
-DROP TABLE IF EXISTS public.product_option_value;
-DROP TABLE IF EXISTS public.product_option;
-DROP TABLE IF EXISTS public.product_collection;
-DROP TABLE IF EXISTS public.product_category_product;
-DROP TABLE IF EXISTS public.product_category;
-DROP TABLE IF EXISTS public.product;
-DROP TABLE IF EXISTS public.price_set;
-DROP TABLE IF EXISTS public.price_rule;
-DROP TABLE IF EXISTS public.price_preference;
-DROP TABLE IF EXISTS public.price_list_rule;
-DROP TABLE IF EXISTS public.price_list;
-DROP TABLE IF EXISTS public.price;
-DROP TABLE IF EXISTS public.payment_session;
-DROP TABLE IF EXISTS public.payment_provider;
-DROP TABLE IF EXISTS public.payment_collection_payment_providers;
-DROP TABLE IF EXISTS public.payment_collection;
-DROP TABLE IF EXISTS public.payment;
-DROP TABLE IF EXISTS public.order_transaction;
-DROP TABLE IF EXISTS public.order_summary;
-DROP TABLE IF EXISTS public.order_shipping_method_tax_line;
-DROP TABLE IF EXISTS public.order_shipping_method_adjustment;
-DROP TABLE IF EXISTS public.order_shipping_method;
-DROP TABLE IF EXISTS public.order_shipping;
-DROP TABLE IF EXISTS public.order_promotion;
-DROP TABLE IF EXISTS public.order_payment_collection;
-DROP TABLE IF EXISTS public.order_line_item_tax_line;
-DROP TABLE IF EXISTS public.order_line_item_adjustment;
-DROP TABLE IF EXISTS public.order_line_item;
-DROP TABLE IF EXISTS public.order_item;
-DROP TABLE IF EXISTS public.order_fulfillment;
-DROP TABLE IF EXISTS public.order_exchange_item;
-DROP SEQUENCE IF EXISTS public.order_exchange_display_id_seq;
-DROP TABLE IF EXISTS public.order_exchange;
-DROP SEQUENCE IF EXISTS public.order_display_id_seq;
-DROP TABLE IF EXISTS public.order_credit_line;
-DROP TABLE IF EXISTS public.order_claim_item_image;
-DROP TABLE IF EXISTS public.order_claim_item;
-DROP SEQUENCE IF EXISTS public.order_claim_display_id_seq;
-DROP TABLE IF EXISTS public.order_claim;
-DROP SEQUENCE IF EXISTS public.order_change_action_ordering_seq;
-DROP TABLE IF EXISTS public.order_change_action;
-DROP TABLE IF EXISTS public.order_change;
-DROP TABLE IF EXISTS public.order_cart;
-DROP TABLE IF EXISTS public.order_address;
-DROP TABLE IF EXISTS public."order";
-DROP TABLE IF EXISTS public.notification_provider;
-DROP TABLE IF EXISTS public.notification;
-DROP SEQUENCE IF EXISTS public.mikro_orm_migrations_id_seq;
-DROP TABLE IF EXISTS public.mikro_orm_migrations;
-DROP TABLE IF EXISTS public.location_fulfillment_set;
-DROP TABLE IF EXISTS public.location_fulfillment_provider;
-DROP SEQUENCE IF EXISTS public.link_module_migrations_id_seq;
-DROP TABLE IF EXISTS public.link_module_migrations;
-DROP TABLE IF EXISTS public.layout_configuration;
-DROP TABLE IF EXISTS public.invite_rbac_role;
-DROP TABLE IF EXISTS public.invite;
-DROP TABLE IF EXISTS public.inventory_level;
-DROP TABLE IF EXISTS public.inventory_item;
-DROP TABLE IF EXISTS public.image;
-DROP TABLE IF EXISTS public.geo_zone;
-DROP TABLE IF EXISTS public.fulfillment_set;
-DROP TABLE IF EXISTS public.fulfillment_provider;
-DROP TABLE IF EXISTS public.fulfillment_label;
-DROP TABLE IF EXISTS public.fulfillment_item;
-DROP TABLE IF EXISTS public.fulfillment_address;
-DROP TABLE IF EXISTS public.fulfillment;
-DROP TABLE IF EXISTS public.customer_group_customer;
-DROP TABLE IF EXISTS public.customer_group;
-DROP TABLE IF EXISTS public.customer_address;
-DROP TABLE IF EXISTS public.customer_account_holder;
-DROP TABLE IF EXISTS public.customer;
-DROP TABLE IF EXISTS public.currency;
-DROP TABLE IF EXISTS public.credit_line;
-DROP TABLE IF EXISTS public.cart_shipping_method_tax_line;
-DROP TABLE IF EXISTS public.cart_shipping_method_adjustment;
-DROP TABLE IF EXISTS public.cart_shipping_method;
-DROP TABLE IF EXISTS public.cart_promotion;
-DROP TABLE IF EXISTS public.cart_payment_collection;
-DROP TABLE IF EXISTS public.cart_line_item_tax_line;
-DROP TABLE IF EXISTS public.cart_line_item_adjustment;
-DROP TABLE IF EXISTS public.cart_line_item;
-DROP TABLE IF EXISTS public.cart_address;
-DROP TABLE IF EXISTS public.cart;
-DROP TABLE IF EXISTS public.capture;
-DROP TABLE IF EXISTS public.auth_verification;
-DROP TABLE IF EXISTS public.auth_password_reset_token;
-DROP TABLE IF EXISTS public.auth_mfa_recovery_code;
-DROP TABLE IF EXISTS public.auth_mfa_factor;
-DROP TABLE IF EXISTS public.auth_identity;
-DROP TABLE IF EXISTS public.application_method_target_rules;
-DROP TABLE IF EXISTS public.application_method_buy_rules;
-DROP TABLE IF EXISTS public.api_key;
-DROP TABLE IF EXISTS public.account_holder;
-DROP TEXT SEARCH CONFIGURATION IF EXISTS public.medusa_search_english;
-DROP TYPE IF EXISTS public.return_status_enum;
-DROP TYPE IF EXISTS public.order_status_enum;
-DROP TYPE IF EXISTS public.order_claim_type_enum;
-DROP TYPE IF EXISTS public.claim_reason_enum;
-DROP EXTENSION IF EXISTS unaccent;
-DROP EXTENSION IF EXISTS pg_trgm;
 --
 -- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
 --
@@ -4717,23 +3846,37 @@ img_01M6RPEW0DMZE3H6006AKD8RB5	https://images.unsplash.com/photo-1600271886742-f
 img_01M6RPEW0DDNWRKDDJVA1QS5CG	https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 10:08:28.569-05	2026-11-06 11:29:22.139-05	2026-11-06 11:29:21.969-05	0	prod_01M6RPEW08K7G5BQ2AJVBNWSD8
 img_01M6RPEW0D4WWDCDHDSKQWBNBG	https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 10:08:28.569-05	2026-11-06 11:29:22.148-05	2026-11-06 11:29:21.969-05	0	prod_01M6RPEW08KKFEMGCR8DHA8253
 img_01M6RPEW0DFNWMQJW0XQ431KBZ	https://images.unsplash.com/photo-1584556812952-905ffd0c611a?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 10:08:28.569-05	2026-11-06 11:29:22.159-05	2026-11-06 11:29:21.969-05	0	prod_01M6RPEW089JG2ZHZMY25K7FKE
-img_01M6RV433YNXC0765V7Y0H2S1N	https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.287-05	2026-11-06 11:29:58.287-05	\N	0	prod_01M6RV433VXTN0Q3M4KFEPFEVY
-img_01M6RV433YR7SZTJCK8ZHXCXBS	https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.287-05	2026-11-06 11:29:58.287-05	\N	0	prod_01M6RV433VBXFP15V95A7WYZJ7
-img_01M6RV433ZFPGNNF0CXZVH713F	https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433V8QZPH3PNVY46ZNEP
-img_01M6RV433ZQFMW7CZZMKZ8HXCF	https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433VH280P701DXANFBRN
-img_01M6RV433ZACD4FZTYY5BEFRPF	https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433V3S45S2XK53QKXJG7
-img_01M6RV433ZG11GW1VEXJK3F2MN	https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433V6XR5MWQQ2R2HZK77
-img_01M6RV4340ZTAJ2JP5Y8DEAAP1	https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433VFVQK8CJ13HYDBF8C
-img_01M6RV4340MJF2QS54MSQD2VNF	https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433W5X97CNW0881T4HVS
-img_01M6RV4340Z6DBNQ0SCA06MHTT	https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433WAC11MFF8J8MYGGXV
-img_01M6RV43413876MQHV4RCFG53F	https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433WSANFXX1A1XPDAKKT
-img_01M6RV4341MBRRTT3T7TC5ZETA	https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433WHK3TK8WS4BB3NCD0
-img_01M6RV4341PYNGW9FES324X69X	https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433WTRZ4DGQ5HHJCEV93
-img_01M6RV4341T0AYP80JACR4YG6P	https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433W9FM6BGE5SP0V9VXE
-img_01M6RV4341AY7YE7GX4VSVTQBM	https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433WFGYYK1YXC74TA0VY
-img_01M6RV4342CQ7S0D58CSKB3B4V	https://images.unsplash.com/photo-1584556812952-905ffd0c611a?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-06 11:29:58.288-05	\N	0	prod_01M6RV433WKGNMKY7EYCP575XW
-img_01M6RZXMNZXECXZKDR2KCCXFY0	https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 12:53:49.759-05	2026-11-06 12:53:49.759-05	\N	0	prod_01M6RV433V2SMZXSHC9ET34Q7P
-img_01M6VRP835CAPDHRFF23VH9ZER	https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80	\N	2026-11-07 14:45:10.76-05	2026-11-07 14:45:10.76-05	\N	0	prod_01M6VRP832RAWH9B74NB480E0K
+img_01M6RV433ZG11GW1VEXJK3F2MN	https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.346-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433V6XR5MWQQ2R2HZK77
+img_01M6RV433YR7SZTJCK8ZHXCXBS	https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.287-05	2026-11-13 12:29:30.371-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433VBXFP15V95A7WYZJ7
+img_01M6RV4340ZTAJ2JP5Y8DEAAP1	https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.377-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433VFVQK8CJ13HYDBF8C
+img_01M6RV433ZQFMW7CZZMKZ8HXCF	https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.391-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433VH280P701DXANFBRN
+img_01M6RV4340MJF2QS54MSQD2VNF	https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.405-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433W5X97CNW0881T4HVS
+img_01M6RV433ZACD4FZTYY5BEFRPF	https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.47-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433V3S45S2XK53QKXJG7
+img_01M6RV433ZFPGNNF0CXZVH713F	https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.5-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433V8QZPH3PNVY46ZNEP
+img_01M6RV433YNXC0765V7Y0H2S1N	https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.287-05	2026-11-13 12:29:30.519-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433VXTN0Q3M4KFEPFEVY
+img_01M6RV4340Z6DBNQ0SCA06MHTT	https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.534-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433WAC11MFF8J8MYGGXV
+img_01M6RV43413876MQHV4RCFG53F	https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.587-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433WSANFXX1A1XPDAKKT
+img_01M6RV4341MBRRTT3T7TC5ZETA	https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.602-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433WHK3TK8WS4BB3NCD0
+img_01M6RV4341T0AYP80JACR4YG6P	https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.42-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433W9FM6BGE5SP0V9VXE
+img_01M6RV4341AY7YE7GX4VSVTQBM	https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.435-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433WFGYYK1YXC74TA0VY
+img_01M6RV4341PYNGW9FES324X69X	https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.447-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433WTRZ4DGQ5HHJCEV93
+img_01M6RZXMNZXECXZKDR2KCCXFY0	https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 12:53:49.759-05	2026-11-13 12:29:30.486-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433V2SMZXSHC9ET34Q7P
+img_01M6RV4342CQ7S0D58CSKB3B4V	https://images.unsplash.com/photo-1584556812952-905ffd0c611a?auto=format&fit=crop&w=800&q=80	\N	2026-11-06 11:29:58.288-05	2026-11-13 12:29:30.55-05	2026-11-13 12:29:30.322-05	0	prod_01M6RV433WKGNMKY7EYCP575XW
+img_01M6VRP835CAPDHRFF23VH9ZER	https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80	\N	2026-11-07 14:45:10.76-05	2026-11-13 12:29:30.571-05	2026-11-13 12:29:30.322-05	0	prod_01M6VRP832RAWH9B74NB480E0K
+img_01M7AZA5232BMMMW1BRN3PR98V	https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA520TTS02XMW50VKCR4X
+img_01M7AZA524XWDCQ8K50QK76BA3	https://images.unsplash.com/photo-1585751119414-ef2636f8aede?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA520XPX02GTD9DPE8H3Y
+img_01M7AZA5240156HGDHD20MDAA4	https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA520R524K5DKXMXK1FDZ
+img_01M7AZA525ESX4EBSMBHN0Y9P7	https://images.unsplash.com/photo-1607006314187-578f7e6f3d9d?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA52030S7D9MRA2BTE3QE
+img_01M7AZA5251S9DBBK65B4CDNYR	https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA520NC8Y5PYEFNZ5RSAT
+img_01M7AZA525E0NQSR16V9P3A0AF	https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA520BYDYSPPV7QHQNM0Q
+img_01M7AZA526A4H872EJZ83QRPC9	https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA520REMWA8TJH89AK0N6
+img_01M7AZA5261BFPRMZ7XEFKQPP4	https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA520MJ70VFJHQCYFE2Q4
+img_01M7AZA5260KJJGBZRZVMP030X	https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA5218VXYMT96TK0GX8AX
+img_01M7AZA527H6CYCD8ACFX7S3MF	https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA521FWZQH8VA4TS3G7BR
+img_01M7AZA527FP7369R46MEHHFD6	https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA521F3C8D1041RWKRJG3
+img_01M7AZA527WQCJ7H9T9P42R865	https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA521NY3ZRQF4AF4QV8RA
+img_01M7AZA527S60RGM62WYY9Z3XD	https://images.unsplash.com/photo-1576186726580-a816e8b12896?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA5214JSFNBG7DTF3KN16
+img_01M7AZA527YPKT6SXVHD744P6B	https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?auto=format&fit=crop&w=600&q=80	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	0	prod_01M7AZA521DSZC6NMT56S5K6KB
 \.
 
 
@@ -4802,40 +3945,40 @@ iitem_01M6RPEW62C5X092Z3CAKJJPCZ	2026-11-06 10:08:28.739-05	2026-11-06 11:29:21.
 iitem_01M6RPEW62Q3Y6BNEZDKHBBN9A	2026-11-06 10:08:28.739-05	2026-11-06 11:29:21.924-05	2026-11-06 11:29:21.757-05	MAYOR-DETERGENTE-LIQUIDO-ECOLOGICO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
 iitem_01M6RPEW62PSAQ2WMC8T3F48PH	2026-11-06 10:08:28.739-05	2026-11-06 11:29:21.928-05	2026-11-06 11:29:21.757-05	DETAL-PAPEL-HIGIENICO-TRIPLE-HOJA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
 iitem_01M6RPEW62ZSRBXA2T55XNY11J	2026-11-06 10:08:28.739-05	2026-11-06 11:29:21.932-05	2026-11-06 11:29:21.757-05	MAYOR-PAPEL-HIGIENICO-TRIPLE-HOJA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV439XM629J2W67DTV929B	2026-11-06 11:29:58.465-05	2026-11-06 11:29:58.465-05	\N	DETAL-AGUACATE-HASS-ORGANICO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV439XQNKF4MA8TRFYT6K5	2026-11-06 11:29:58.465-05	2026-11-06 11:29:58.465-05	\N	MAYOR-AGUACATE-HASS-ORGANICO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV439XS3J0XKTKYX8J1M2K	2026-11-06 11:29:58.465-05	2026-11-06 11:29:58.465-05	\N	DETAL-FRESAS-FRESCAS-500G	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV439XF008GP00GQKT2N7E	2026-11-06 11:29:58.465-05	2026-11-06 11:29:58.465-05	\N	MAYOR-FRESAS-FRESCAS-500G	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV439YGVAPYPMN55HEZM62	2026-11-06 11:29:58.465-05	2026-11-06 11:29:58.466-05	\N	DETAL-BANANO-ORGANICO-EXPORTACION	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV439YNGWKCF1ERHXG23SH	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-BANANO-ORGANICO-EXPORTACION	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV439Y08C5WDPJF3PYTHJP	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-CAFE-GRANO-ARTESANAL	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV439YCT9Y2KH49TH3B54A	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-CAFE-GRANO-ARTESANAL	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV439YEMQBWB1K4SQXT81R	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-ACEITE-OLIVA-VIRGEN-EXTRA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV439YG3SWBN0KJSVA46DZ	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-ACEITE-OLIVA-VIRGEN-EXTRA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV439Y1P551YKDPFYZEKTS	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-ARROZ-BLANCO-EXTRA-GRANO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV439Z3JY3BHRK2K9J8QTZ	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-ARROZ-BLANCO-EXTRA-GRANO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV439ZPB7WNZ0ERAEPDDYP	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-PAN-ARTESANAL-MASA-MADRE	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV439Z7D8XX7RY0H61P7WF	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-PAN-ARTESANAL-MASA-MADRE	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV439Z4YGKFSMP7SX8ZTNE	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-LECHE-ENTERA-FRESCA-1L	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV439Z6EQFMAC1RSRB0ME7	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-LECHE-ENTERA-FRESCA-1L	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV439ZMBXK2EPJXA344XK6	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-HUEVOS-CAMPEROS-DOCENA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV439ZQAJ5D2S4DQ73KF93	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-HUEVOS-CAMPEROS-DOCENA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV439Z5R5SWHXEYS5D2124	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-QUESO-MOZZARELLA-FRESCO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV439ZCMKFZJKKEF1SCPY4	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-QUESO-MOZZARELLA-FRESCO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV439ZXB9KBYPPFK9JPZJM	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-LOMO-RES-MADURADO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV43A0CE1XXG7J1KP5S7ZV	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-LOMO-RES-MADURADO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV43A0TGDSD2M9QB5C82ZR	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-PECHUGA-POLLO-FRESCA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV43A059BZ9RFGVBX7FK7G	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-PECHUGA-POLLO-FRESCA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV43A0YRMED8HC4RE4GHPR	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-JUGO-NARANJA-EXPRIMIDO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV43A00DSBMSYN3J485BG7	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-JUGO-NARANJA-EXPRIMIDO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV43A0HQ97JSMCFFCBBZJ0	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-AGUA-MINERAL-MANANTIAL	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV43A0Q16DHWHNV44Y16JJ	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-AGUA-MINERAL-MANANTIAL	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV43A0FXDQKHYZM5P1FZDX	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-DETERGENTE-LIQUIDO-ECOLOGICO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV43A1B5HDFHRSPD8HKP85	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-DETERGENTE-LIQUIDO-ECOLOGICO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6RV43A1EQTDJ4WVDMY1JP5G	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	DETAL-PAPEL-HIGIENICO-TRIPLE-HOJA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6RV43A1C5EEXGYE9G7SH84A	2026-11-06 11:29:58.466-05	2026-11-06 11:29:58.466-05	\N	MAYOR-PAPEL-HIGIENICO-TRIPLE-HOJA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
-iitem_01M6VRP89F6NG3CWJYRSFQ6K45	2026-11-07 14:45:10.959-05	2026-11-07 14:45:10.959-05	\N	DETAL-7702025102004	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
-iitem_01M6VRP89FA5756PX1E58M8S1G	2026-11-07 14:45:10.96-05	2026-11-07 14:45:10.96-05	\N	MAYOR-7702025102004	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV439XM629J2W67DTV929B	2026-11-06 11:29:58.465-05	2026-11-13 12:29:30.089-05	2026-11-13 12:29:30.088-05	DETAL-AGUACATE-HASS-ORGANICO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV439XQNKF4MA8TRFYT6K5	2026-11-06 11:29:58.465-05	2026-11-13 12:29:30.109-05	2026-11-13 12:29:30.088-05	MAYOR-AGUACATE-HASS-ORGANICO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV439XS3J0XKTKYX8J1M2K	2026-11-06 11:29:58.465-05	2026-11-13 12:29:30.123-05	2026-11-13 12:29:30.088-05	DETAL-FRESAS-FRESCAS-500G	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV439XF008GP00GQKT2N7E	2026-11-06 11:29:58.465-05	2026-11-13 12:29:30.128-05	2026-11-13 12:29:30.088-05	MAYOR-FRESAS-FRESCAS-500G	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV439Y08C5WDPJF3PYTHJP	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.154-05	2026-11-13 12:29:30.088-05	DETAL-CAFE-GRANO-ARTESANAL	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV439YGVAPYPMN55HEZM62	2026-11-06 11:29:58.465-05	2026-11-13 12:29:30.134-05	2026-11-13 12:29:30.088-05	DETAL-BANANO-ORGANICO-EXPORTACION	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV439YNGWKCF1ERHXG23SH	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.149-05	2026-11-13 12:29:30.088-05	MAYOR-BANANO-ORGANICO-EXPORTACION	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV439YCT9Y2KH49TH3B54A	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.158-05	2026-11-13 12:29:30.088-05	MAYOR-CAFE-GRANO-ARTESANAL	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV439YEMQBWB1K4SQXT81R	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.162-05	2026-11-13 12:29:30.088-05	DETAL-ACEITE-OLIVA-VIRGEN-EXTRA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV439YG3SWBN0KJSVA46DZ	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.167-05	2026-11-13 12:29:30.088-05	MAYOR-ACEITE-OLIVA-VIRGEN-EXTRA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV439Y1P551YKDPFYZEKTS	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.171-05	2026-11-13 12:29:30.088-05	DETAL-ARROZ-BLANCO-EXTRA-GRANO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV439Z3JY3BHRK2K9J8QTZ	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.175-05	2026-11-13 12:29:30.088-05	MAYOR-ARROZ-BLANCO-EXTRA-GRANO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV439ZPB7WNZ0ERAEPDDYP	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.179-05	2026-11-13 12:29:30.088-05	DETAL-PAN-ARTESANAL-MASA-MADRE	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV439Z7D8XX7RY0H61P7WF	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.183-05	2026-11-13 12:29:30.088-05	MAYOR-PAN-ARTESANAL-MASA-MADRE	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV439Z4YGKFSMP7SX8ZTNE	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.188-05	2026-11-13 12:29:30.088-05	DETAL-LECHE-ENTERA-FRESCA-1L	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV439Z6EQFMAC1RSRB0ME7	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.192-05	2026-11-13 12:29:30.088-05	MAYOR-LECHE-ENTERA-FRESCA-1L	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV439ZMBXK2EPJXA344XK6	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.195-05	2026-11-13 12:29:30.088-05	DETAL-HUEVOS-CAMPEROS-DOCENA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV439ZQAJ5D2S4DQ73KF93	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.2-05	2026-11-13 12:29:30.088-05	MAYOR-HUEVOS-CAMPEROS-DOCENA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV439Z5R5SWHXEYS5D2124	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.206-05	2026-11-13 12:29:30.088-05	DETAL-QUESO-MOZZARELLA-FRESCO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV439ZCMKFZJKKEF1SCPY4	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.21-05	2026-11-13 12:29:30.088-05	MAYOR-QUESO-MOZZARELLA-FRESCO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV439ZXB9KBYPPFK9JPZJM	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.214-05	2026-11-13 12:29:30.088-05	DETAL-LOMO-RES-MADURADO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV43A0CE1XXG7J1KP5S7ZV	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.219-05	2026-11-13 12:29:30.088-05	MAYOR-LOMO-RES-MADURADO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV43A0TGDSD2M9QB5C82ZR	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.223-05	2026-11-13 12:29:30.088-05	DETAL-PECHUGA-POLLO-FRESCA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV43A059BZ9RFGVBX7FK7G	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.227-05	2026-11-13 12:29:30.088-05	MAYOR-PECHUGA-POLLO-FRESCA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV43A0YRMED8HC4RE4GHPR	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.233-05	2026-11-13 12:29:30.088-05	DETAL-JUGO-NARANJA-EXPRIMIDO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV43A00DSBMSYN3J485BG7	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.238-05	2026-11-13 12:29:30.088-05	MAYOR-JUGO-NARANJA-EXPRIMIDO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV43A0HQ97JSMCFFCBBZJ0	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.242-05	2026-11-13 12:29:30.088-05	DETAL-AGUA-MINERAL-MANANTIAL	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV43A0Q16DHWHNV44Y16JJ	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.246-05	2026-11-13 12:29:30.088-05	MAYOR-AGUA-MINERAL-MANANTIAL	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV43A0FXDQKHYZM5P1FZDX	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.252-05	2026-11-13 12:29:30.088-05	DETAL-DETERGENTE-LIQUIDO-ECOLOGICO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV43A1B5HDFHRSPD8HKP85	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.257-05	2026-11-13 12:29:30.088-05	MAYOR-DETERGENTE-LIQUIDO-ECOLOGICO	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6RV43A1EQTDJ4WVDMY1JP5G	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.261-05	2026-11-13 12:29:30.088-05	DETAL-PAPEL-HIGIENICO-TRIPLE-HOJA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6RV43A1C5EEXGYE9G7SH84A	2026-11-06 11:29:58.466-05	2026-11-13 12:29:30.267-05	2026-11-13 12:29:30.088-05	MAYOR-PAPEL-HIGIENICO-TRIPLE-HOJA	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
+iitem_01M6VRP89F6NG3CWJYRSFQ6K45	2026-11-07 14:45:10.959-05	2026-11-13 12:29:30.273-05	2026-11-13 12:29:30.088-05	DETAL-7702025102004	\N	\N	\N	\N	\N	\N	\N	\N	t	Al Detal (Unidad)	Al Detal (Unidad)	\N	\N	\N
+iitem_01M6VRP89FA5756PX1E58M8S1G	2026-11-07 14:45:10.96-05	2026-11-13 12:29:30.277-05	2026-11-13 12:29:30.088-05	MAYOR-7702025102004	\N	\N	\N	\N	\N	\N	\N	\N	t	Al por Mayor (Caja / Bulto)	Al por Mayor (Caja / Bulto)	\N	\N	\N
 \.
 
 
@@ -4904,40 +4047,40 @@ ilev_01M6RPEWMZT5YRGBMW1QNQKWC2	2026-11-06 10:08:29.216-05	2026-11-06 11:29:21.9
 ilev_01M6RPEWN0CYFCFHEYP3V1TENS	2026-11-06 10:08:29.216-05	2026-11-06 11:29:21.927-05	2026-11-06 11:29:21.757-05	iitem_01M6RPEW62Q3Y6BNEZDKHBBN9A	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
 ilev_01M6RPEWMZTPN7KSDV6N9QWW58	2026-11-06 10:08:29.216-05	2026-11-06 11:29:21.931-05	2026-11-06 11:29:21.757-05	iitem_01M6RPEW62PSAQ2WMC8T3F48PH	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
 ilev_01M6RPEWN0AN90DWMFAMEXQRKX	2026-11-06 10:08:29.216-05	2026-11-06 11:29:21.936-05	2026-11-06 11:29:21.757-05	iitem_01M6RPEW62ZSRBXA2T55XNY11J	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V5M7973711HMX12PDK	2026-11-06 11:29:59.016-05	2026-11-06 11:29:59.016-05	\N	iitem_01M6RV439XF008GP00GQKT2N7E	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V518763B3MADCW3XM4	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439XM629J2W67DTV929B	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V5D9SD975DGFWENEFP	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439XQNKF4MA8TRFYT6K5	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V5Q5THH0T43JRQWN89	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439XS3J0XKTKYX8J1M2K	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V6DYEQV4FEEH5RAPJ7	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439Y08C5WDPJF3PYTHJP	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V6ZVWEF1AK7CD3ZCC7	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439Y1P551YKDPFYZEKTS	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V69HMSV4T8V6MXKCYS	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439YCT9Y2KH49TH3B54A	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V6KRJTRASD0ZTMBBWJ	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439YEMQBWB1K4SQXT81R	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V6NSKSX8XQ2KJR4WHE	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439YG3SWBN0KJSVA46DZ	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V6MXBQ6XXAYWSS2JG7	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439YGVAPYPMN55HEZM62	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V64CBMH1DN217V70TC	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439YNGWKCF1ERHXG23SH	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V6R6TT35ZZRE6TFTKG	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439Z3JY3BHRK2K9J8QTZ	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V6S1SCSDZQ905CM2N4	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439Z4YGKFSMP7SX8ZTNE	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V7TKQ5J5GDN7BWG4G2	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439Z5R5SWHXEYS5D2124	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V7NMF93P4RR01DA1MF	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439Z6EQFMAC1RSRB0ME7	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V7QRCNNXD7PBA8BB5N	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439Z7D8XX7RY0H61P7WF	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V711J00HDCR8SSSQ64	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439ZCMKFZJKKEF1SCPY4	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V7P25GN5JE7ZZ71K52	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439ZMBXK2EPJXA344XK6	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V77GGVBYZFC6PH536H	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439ZPB7WNZ0ERAEPDDYP	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V7RVKS42M0T7K3Q8DZ	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439ZQAJ5D2S4DQ73KF93	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V795VSSM011EX7C1HX	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV439ZXB9KBYPPFK9JPZJM	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V77HBRZNY9GS8C8RAZ	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV43A00DSBMSYN3J485BG7	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V72H3AVSEX58YAM43E	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV43A059BZ9RFGVBX7FK7G	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V7G6RCAG622V1WNJN6	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV43A0CE1XXG7J1KP5S7ZV	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V8JHRWRGD25CHDYXCY	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV43A0FXDQKHYZM5P1FZDX	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V8E5PAYA6ASSQ525GT	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV43A0HQ97JSMCFFCBBZJ0	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V8MR3Y4H032EE6ZJQM	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV43A0Q16DHWHNV44Y16JJ	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V82FAZ351W1XWEWEF8	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV43A0TGDSD2M9QB5C82ZR	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V8W8TCHXWRZE2K8NAE	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV43A0YRMED8HC4RE4GHPR	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V83A8ZH8FK3TYXFHYF	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV43A1B5HDFHRSPD8HKP85	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V8V9QABDQRW09KR7EJ	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV43A1C5EEXGYE9G7SH84A	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6RV43V8KSPCVFDJTYSY0N3H	2026-11-06 11:29:59.017-05	2026-11-06 11:29:59.017-05	\N	iitem_01M6RV43A1EQTDJ4WVDMY1JP5G	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6VRP8E169PV9G7E8CW0ZEV1	2026-11-07 14:45:11.106-05	2026-11-07 14:45:11.106-05	\N	iitem_01M6VRP89F6NG3CWJYRSFQ6K45	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	500	0	0	\N	{"value": "500", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
-ilev_01M6VRP8E13MDC07AX00VPFVMR	2026-11-07 14:45:11.106-05	2026-11-07 14:45:11.106-05	\N	iitem_01M6VRP89FA5756PX1E58M8S1G	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	500	0	0	\N	{"value": "500", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V518763B3MADCW3XM4	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.109-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439XM629J2W67DTV929B	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V5D9SD975DGFWENEFP	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.123-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439XQNKF4MA8TRFYT6K5	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V5Q5THH0T43JRQWN89	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.128-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439XS3J0XKTKYX8J1M2K	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V5M7973711HMX12PDK	2026-11-06 11:29:59.016-05	2026-11-13 12:29:30.134-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439XF008GP00GQKT2N7E	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V6MXBQ6XXAYWSS2JG7	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.149-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439YGVAPYPMN55HEZM62	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V64CBMH1DN217V70TC	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.154-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439YNGWKCF1ERHXG23SH	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V6DYEQV4FEEH5RAPJ7	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.158-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439Y08C5WDPJF3PYTHJP	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V69HMSV4T8V6MXKCYS	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.161-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439YCT9Y2KH49TH3B54A	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V6KRJTRASD0ZTMBBWJ	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.166-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439YEMQBWB1K4SQXT81R	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V6NSKSX8XQ2KJR4WHE	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.171-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439YG3SWBN0KJSVA46DZ	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V6ZVWEF1AK7CD3ZCC7	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.175-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439Y1P551YKDPFYZEKTS	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V6R6TT35ZZRE6TFTKG	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.179-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439Z3JY3BHRK2K9J8QTZ	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V77GGVBYZFC6PH536H	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.183-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439ZPB7WNZ0ERAEPDDYP	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V7QRCNNXD7PBA8BB5N	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.187-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439Z7D8XX7RY0H61P7WF	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V6S1SCSDZQ905CM2N4	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.191-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439Z4YGKFSMP7SX8ZTNE	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V7NMF93P4RR01DA1MF	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.195-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439Z6EQFMAC1RSRB0ME7	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V7P25GN5JE7ZZ71K52	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.2-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439ZMBXK2EPJXA344XK6	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V7RVKS42M0T7K3Q8DZ	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.205-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439ZQAJ5D2S4DQ73KF93	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V7TKQ5J5GDN7BWG4G2	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.209-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439Z5R5SWHXEYS5D2124	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V711J00HDCR8SSSQ64	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.213-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439ZCMKFZJKKEF1SCPY4	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V795VSSM011EX7C1HX	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.218-05	2026-11-13 12:29:30.088-05	iitem_01M6RV439ZXB9KBYPPFK9JPZJM	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V7G6RCAG622V1WNJN6	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.223-05	2026-11-13 12:29:30.088-05	iitem_01M6RV43A0CE1XXG7J1KP5S7ZV	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V82FAZ351W1XWEWEF8	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.227-05	2026-11-13 12:29:30.088-05	iitem_01M6RV43A0TGDSD2M9QB5C82ZR	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V72H3AVSEX58YAM43E	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.232-05	2026-11-13 12:29:30.088-05	iitem_01M6RV43A059BZ9RFGVBX7FK7G	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V8W8TCHXWRZE2K8NAE	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.237-05	2026-11-13 12:29:30.088-05	iitem_01M6RV43A0YRMED8HC4RE4GHPR	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V77HBRZNY9GS8C8RAZ	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.241-05	2026-11-13 12:29:30.088-05	iitem_01M6RV43A00DSBMSYN3J485BG7	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V8E5PAYA6ASSQ525GT	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.245-05	2026-11-13 12:29:30.088-05	iitem_01M6RV43A0HQ97JSMCFFCBBZJ0	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V8MR3Y4H032EE6ZJQM	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.251-05	2026-11-13 12:29:30.088-05	iitem_01M6RV43A0Q16DHWHNV44Y16JJ	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V8JHRWRGD25CHDYXCY	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.256-05	2026-11-13 12:29:30.088-05	iitem_01M6RV43A0FXDQKHYZM5P1FZDX	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V83A8ZH8FK3TYXFHYF	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.26-05	2026-11-13 12:29:30.088-05	iitem_01M6RV43A1B5HDFHRSPD8HKP85	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V8KSPCVFDJTYSY0N3H	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.266-05	2026-11-13 12:29:30.088-05	iitem_01M6RV43A1EQTDJ4WVDMY1JP5G	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6RV43V8V9QABDQRW09KR7EJ	2026-11-06 11:29:59.017-05	2026-11-13 12:29:30.272-05	2026-11-13 12:29:30.088-05	iitem_01M6RV43A1C5EEXGYE9G7SH84A	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	1000	0	0	\N	{"value": "1000", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6VRP8E169PV9G7E8CW0ZEV1	2026-11-07 14:45:11.106-05	2026-11-13 12:29:30.277-05	2026-11-13 12:29:30.088-05	iitem_01M6VRP89F6NG3CWJYRSFQ6K45	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	500	0	0	\N	{"value": "500", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
+ilev_01M6VRP8E13MDC07AX00VPFVMR	2026-11-07 14:45:11.106-05	2026-11-13 12:29:30.281-05	2026-11-13 12:29:30.088-05	iitem_01M6VRP89FA5756PX1E58M8S1G	sloc_01M6Q03ENBW67DKHCPC7ERY5PA	500	0	0	\N	{"value": "500", "precision": 20}	{"value": "0", "precision": 20}	{"value": "0", "precision": 20}
 \.
 
 
@@ -5464,12 +4607,54 @@ price_01M6Q03ER1GBYBK5HGV0P9BH6S	\N	pset_01M6Q03ER1S2XE4CM5FA0G7RKQ	eur	{"value"
 price_01M6Q03ER1PVTPHFC7S15P199A	\N	pset_01M6Q03ER234G9QW9PB819DGPC	usd	{"value": "10", "precision": 20}	0	2026-11-05 18:18:31.427-05	2026-11-05 18:18:31.427-05	\N	\N	10	\N	\N	\N	\N
 price_01M6Q03ER1M356V604044JS51T	\N	pset_01M6Q03ER234G9QW9PB819DGPC	eur	{"value": "10", "precision": 20}	0	2026-11-05 18:18:31.427-05	2026-11-05 18:18:31.427-05	\N	\N	10	\N	\N	\N	\N
 price_01M6Q03ER2GTPH3K2XM5KS7BSK	\N	pset_01M6Q03ER234G9QW9PB819DGPC	eur	{"value": "10", "precision": 20}	1	2026-11-05 18:18:31.427-05	2026-11-05 18:18:31.427-05	\N	\N	10	\N	\N	\N	\N
-price_01M6VHSM7RMJNJ3FH9NPRKJ3AE	\N	pset_01M6RV43BJZFTP7VEG1Q33SBEF	cop	{"value": "83750", "precision": 20}	0	2026-11-07 12:44:41.478-05	2026-11-07 12:44:41.478-05	\N	\N	83750	\N	\N	\N	\N
-price_01M6VHSM7RBTE4KFB9E6C01JMZ	\N	pset_01M6RV43BJZFTP7VEG1Q33SBEF	eur	{"value": "20", "precision": 20}	0	2026-11-07 12:44:41.479-05	2026-11-07 12:44:41.479-05	\N	\N	20	\N	\N	\N	\N
-price_01M6VHSM7R9AA1R5R9SBCR9EDK	\N	pset_01M6RV43BJZFTP7VEG1Q33SBEF	usd	{"value": "21", "precision": 20}	0	2026-11-07 12:44:41.479-05	2026-11-07 12:44:41.479-05	\N	\N	21	\N	\N	\N	\N
-price_01M6VHSMAGZ1XR203AF4TFRE12	\N	pset_01M6RV43BJDJMAVZBR5V6DRG2M	cop	{"value": "744444", "precision": 20}	0	2026-11-07 12:44:41.557-05	2026-11-07 12:44:41.557-05	\N	\N	744444	\N	\N	\N	\N
-price_01M6VHSMAG43KTMZ64WST1P6S9	\N	pset_01M6RV43BJDJMAVZBR5V6DRG2M	eur	{"value": "177", "precision": 20}	0	2026-11-07 12:44:41.557-05	2026-11-07 12:44:41.557-05	\N	\N	177	\N	\N	\N	\N
-price_01M6VHSMAGGTD4M7A5VA9NKDPN	\N	pset_01M6RV43BJDJMAVZBR5V6DRG2M	usd	{"value": "191", "precision": 20}	0	2026-11-07 12:44:41.557-05	2026-11-07 12:44:41.557-05	\N	\N	191	\N	\N	\N	\N
+price_01M6VF7FY4HQHKFVYM8YJ80B6S	\N	pset_01M6RV43BF1F63YETZCN4E5RN8	eur	{"value": "3", "precision": 20}	0	2026-11-07 11:59:50.092-05	2026-11-13 12:29:30.443-05	2026-11-13 12:29:30.359-05	\N	3	\N	\N	\N	\N
+price_01M6VF7FY475K3KRFWAR870R3C	\N	pset_01M6RV43BF1F63YETZCN4E5RN8	usd	{"value": "3", "precision": 20}	0	2026-11-07 11:59:50.092-05	2026-11-13 12:29:30.443-05	2026-11-13 12:29:30.359-05	\N	3	\N	\N	\N	\N
+price_01M6VF7GGKFR09Z0B9R1C87GWX	\N	pset_01M6RV43BG9R5E0HRR60FE3WC9	cop	{"value": "215529", "precision": 20}	0	2026-11-07 11:59:50.679-05	2026-11-13 12:29:30.475-05	2026-11-13 12:29:30.359-05	\N	215529	\N	\N	\N	\N
+price_01M6VF7GGK4MSHD1Z2P5SJ9233	\N	pset_01M6RV43BG9R5E0HRR60FE3WC9	eur	{"value": "51", "precision": 20}	0	2026-11-07 11:59:50.679-05	2026-11-13 12:29:30.475-05	2026-11-13 12:29:30.359-05	\N	51	\N	\N	\N	\N
+price_01M6VF7GGKQ3SHEV19CKCX5R6N	\N	pset_01M6RV43BG9R5E0HRR60FE3WC9	usd	{"value": "55", "precision": 20}	0	2026-11-07 11:59:50.679-05	2026-11-13 12:29:30.475-05	2026-11-13 12:29:30.359-05	\N	55	\N	\N	\N	\N
+price_01M6VHSM7RMJNJ3FH9NPRKJ3AE	\N	pset_01M6RV43BJZFTP7VEG1Q33SBEF	cop	{"value": "83750", "precision": 20}	0	2026-11-07 12:44:41.478-05	2026-11-13 12:29:30.509-05	2026-11-13 12:29:30.359-05	\N	83750	\N	\N	\N	\N
+price_01M6VHSM7RBTE4KFB9E6C01JMZ	\N	pset_01M6RV43BJZFTP7VEG1Q33SBEF	eur	{"value": "20", "precision": 20}	0	2026-11-07 12:44:41.479-05	2026-11-13 12:29:30.509-05	2026-11-13 12:29:30.359-05	\N	20	\N	\N	\N	\N
+price_01M6VHSM7R9AA1R5R9SBCR9EDK	\N	pset_01M6RV43BJZFTP7VEG1Q33SBEF	usd	{"value": "21", "precision": 20}	0	2026-11-07 12:44:41.479-05	2026-11-13 12:29:30.509-05	2026-11-13 12:29:30.359-05	\N	21	\N	\N	\N	\N
+price_01M6VF7GBSQ8T6P6AMSRNSS65X	\N	pset_01M6RV43BK71704A1NZBJKKVHB	cop	{"value": "89412", "precision": 20}	0	2026-11-07 11:59:50.527-05	2026-11-13 12:29:30.547-05	2026-11-13 12:29:30.359-05	\N	89412	\N	\N	\N	\N
+price_01M6VF7GBTJVBZAVBTDCG8KTJ4	\N	pset_01M6RV43BK71704A1NZBJKKVHB	eur	{"value": "21", "precision": 20}	0	2026-11-07 11:59:50.527-05	2026-11-13 12:29:30.547-05	2026-11-13 12:29:30.359-05	\N	21	\N	\N	\N	\N
+price_01M6VF7GBT02FDEHN5MQ76H3GX	\N	pset_01M6RV43BK71704A1NZBJKKVHB	usd	{"value": "23", "precision": 20}	0	2026-11-07 11:59:50.527-05	2026-11-13 12:29:30.547-05	2026-11-13 12:29:30.359-05	\N	23	\N	\N	\N	\N
+price_01M6VF7GRY5WGSNEH06FTQPXGD	\N	pset_01M6RV43BK0XV8105MW01FAXCK	cop	{"value": "4800", "precision": 20}	0	2026-11-07 11:59:50.946-05	2026-11-13 12:29:30.56-05	2026-11-13 12:29:30.359-05	\N	4800	\N	\N	\N	\N
+price_01M6VF7GRYAAMENHC7V0GRWK6Z	\N	pset_01M6RV43BK0XV8105MW01FAXCK	eur	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.946-05	2026-11-13 12:29:30.56-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M6VF7JBKPVH2HGMBRK6S1ADQ	\N	pset_01M6RV43BRSRSGQ7896HNZGWSQ	eur	{"value": "5", "precision": 20}	0	2026-11-07 11:59:52.568-05	2026-11-13 12:29:30.726-05	2026-11-13 12:29:30.359-05	\N	5	\N	\N	\N	\N
+price_01M6VF7JBK960C64WV56CHSDAD	\N	pset_01M6RV43BRSRSGQ7896HNZGWSQ	usd	{"value": "6", "precision": 20}	0	2026-11-07 11:59:52.568-05	2026-11-13 12:29:30.726-05	2026-11-13 12:29:30.359-05	\N	6	\N	\N	\N	\N
+price_01M6VF7JR7PN4ZTPPWTRTVDHVX	\N	pset_01M6RV43BR8KAG1J4V2G2AD3P4	cop	{"value": "18900", "precision": 20}	0	2026-11-07 11:59:52.973-05	2026-11-13 12:29:30.747-05	2026-11-13 12:29:30.359-05	\N	18900	\N	\N	\N	\N
+price_01M6VF7JR8XR4F2V1N5C34BWY3	\N	pset_01M6RV43BR8KAG1J4V2G2AD3P4	eur	{"value": "5", "precision": 20}	0	2026-11-07 11:59:52.973-05	2026-11-13 12:29:30.747-05	2026-11-13 12:29:30.359-05	\N	5	\N	\N	\N	\N
+price_01M6VF7JR81CX4K2YKXWRH2JA7	\N	pset_01M6RV43BR8KAG1J4V2G2AD3P4	usd	{"value": "5", "precision": 20}	0	2026-11-07 11:59:52.973-05	2026-11-13 12:29:30.747-05	2026-11-13 12:29:30.359-05	\N	5	\N	\N	\N	\N
+price_01M7AZA5A6K3VJXDMAZRNRRC2B	\N	pset_01M7AZA5A6F5TM5R4S2Y49EFFA	eur	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A65MWCEJPPZNHVV1QY	\N	pset_01M7AZA5A6F5TM5R4S2Y49EFFA	usd	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A6MKJ1RQ9W5B47HDE1	\N	pset_01M7AZA5A6Z2Z5239PCW3GXQMG	cop	{"value": "16900", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	16900	\N	\N	\N	\N
+price_01M7AZA5A61N5TFMS6F1AAQC9X	\N	pset_01M7AZA5A6Z2Z5239PCW3GXQMG	eur	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5A6A751T5RSCJ20FYS9	\N	pset_01M7AZA5A6Z2Z5239PCW3GXQMG	usd	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5A61JHAE2R1KWVGWMG4	\N	pset_01M7AZA5A7B9TX6YPTA9KZVNGD	cop	{"value": "1200", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1200	\N	\N	\N	\N
+price_01M7AZA5A6RZ9P9YNE1CZCZTW1	\N	pset_01M7AZA5A7B9TX6YPTA9KZVNGD	eur	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A7A91K4MX58PCVKER3	\N	pset_01M7AZA5A7B9TX6YPTA9KZVNGD	usd	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A7KAVZQJ59VRPVX2MT	\N	pset_01M7AZA5A79MVVKC8NM4B5G8KF	cop	{"value": "16900", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	16900	\N	\N	\N	\N
+price_01M7AZA5A740W2G17ZVM8RJ05G	\N	pset_01M7AZA5A79MVVKC8NM4B5G8KF	eur	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5A7JK4NBKEP0W93N3B4	\N	pset_01M7AZA5A79MVVKC8NM4B5G8KF	usd	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5A7ETF92Q795144JPK2	\N	pset_01M7AZA5A7AT5CC43XPC170PXG	cop	{"value": "1200", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1200	\N	\N	\N	\N
+price_01M7AZA5A7N2F9SG5NTHXC9037	\N	pset_01M7AZA5A7AT5CC43XPC170PXG	eur	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A7F7KHXVZK5M41CZWN	\N	pset_01M7AZA5A7AT5CC43XPC170PXG	usd	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A7WB9KMCK9ZFW16WFJ	\N	pset_01M7AZA5A8QNBWPHMWG1J72370	cop	{"value": "16900", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	16900	\N	\N	\N	\N
+price_01M7AZA5A7TR790QA7VHKN1RRR	\N	pset_01M7AZA5A8QNBWPHMWG1J72370	eur	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5A8HATQMQGBWREA9WGB	\N	pset_01M7AZA5A8QNBWPHMWG1J72370	usd	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	4	\N	\N	\N	\N
+price_01M6VHSMAGZ1XR203AF4TFRE12	\N	pset_01M6RV43BJDJMAVZBR5V6DRG2M	cop	{"value": "744444", "precision": 20}	0	2026-11-07 12:44:41.557-05	2026-11-13 12:29:30.524-05	2026-11-13 12:29:30.359-05	\N	744444	\N	\N	\N	\N
+price_01M6VHSMAG43KTMZ64WST1P6S9	\N	pset_01M6RV43BJDJMAVZBR5V6DRG2M	eur	{"value": "177", "precision": 20}	0	2026-11-07 12:44:41.557-05	2026-11-13 12:29:30.524-05	2026-11-13 12:29:30.359-05	\N	177	\N	\N	\N	\N
+price_01M6VHSMAGGTD4M7A5VA9NKDPN	\N	pset_01M6RV43BJDJMAVZBR5V6DRG2M	usd	{"value": "191", "precision": 20}	0	2026-11-07 12:44:41.557-05	2026-11-13 12:29:30.524-05	2026-11-13 12:29:30.359-05	\N	191	\N	\N	\N	\N
+price_01M7AZA5A13PW0EWTA2RA2X5Y9	\N	pset_01M7AZA5A1PPG9X5QX8QFFWCWH	cop	{"value": "20000", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	20000	\N	\N	\N	\N
+price_01M7AZA5A13HNCV70W7D4ZB45V	\N	pset_01M7AZA5A1PPG9X5QX8QFFWCWH	eur	{"value": "5", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	5	\N	\N	\N	\N
+price_01M7AZA5A1SWR530VYRR3MPQCH	\N	pset_01M7AZA5A1PPG9X5QX8QFFWCWH	usd	{"value": "5", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	5	\N	\N	\N	\N
+price_01M7AZA5A2VY3N8D1X9171AT0K	\N	pset_01M7AZA5A2SSN5DDMSZQC243WE	cop	{"value": "225900", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	225900	\N	\N	\N	\N
+price_01M7AZA5A2GC59TWN183Q70TC6	\N	pset_01M7AZA5A2SSN5DDMSZQC243WE	eur	{"value": "54", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	54	\N	\N	\N	\N
+price_01M7AZA5A26Y2CWASABKW3SAGD	\N	pset_01M7AZA5A2SSN5DDMSZQC243WE	usd	{"value": "58", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	58	\N	\N	\N	\N
+price_01M7AZA5A24BBSQVGAFMS43D2D	\N	pset_01M7AZA5A2NM2NKJ7JE59AQVSX	cop	{"value": "20000", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	20000	\N	\N	\N	\N
+price_01M7AZA5A23G8KP335YNFVZDC2	\N	pset_01M7AZA5A2NM2NKJ7JE59AQVSX	eur	{"value": "5", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	5	\N	\N	\N	\N
+price_01M7AZA5A2EYEBRG1YMY9CJ5J5	\N	pset_01M7AZA5A2NM2NKJ7JE59AQVSX	usd	{"value": "5", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	5	\N	\N	\N	\N
+price_01M7AZA5A2HFQTTMQAY1D22HY1	\N	pset_01M7AZA5A3KJTHP8E5PPM4NZKA	cop	{"value": "225900", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	225900	\N	\N	\N	\N
 price_01M6Q03F03R9HM9Y5C13AAR1KR	\N	pset_01M6Q03F0306PBNZ0NW0ETZEJ3	eur	{"value": "10", "precision": 20}	0	2026-11-05 18:18:31.689-05	2026-11-06 10:08:27.994-05	2026-11-06 10:08:27.98-05	\N	10	\N	\N	\N	\N
 price_01M6Q03F038EZGVVQXVTFJ9YX2	\N	pset_01M6Q03F0306PBNZ0NW0ETZEJ3	usd	{"value": "15", "precision": 20}	0	2026-11-05 18:18:31.689-05	2026-11-06 10:08:27.994-05	2026-11-06 10:08:27.98-05	\N	15	\N	\N	\N	\N
 price_01M6Q03F03QWD8PM6JKD9S72FV	\N	pset_01M6Q03F04S0YQ8H7GRKC8M7AB	eur	{"value": "10", "precision": 20}	0	2026-11-05 18:18:31.689-05	2026-11-06 10:08:28.015-05	2026-11-06 10:08:27.98-05	\N	10	\N	\N	\N	\N
@@ -5526,25 +4711,45 @@ price_01M6Q0TVV7EW16WA7GCNQRHG73	\N	pset_01M6Q0TVV7E0HQ6EEXFZ356V6W	eur	{"value"
 price_01M6Q0TVV7EGQ2WPV7HMKQCAXF	\N	pset_01M6Q0TVV7E0HQ6EEXFZ356V6W	usd	{"value": "4", "precision": 20}	0	2026-11-05 18:31:18.505-05	2026-11-06 10:08:28.212-05	2026-11-06 10:08:27.98-05	\N	4	\N	\N	\N	\N
 price_01M6Q0TVV7SSHGD9YRHK1B3QF5	\N	pset_01M6Q0TVV8WN4MJ4YG6WS5KNMS	eur	{"value": "5", "precision": 20}	0	2026-11-05 18:31:18.505-05	2026-11-06 10:08:28.218-05	2026-11-06 10:08:27.98-05	\N	5	\N	\N	\N	\N
 price_01M6Q0TVV79GMYNDPN4JVH9YVW	\N	pset_01M6Q0TVV8WN4MJ4YG6WS5KNMS	usd	{"value": "6", "precision": 20}	0	2026-11-05 18:31:18.505-05	2026-11-06 10:08:28.219-05	2026-11-06 10:08:27.98-05	\N	6	\N	\N	\N	\N
-price_01M6VRP8AYX16GCEVXSXXJ9NNY	\N	pset_01M6VRP8AZPBWS44X17S8HCDSS	eur	{"value": "1", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-07 14:45:11.008-05	\N	\N	1	\N	\N	\N	\N
-price_01M6VRP8AZF243219RV5VDK7JP	\N	pset_01M6VRP8AZPBWS44X17S8HCDSS	usd	{"value": "1", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-07 14:45:11.008-05	\N	\N	1	\N	\N	\N	\N
-price_01M6VRP8AZ8JBK4X69AHFSFTH2	\N	pset_01M6VRP8AZPAD4RVAQS4PWFD3P	eur	{"value": "1", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-07 14:45:11.008-05	\N	\N	1	\N	\N	\N	\N
-price_01M6VRP8AZXE5JGJ2ZZST92KHA	\N	pset_01M6VRP8AZPAD4RVAQS4PWFD3P	usd	{"value": "1", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-07 14:45:11.008-05	\N	\N	1	\N	\N	\N	\N
-price_01M6VRP8AYR8CWR7ZVAHQ4T99Z	\N	pset_01M6VRP8AZPBWS44X17S8HCDSS	cop	{"value": "12000", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-07 14:45:11.008-05	\N	\N	12000	\N	\N	\N	\N
-price_01M6VRP8AZYBVQGH16RYAVXJJS	\N	pset_01M6VRP8AZPAD4RVAQS4PWFD3P	cop	{"value": "135500", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-07 14:45:11.008-05	\N	\N	135500	\N	\N	\N	\N
-price_01M6VF7G01NVSHK0SBA43W88EW	\N	pset_01M6RV43BFPH4J75BQ9JGCJ0P5	cop	{"value": "1250", "precision": 20}	0	2026-11-07 11:59:50.15-05	2026-11-07 11:59:50.15-05	\N	\N	1250	\N	\N	\N	\N
-price_01M6VF7G01ARSANA4C6P3EJAF4	\N	pset_01M6RV43BFPH4J75BQ9JGCJ0P5	eur	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.15-05	2026-11-07 11:59:50.15-05	\N	\N	1	\N	\N	\N	\N
-price_01M6VF7G014NDSMJNADB2A2Y19	\N	pset_01M6RV43BFPH4J75BQ9JGCJ0P5	usd	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.15-05	2026-11-07 11:59:50.15-05	\N	\N	1	\N	\N	\N	\N
-price_01M6VF7GA0BFPTWJ5ZRAJ5MY2G	\N	pset_01M6RV43BJGR7XZ5Z81CV7JN3S	cop	{"value": "9500", "precision": 20}	0	2026-11-07 11:59:50.47-05	2026-11-07 11:59:50.47-05	\N	\N	9500	\N	\N	\N	\N
-price_01M6VF7GA0RZEJDGNS9NXGEC5C	\N	pset_01M6RV43BJGR7XZ5Z81CV7JN3S	eur	{"value": "2", "precision": 20}	0	2026-11-07 11:59:50.47-05	2026-11-07 11:59:50.47-05	\N	\N	2	\N	\N	\N	\N
-price_01M6VF7GA05MQA3GJF5CF42TNN	\N	pset_01M6RV43BJGR7XZ5Z81CV7JN3S	usd	{"value": "2", "precision": 20}	0	2026-11-07 11:59:50.47-05	2026-11-07 11:59:50.47-05	\N	\N	2	\N	\N	\N	\N
-price_01M6VF7GF3MBV927YNDFS2E96R	\N	pset_01M6RV43BGR8TNZJ2DBZFKJF2J	cop	{"value": "22900", "precision": 20}	0	2026-11-07 11:59:50.631-05	2026-11-07 11:59:50.631-05	\N	\N	22900	\N	\N	\N	\N
-price_01M6VF7GF3TY4D02634KVF95DN	\N	pset_01M6RV43BGR8TNZJ2DBZFKJF2J	eur	{"value": "5", "precision": 20}	0	2026-11-07 11:59:50.631-05	2026-11-07 11:59:50.631-05	\N	\N	5	\N	\N	\N	\N
-price_01M6VF7GF44YJBVE2JPSPRZW83	\N	pset_01M6RV43BGR8TNZJ2DBZFKJF2J	usd	{"value": "6", "precision": 20}	0	2026-11-07 11:59:50.631-05	2026-11-07 11:59:50.631-05	\N	\N	6	\N	\N	\N	\N
-price_01M6VF7GNZRYZ292PCZB20GWCS	\N	pset_01M6RV43BEQKKSWAGGAHGEED2H	cop	{"value": "5800", "precision": 20}	0	2026-11-07 11:59:50.851-05	2026-11-07 11:59:50.851-05	\N	\N	5800	\N	\N	\N	\N
-price_01M6VF7GNZEKDXPQ52DN47JYVS	\N	pset_01M6RV43BEQKKSWAGGAHGEED2H	eur	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.851-05	2026-11-07 11:59:50.851-05	\N	\N	1	\N	\N	\N	\N
-price_01M6VF7GNZ815T57233ECN8DV0	\N	pset_01M6RV43BEQKKSWAGGAHGEED2H	usd	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.851-05	2026-11-07 11:59:50.851-05	\N	\N	1	\N	\N	\N	\N
-price_01M6VF7GRY3C98BHGZVEWCMBBB	\N	pset_01M6RV43BK0XV8105MW01FAXCK	usd	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.946-05	2026-11-07 11:59:50.946-05	\N	\N	1	\N	\N	\N	\N
+price_01M6VRP8AYX16GCEVXSXXJ9NNY	\N	pset_01M6VRP8AZPBWS44X17S8HCDSS	eur	{"value": "1", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-13 12:29:30.769-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M6VRP8AZF243219RV5VDK7JP	\N	pset_01M6VRP8AZPBWS44X17S8HCDSS	usd	{"value": "1", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-13 12:29:30.769-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M6VRP8AYR8CWR7ZVAHQ4T99Z	\N	pset_01M6VRP8AZPBWS44X17S8HCDSS	cop	{"value": "12000", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-13 12:29:30.769-05	2026-11-13 12:29:30.359-05	\N	12000	\N	\N	\N	\N
+price_01M6VRP8AZ8JBK4X69AHFSFTH2	\N	pset_01M6VRP8AZPAD4RVAQS4PWFD3P	eur	{"value": "1", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-13 12:29:30.779-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M6VRP8AZXE5JGJ2ZZST92KHA	\N	pset_01M6VRP8AZPAD4RVAQS4PWFD3P	usd	{"value": "1", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-13 12:29:30.779-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M6VRP8AZYBVQGH16RYAVXJJS	\N	pset_01M6VRP8AZPAD4RVAQS4PWFD3P	cop	{"value": "135500", "precision": 20}	0	2026-11-07 14:45:11.008-05	2026-11-13 12:29:30.779-05	2026-11-13 12:29:30.359-05	\N	135500	\N	\N	\N	\N
+price_01M7AZA5A3WQS5CJMRJBW0T035	\N	pset_01M7AZA5A3KJTHP8E5PPM4NZKA	eur	{"value": "54", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	54	\N	\N	\N	\N
+price_01M7AZA5A3XPHZJSW794CPSBPT	\N	pset_01M7AZA5A3KJTHP8E5PPM4NZKA	usd	{"value": "58", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	58	\N	\N	\N	\N
+price_01M6VF7GNZRYZ292PCZB20GWCS	\N	pset_01M6RV43BEQKKSWAGGAHGEED2H	cop	{"value": "5800", "precision": 20}	0	2026-11-07 11:59:50.851-05	2026-11-13 12:29:30.409-05	2026-11-13 12:29:30.359-05	\N	5800	\N	\N	\N	\N
+price_01M6VF7GNZEKDXPQ52DN47JYVS	\N	pset_01M6RV43BEQKKSWAGGAHGEED2H	eur	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.851-05	2026-11-13 12:29:30.409-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M6VF7GNZ815T57233ECN8DV0	\N	pset_01M6RV43BEQKKSWAGGAHGEED2H	usd	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.851-05	2026-11-13 12:29:30.409-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M6VF7G01NVSHK0SBA43W88EW	\N	pset_01M6RV43BFPH4J75BQ9JGCJ0P5	cop	{"value": "1250", "precision": 20}	0	2026-11-07 11:59:50.15-05	2026-11-13 12:29:30.432-05	2026-11-13 12:29:30.359-05	\N	1250	\N	\N	\N	\N
+price_01M6VF7G01ARSANA4C6P3EJAF4	\N	pset_01M6RV43BFPH4J75BQ9JGCJ0P5	eur	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.15-05	2026-11-13 12:29:30.433-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M6VF7G014NDSMJNADB2A2Y19	\N	pset_01M6RV43BFPH4J75BQ9JGCJ0P5	usd	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.15-05	2026-11-13 12:29:30.433-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M6VF7GF3MBV927YNDFS2E96R	\N	pset_01M6RV43BGR8TNZJ2DBZFKJF2J	cop	{"value": "22900", "precision": 20}	0	2026-11-07 11:59:50.631-05	2026-11-13 12:29:30.462-05	2026-11-13 12:29:30.359-05	\N	22900	\N	\N	\N	\N
+price_01M6VF7GF3TY4D02634KVF95DN	\N	pset_01M6RV43BGR8TNZJ2DBZFKJF2J	eur	{"value": "5", "precision": 20}	0	2026-11-07 11:59:50.631-05	2026-11-13 12:29:30.462-05	2026-11-13 12:29:30.359-05	\N	5	\N	\N	\N	\N
+price_01M6VF7GF44YJBVE2JPSPRZW83	\N	pset_01M6RV43BGR8TNZJ2DBZFKJF2J	usd	{"value": "6", "precision": 20}	0	2026-11-07 11:59:50.631-05	2026-11-13 12:29:30.462-05	2026-11-13 12:29:30.359-05	\N	6	\N	\N	\N	\N
+price_01M6VF7GA0BFPTWJ5ZRAJ5MY2G	\N	pset_01M6RV43BJGR7XZ5Z81CV7JN3S	cop	{"value": "9500", "precision": 20}	0	2026-11-07 11:59:50.47-05	2026-11-13 12:29:30.536-05	2026-11-13 12:29:30.359-05	\N	9500	\N	\N	\N	\N
+price_01M6VF7GA0RZEJDGNS9NXGEC5C	\N	pset_01M6RV43BJGR7XZ5Z81CV7JN3S	eur	{"value": "2", "precision": 20}	0	2026-11-07 11:59:50.47-05	2026-11-13 12:29:30.536-05	2026-11-13 12:29:30.359-05	\N	2	\N	\N	\N	\N
+price_01M6VF7GA05MQA3GJF5CF42TNN	\N	pset_01M6RV43BJGR7XZ5Z81CV7JN3S	usd	{"value": "2", "precision": 20}	0	2026-11-07 11:59:50.47-05	2026-11-13 12:29:30.536-05	2026-11-13 12:29:30.359-05	\N	2	\N	\N	\N	\N
+price_01M6VF7GRY3C98BHGZVEWCMBBB	\N	pset_01M6RV43BK0XV8105MW01FAXCK	usd	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.946-05	2026-11-13 12:29:30.56-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M7AZA5A3MY3ZNQJMF2CW137J	\N	pset_01M7AZA5A3T225XZT12SNA8VD1	cop	{"value": "12000", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	12000	\N	\N	\N	\N
+price_01M7AZA5A3G68PH50QF5HM74V6	\N	pset_01M7AZA5A3T225XZT12SNA8VD1	eur	{"value": "3", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	3	\N	\N	\N	\N
+price_01M7AZA5A3GEPK67PY6KPFFMCR	\N	pset_01M7AZA5A3T225XZT12SNA8VD1	usd	{"value": "3", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	3	\N	\N	\N	\N
+price_01M7AZA5A3CCBGMRB2PEPPFHVA	\N	pset_01M7AZA5A3817M28368JN4MTMF	cop	{"value": "135500", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	135500	\N	\N	\N	\N
+price_01M7AZA5A3J3P2CVSVP8AKPB4T	\N	pset_01M7AZA5A3817M28368JN4MTMF	eur	{"value": "32", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	32	\N	\N	\N	\N
+price_01M7AZA5A3ZV0WV1SA6YHBD7HS	\N	pset_01M7AZA5A3817M28368JN4MTMF	usd	{"value": "35", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	35	\N	\N	\N	\N
+price_01M7AZA5A4ZD4M7GRCK84PXBRN	\N	pset_01M7AZA5A4APYSAC4BQHQ8MR5B	cop	{"value": "3000", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	3000	\N	\N	\N	\N
+price_01M7AZA5A42N0G3RPXFNMQZ8GN	\N	pset_01M7AZA5A4APYSAC4BQHQ8MR5B	eur	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A4K50WVEAJ1TKQG91J	\N	pset_01M7AZA5A4APYSAC4BQHQ8MR5B	usd	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A44NTPWKK1RT9WVA4Q	\N	pset_01M7AZA5A4P61RJNWYMVP2Q0VP	cop	{"value": "70600", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	70600	\N	\N	\N	\N
+price_01M7AZA5A453AG8A2DGH1MXPTX	\N	pset_01M7AZA5A4P61RJNWYMVP2Q0VP	eur	{"value": "17", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	17	\N	\N	\N	\N
+price_01M7AZA5A4SED190HX3MM27NR7	\N	pset_01M7AZA5A4P61RJNWYMVP2Q0VP	usd	{"value": "18", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	18	\N	\N	\N	\N
+price_01M7AZA5A4C131Z8BPWGRC76JR	\N	pset_01M7AZA5A4AY0N14N2QEXHXA7V	cop	{"value": "4000", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	4000	\N	\N	\N	\N
+price_01M7AZA5A4B83WGMF6QE9E8GST	\N	pset_01M7AZA5A4AY0N14N2QEXHXA7V	eur	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A43J1F2BEEJ8AMV640	\N	pset_01M7AZA5A4AY0N14N2QEXHXA7V	usd	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1	\N	\N	\N	\N
+price_01M6VF7FY40TZXTB8SW67KT6V9	\N	pset_01M6RV43BF1F63YETZCN4E5RN8	cop	{"value": "11765", "precision": 20}	0	2026-11-07 11:59:50.092-05	2026-11-13 12:29:30.443-05	2026-11-13 12:29:30.359-05	\N	11765	\N	\N	\N	\N
+price_01M7AZA5A5PWHA9DAWM6QRCR4Q	\N	pset_01M7AZA5A5CG5KTA4D2BMYMXQV	cop	{"value": "30100", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	30100	\N	\N	\N	\N
+price_01M7AZA5A5VQBR824TXZJJQGAD	\N	pset_01M7AZA5A5CG5KTA4D2BMYMXQV	eur	{"value": "7", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	7	\N	\N	\N	\N
 price_01M6RV2ZAV4938J0XDDDYGYY6Q	\N	pset_01M6RV2ZAWJFHV75X154DPQ06N	cop	{"value": "6000", "precision": 20}	0	2026-11-06 11:29:21.628-05	2026-11-06 11:29:21.629-05	\N	\N	6000	\N	\N	\N	\N
 price_01M6RV2ZAW0BET0ZB9SA5JJT2N	\N	pset_01M6RV2ZAWJFHV75X154DPQ06N	cop	{"value": "6000", "precision": 20}	1	2026-11-06 11:29:21.629-05	2026-11-06 11:29:21.629-05	\N	\N	6000	\N	\N	\N	\N
 price_01M6RPEW7DJE5PYYPZK7VCE890	\N	pset_01M6RPEW7DEC83CMTND4XZQKXW	eur	{"value": "4", "precision": 20}	0	2026-11-06 10:08:28.79-05	2026-11-06 11:29:22.006-05	2026-11-06 11:29:21.998-05	\N	4	\N	\N	\N	\N
@@ -5584,7 +4789,6 @@ price_01M6RPEW7HA9YZY44WHYTX7MD8	\N	pset_01M6RPEW7H8D19YCY7ABKAYN3B	usd	{"value"
 price_01M6RPEW7HV8Y2NMSVJT3MR4NJ	\N	pset_01M6RPEW7JPGHJC39KKQBZK5FG	eur	{"value": "72", "precision": 20}	0	2026-11-06 10:08:28.79-05	2026-11-06 11:29:22.179-05	2026-11-06 11:29:21.998-05	\N	72	\N	\N	\N	\N
 price_01M6RPEW7JCWVV5MJRNXSDCS4X	\N	pset_01M6RPEW7JPGHJC39KKQBZK5FG	usd	{"value": "83", "precision": 20}	0	2026-11-06 10:08:28.79-05	2026-11-06 11:29:22.179-05	2026-11-06 11:29:21.998-05	\N	83	\N	\N	\N	\N
 price_01M6RPEW7J20DYQ3R04V1P2H0B	\N	pset_01M6RPEW7J5AADXYDDQAX6Z1ES	eur	{"value": "6", "precision": 20}	0	2026-11-06 10:08:28.79-05	2026-11-06 11:29:22.187-05	2026-11-06 11:29:21.998-05	\N	6	\N	\N	\N	\N
-price_01M6VF7FY40TZXTB8SW67KT6V9	\N	pset_01M6RV43BF1F63YETZCN4E5RN8	cop	{"value": "11765", "precision": 20}	0	2026-11-07 11:59:50.092-05	2026-11-07 11:59:50.092-05	\N	\N	11765	\N	\N	\N	\N
 price_01M6RPEW7J7GMW62WJ0Z15Y1R5	\N	pset_01M6RPEW7J5AADXYDDQAX6Z1ES	usd	{"value": "7", "precision": 20}	0	2026-11-06 10:08:28.79-05	2026-11-06 11:29:22.187-05	2026-11-06 11:29:21.998-05	\N	7	\N	\N	\N	\N
 price_01M6RPEW7JAJPJQBDF5Y9S3BFY	\N	pset_01M6RPEW7JZ04GQT4DMSHJE1C2	eur	{"value": "48", "precision": 20}	0	2026-11-06 10:08:28.79-05	2026-11-06 11:29:22.194-05	2026-11-06 11:29:21.998-05	\N	48	\N	\N	\N	\N
 price_01M6RPEW7JRG7M0EHCFPYMG3PW	\N	pset_01M6RPEW7JZ04GQT4DMSHJE1C2	usd	{"value": "55", "precision": 20}	0	2026-11-06 10:08:28.79-05	2026-11-06 11:29:22.194-05	2026-11-06 11:29:21.998-05	\N	55	\N	\N	\N	\N
@@ -5612,82 +4816,105 @@ price_01M6RPEW7MS737PJVPX4ZZKABD	\N	pset_01M6RPEW7NHK36GGEG1KTWYGEB	eur	{"value"
 price_01M6RPEW7NSCRYDBG73QPFA2Y5	\N	pset_01M6RPEW7NHK36GGEG1KTWYGEB	usd	{"value": "7", "precision": 20}	0	2026-11-06 10:08:28.791-05	2026-11-06 11:29:22.277-05	2026-11-06 11:29:21.998-05	\N	7	\N	\N	\N	\N
 price_01M6RPEW7NTNKPAW0DVS7PYKQX	\N	pset_01M6RPEW7N4Y95A3V51A42D0M7	eur	{"value": "45", "precision": 20}	0	2026-11-06 10:08:28.791-05	2026-11-06 11:29:22.284-05	2026-11-06 11:29:21.998-05	\N	45	\N	\N	\N	\N
 price_01M6RPEW7N44Q5G7ET8ATY8PKP	\N	pset_01M6RPEW7N4Y95A3V51A42D0M7	usd	{"value": "52", "precision": 20}	0	2026-11-06 10:08:28.791-05	2026-11-06 11:29:22.284-05	2026-11-06 11:29:21.998-05	\N	52	\N	\N	\N	\N
-price_01M6VF7FY4HQHKFVYM8YJ80B6S	\N	pset_01M6RV43BF1F63YETZCN4E5RN8	eur	{"value": "3", "precision": 20}	0	2026-11-07 11:59:50.092-05	2026-11-07 11:59:50.092-05	\N	\N	3	\N	\N	\N	\N
-price_01M6VF7FY475K3KRFWAR870R3C	\N	pset_01M6RV43BF1F63YETZCN4E5RN8	usd	{"value": "3", "precision": 20}	0	2026-11-07 11:59:50.092-05	2026-11-07 11:59:50.092-05	\N	\N	3	\N	\N	\N	\N
-price_01M6VF7GBSQ8T6P6AMSRNSS65X	\N	pset_01M6RV43BK71704A1NZBJKKVHB	cop	{"value": "89412", "precision": 20}	0	2026-11-07 11:59:50.527-05	2026-11-07 11:59:50.527-05	\N	\N	89412	\N	\N	\N	\N
-price_01M6VF7GBTJVBZAVBTDCG8KTJ4	\N	pset_01M6RV43BK71704A1NZBJKKVHB	eur	{"value": "21", "precision": 20}	0	2026-11-07 11:59:50.527-05	2026-11-07 11:59:50.527-05	\N	\N	21	\N	\N	\N	\N
-price_01M6VF7GBT02FDEHN5MQ76H3GX	\N	pset_01M6RV43BK71704A1NZBJKKVHB	usd	{"value": "23", "precision": 20}	0	2026-11-07 11:59:50.527-05	2026-11-07 11:59:50.527-05	\N	\N	23	\N	\N	\N	\N
-price_01M6VF7GGKFR09Z0B9R1C87GWX	\N	pset_01M6RV43BG9R5E0HRR60FE3WC9	cop	{"value": "215529", "precision": 20}	0	2026-11-07 11:59:50.679-05	2026-11-07 11:59:50.679-05	\N	\N	215529	\N	\N	\N	\N
-price_01M6VF7GGK4MSHD1Z2P5SJ9233	\N	pset_01M6RV43BG9R5E0HRR60FE3WC9	eur	{"value": "51", "precision": 20}	0	2026-11-07 11:59:50.679-05	2026-11-07 11:59:50.679-05	\N	\N	51	\N	\N	\N	\N
-price_01M6VF7GGKQ3SHEV19CKCX5R6N	\N	pset_01M6RV43BG9R5E0HRR60FE3WC9	usd	{"value": "55", "precision": 20}	0	2026-11-07 11:59:50.679-05	2026-11-07 11:59:50.679-05	\N	\N	55	\N	\N	\N	\N
-price_01M6VF7GM3DT80GEDX6SGYP6R2	\N	pset_01M6RV43BEBP0HQ4P546GEYM8Y	cop	{"value": "54588", "precision": 20}	0	2026-11-07 11:59:50.794-05	2026-11-07 11:59:50.794-05	\N	\N	54588	\N	\N	\N	\N
-price_01M6VF7GM344REVF29Z9WD8B25	\N	pset_01M6RV43BEBP0HQ4P546GEYM8Y	eur	{"value": "13", "precision": 20}	0	2026-11-07 11:59:50.794-05	2026-11-07 11:59:50.794-05	\N	\N	13	\N	\N	\N	\N
-price_01M6VF7GM4E1FF2BSWB27S70C0	\N	pset_01M6RV43BEBP0HQ4P546GEYM8Y	usd	{"value": "14", "precision": 20}	0	2026-11-07 11:59:50.794-05	2026-11-07 11:59:50.794-05	\N	\N	14	\N	\N	\N	\N
-price_01M6VF7GRY5WGSNEH06FTQPXGD	\N	pset_01M6RV43BK0XV8105MW01FAXCK	cop	{"value": "4800", "precision": 20}	0	2026-11-07 11:59:50.946-05	2026-11-07 11:59:50.946-05	\N	\N	4800	\N	\N	\N	\N
-price_01M6VF7GRYAAMENHC7V0GRWK6Z	\N	pset_01M6RV43BK0XV8105MW01FAXCK	eur	{"value": "1", "precision": 20}	0	2026-11-07 11:59:50.946-05	2026-11-07 11:59:50.946-05	\N	\N	1	\N	\N	\N	\N
-price_01M6VF7GTH4T075054NME19GYS	\N	pset_01M6RV43BKB21295GB1AZP8A0V	cop	{"value": "45176", "precision": 20}	0	2026-11-07 11:59:50.997-05	2026-11-07 11:59:50.997-05	\N	\N	45176	\N	\N	\N	\N
-price_01M6VF7GTHFS4FZ4QRAXRZ94ZR	\N	pset_01M6RV43BKB21295GB1AZP8A0V	eur	{"value": "11", "precision": 20}	0	2026-11-07 11:59:50.997-05	2026-11-07 11:59:50.997-05	\N	\N	11	\N	\N	\N	\N
-price_01M6VF7GTHM1C5STYJS20WZ18J	\N	pset_01M6RV43BKB21295GB1AZP8A0V	usd	{"value": "12", "precision": 20}	0	2026-11-07 11:59:50.997-05	2026-11-07 11:59:50.997-05	\N	\N	12	\N	\N	\N	\N
-price_01M6VF7HHVA9TXZ38RN6VHYEV9	\N	pset_01M6RV43BECAVH4ZB7NVP7HP88	cop	{"value": "64941", "precision": 20}	0	2026-11-07 11:59:51.746-05	2026-11-07 11:59:51.746-05	\N	\N	64941	\N	\N	\N	\N
-price_01M6VF7HHVXMZ27BYPG9YBN7WC	\N	pset_01M6RV43BECAVH4ZB7NVP7HP88	eur	{"value": "15", "precision": 20}	0	2026-11-07 11:59:51.746-05	2026-11-07 11:59:51.746-05	\N	\N	15	\N	\N	\N	\N
-price_01M6VF7HHV3NW0FMVVEB7EVQW0	\N	pset_01M6RV43BECAVH4ZB7NVP7HP88	usd	{"value": "17", "precision": 20}	0	2026-11-07 11:59:51.746-05	2026-11-07 11:59:51.746-05	\N	\N	17	\N	\N	\N	\N
-price_01M6VF7HT5R6NCGEQVJC9B1113	\N	pset_01M6RV43BMPFNFR218P6114BJA	cop	{"value": "16900", "precision": 20}	0	2026-11-07 11:59:52.013-05	2026-11-07 11:59:52.013-05	\N	\N	16900	\N	\N	\N	\N
-price_01M6VF7HT53J1NAHTA32V8Y4F1	\N	pset_01M6RV43BMPFNFR218P6114BJA	eur	{"value": "4", "precision": 20}	0	2026-11-07 11:59:52.013-05	2026-11-07 11:59:52.013-05	\N	\N	4	\N	\N	\N	\N
-price_01M6VF7HT5CZQBJ7YT7R00WE95	\N	pset_01M6RV43BMPFNFR218P6114BJA	usd	{"value": "4", "precision": 20}	0	2026-11-07 11:59:52.013-05	2026-11-07 11:59:52.013-05	\N	\N	4	\N	\N	\N	\N
-price_01M6VF7J1RYNEHHSDTE1RWBWZY	\N	pset_01M6RV43BQYXVXA41AWTTK02Y0	cop	{"value": "26353", "precision": 20}	0	2026-11-07 11:59:52.252-05	2026-11-07 11:59:52.252-05	\N	\N	26353	\N	\N	\N	\N
-price_01M6VF7J1R362EVWKZ7HE9RM95	\N	pset_01M6RV43BQYXVXA41AWTTK02Y0	eur	{"value": "6", "precision": 20}	0	2026-11-07 11:59:52.252-05	2026-11-07 11:59:52.252-05	\N	\N	6	\N	\N	\N	\N
-price_01M6VF7J1R2K8G50A0Y5T3BNFG	\N	pset_01M6RV43BQYXVXA41AWTTK02Y0	usd	{"value": "7", "precision": 20}	0	2026-11-07 11:59:52.252-05	2026-11-07 11:59:52.252-05	\N	\N	7	\N	\N	\N	\N
-price_01M6VF7JBKYR4JJ2M5SE507F82	\N	pset_01M6RV43BRSRSGQ7896HNZGWSQ	cop	{"value": "21900", "precision": 20}	0	2026-11-07 11:59:52.568-05	2026-11-07 11:59:52.568-05	\N	\N	21900	\N	\N	\N	\N
-price_01M6VF7JBKPVH2HGMBRK6S1ADQ	\N	pset_01M6RV43BRSRSGQ7896HNZGWSQ	eur	{"value": "5", "precision": 20}	0	2026-11-07 11:59:52.568-05	2026-11-07 11:59:52.568-05	\N	\N	5	\N	\N	\N	\N
-price_01M6VF7JBK960C64WV56CHSDAD	\N	pset_01M6RV43BRSRSGQ7896HNZGWSQ	usd	{"value": "6", "precision": 20}	0	2026-11-07 11:59:52.568-05	2026-11-07 11:59:52.568-05	\N	\N	6	\N	\N	\N	\N
-price_01M6VF7JMFK4T1YZQF7BRS384Q	\N	pset_01M6RV43BPK0XZDET9ZC9NPMBG	cop	{"value": "155294", "precision": 20}	0	2026-11-07 11:59:52.852-05	2026-11-07 11:59:52.852-05	\N	\N	155294	\N	\N	\N	\N
-price_01M6VF7JMFESAE3CF71QV4CH61	\N	pset_01M6RV43BPK0XZDET9ZC9NPMBG	eur	{"value": "37", "precision": 20}	0	2026-11-07 11:59:52.852-05	2026-11-07 11:59:52.852-05	\N	\N	37	\N	\N	\N	\N
-price_01M6VF7JMGTZFZCYRQ8BMXJY2S	\N	pset_01M6RV43BPK0XZDET9ZC9NPMBG	usd	{"value": "40", "precision": 20}	0	2026-11-07 11:59:52.852-05	2026-11-07 11:59:52.852-05	\N	\N	40	\N	\N	\N	\N
-price_01M6VF7JR7PN4ZTPPWTRTVDHVX	\N	pset_01M6RV43BR8KAG1J4V2G2AD3P4	cop	{"value": "18900", "precision": 20}	0	2026-11-07 11:59:52.973-05	2026-11-07 11:59:52.973-05	\N	\N	18900	\N	\N	\N	\N
-price_01M6VF7JR8XR4F2V1N5C34BWY3	\N	pset_01M6RV43BR8KAG1J4V2G2AD3P4	eur	{"value": "5", "precision": 20}	0	2026-11-07 11:59:52.973-05	2026-11-07 11:59:52.973-05	\N	\N	5	\N	\N	\N	\N
-price_01M6VF7JR81CX4K2YKXWRH2JA7	\N	pset_01M6RV43BR8KAG1J4V2G2AD3P4	usd	{"value": "5", "precision": 20}	0	2026-11-07 11:59:52.973-05	2026-11-07 11:59:52.973-05	\N	\N	5	\N	\N	\N	\N
-price_01M6VF7K3500GKRGKS55EGCS8V	\N	pset_01M6RV43BPWDS4BJZXJKKAFMQE	cop	{"value": "8900", "precision": 20}	0	2026-11-07 11:59:53.323-05	2026-11-07 11:59:53.323-05	\N	\N	8900	\N	\N	\N	\N
-price_01M6VF7K354AQEX0W52JEV3Q29	\N	pset_01M6RV43BPWDS4BJZXJKKAFMQE	eur	{"value": "2", "precision": 20}	0	2026-11-07 11:59:53.323-05	2026-11-07 11:59:53.323-05	\N	\N	2	\N	\N	\N	\N
-price_01M6VF7K359MT9YFF33RETMK9M	\N	pset_01M6RV43BPWDS4BJZXJKKAFMQE	usd	{"value": "2", "precision": 20}	0	2026-11-07 11:59:53.323-05	2026-11-07 11:59:53.323-05	\N	\N	2	\N	\N	\N	\N
-price_01M6VF7GZ1Q9Q78D0BGPY4QHWD	\N	pset_01M6RV43BHHR7JQZ2RD267EH81	cop	{"value": "28500", "precision": 20}	0	2026-11-07 11:59:51.142-05	2026-11-07 11:59:51.142-05	\N	\N	28500	\N	\N	\N	\N
-price_01M6VF7GZ12R0QTDGCYWPK528W	\N	pset_01M6RV43BHHR7JQZ2RD267EH81	eur	{"value": "7", "precision": 20}	0	2026-11-07 11:59:51.142-05	2026-11-07 11:59:51.142-05	\N	\N	7	\N	\N	\N	\N
-price_01M6VF7GZ2FZ4XY9DTS9EEX3MT	\N	pset_01M6RV43BHHR7JQZ2RD267EH81	usd	{"value": "7", "precision": 20}	0	2026-11-07 11:59:51.142-05	2026-11-07 11:59:51.142-05	\N	\N	7	\N	\N	\N	\N
-price_01M6VF7HWNGJYKJJ59A4JFZVCZ	\N	pset_01M6RV43BM0H4SC00N16E6DTV8	cop	{"value": "159059", "precision": 20}	0	2026-11-07 11:59:52.091-05	2026-11-07 11:59:52.091-05	\N	\N	159059	\N	\N	\N	\N
-price_01M6VF7HWP1MADA9C4NVJH7CYY	\N	pset_01M6RV43BM0H4SC00N16E6DTV8	eur	{"value": "38", "precision": 20}	0	2026-11-07 11:59:52.091-05	2026-11-07 11:59:52.091-05	\N	\N	38	\N	\N	\N	\N
-price_01M6VF7HWPB1APB10J60TMS8PM	\N	pset_01M6RV43BM0H4SC00N16E6DTV8	usd	{"value": "41", "precision": 20}	0	2026-11-07 11:59:52.091-05	2026-11-07 11:59:52.091-05	\N	\N	41	\N	\N	\N	\N
-price_01M6VF7J5A9YS86YC5DV5ENDTJ	\N	pset_01M6RV43BMPS4T68C6WMZDT8YS	cop	{"value": "14500", "precision": 20}	0	2026-11-07 11:59:52.368-05	2026-11-07 11:59:52.368-05	\N	\N	14500	\N	\N	\N	\N
-price_01M6VF7J5AN5XFS8JTVPWYJ4GT	\N	pset_01M6RV43BMPS4T68C6WMZDT8YS	eur	{"value": "3", "precision": 20}	0	2026-11-07 11:59:52.368-05	2026-11-07 11:59:52.368-05	\N	\N	3	\N	\N	\N	\N
-price_01M6VF7J5AT7Q8WJKVJZZTH0ET	\N	pset_01M6RV43BMPS4T68C6WMZDT8YS	usd	{"value": "4", "precision": 20}	0	2026-11-07 11:59:52.368-05	2026-11-07 11:59:52.368-05	\N	\N	4	\N	\N	\N	\N
-price_01M6VF7JDC4AXJSYC5MMETWKG1	\N	pset_01M6RV43BRSBPC10D36HWWW4XX	cop	{"value": "206118", "precision": 20}	0	2026-11-07 11:59:52.625-05	2026-11-07 11:59:52.625-05	\N	\N	206118	\N	\N	\N	\N
-price_01M6VF7JDCJZWNNYCQN5AZVEZJ	\N	pset_01M6RV43BRSBPC10D36HWWW4XX	eur	{"value": "49", "precision": 20}	0	2026-11-07 11:59:52.625-05	2026-11-07 11:59:52.625-05	\N	\N	49	\N	\N	\N	\N
-price_01M6VF7JDDYB6Z8XQAD91TY923	\N	pset_01M6RV43BRSBPC10D36HWWW4XX	usd	{"value": "53", "precision": 20}	0	2026-11-07 11:59:52.625-05	2026-11-07 11:59:52.625-05	\N	\N	53	\N	\N	\N	\N
-price_01M6VF7JXX5MSCXV959EF6V9YK	\N	pset_01M6RV43BN2AN3DKRRY2ATF4VJ	cop	{"value": "26900", "precision": 20}	0	2026-11-07 11:59:53.153-05	2026-11-07 11:59:53.153-05	\N	\N	26900	\N	\N	\N	\N
-price_01M6VF7JXX8KWR42AGD931SPS9	\N	pset_01M6RV43BN2AN3DKRRY2ATF4VJ	eur	{"value": "6", "precision": 20}	0	2026-11-07 11:59:53.153-05	2026-11-07 11:59:53.153-05	\N	\N	6	\N	\N	\N	\N
-price_01M6VF7JXX5SMWRJQSMW3AC80Q	\N	pset_01M6RV43BN2AN3DKRRY2ATF4VJ	usd	{"value": "7", "precision": 20}	0	2026-11-07 11:59:53.153-05	2026-11-07 11:59:53.153-05	\N	\N	7	\N	\N	\N	\N
-price_01M6VF7K5GSZQ6XV2KKVJZ15SX	\N	pset_01M6RV43BQW7YY8ZJ8JJV3S3XM	cop	{"value": "83765", "precision": 20}	0	2026-11-07 11:59:53.396-05	2026-11-07 11:59:53.396-05	\N	\N	83765	\N	\N	\N	\N
-price_01M6VF7K5GVZ403SAT7YNRRVVA	\N	pset_01M6RV43BQW7YY8ZJ8JJV3S3XM	eur	{"value": "20", "precision": 20}	0	2026-11-07 11:59:53.396-05	2026-11-07 11:59:53.396-05	\N	\N	20	\N	\N	\N	\N
-price_01M6VF7K5GXENSBNH83BF9YT7S	\N	pset_01M6RV43BQW7YY8ZJ8JJV3S3XM	usd	{"value": "21", "precision": 20}	0	2026-11-07 11:59:53.396-05	2026-11-07 11:59:53.396-05	\N	\N	21	\N	\N	\N	\N
-price_01M6VF7H1FTHRYHMC5MT713S3W	\N	pset_01M6RV43BH81KHHXAE3K0KSM86	cop	{"value": "268235", "precision": 20}	0	2026-11-07 11:59:51.223-05	2026-11-07 11:59:51.223-05	\N	\N	268235	\N	\N	\N	\N
-price_01M6VF7H1FF01VRN51MC968FQJ	\N	pset_01M6RV43BH81KHHXAE3K0KSM86	eur	{"value": "64", "precision": 20}	0	2026-11-07 11:59:51.223-05	2026-11-07 11:59:51.223-05	\N	\N	64	\N	\N	\N	\N
-price_01M6VF7H1FT36TMX7AGHJ1M5EY	\N	pset_01M6RV43BH81KHHXAE3K0KSM86	usd	{"value": "69", "precision": 20}	0	2026-11-07 11:59:51.223-05	2026-11-07 11:59:51.223-05	\N	\N	69	\N	\N	\N	\N
-price_01M6VF7HBV5WN4W70HRNNS1WYH	\N	pset_01M6RV43BD3JNDQWSS6GA78VN6	cop	{"value": "6900", "precision": 20}	0	2026-11-07 11:59:51.558-05	2026-11-07 11:59:51.558-05	\N	\N	6900	\N	\N	\N	\N
-price_01M6VF7HBVQ0HFD0P6KZFDG07B	\N	pset_01M6RV43BD3JNDQWSS6GA78VN6	eur	{"value": "2", "precision": 20}	0	2026-11-07 11:59:51.558-05	2026-11-07 11:59:51.558-05	\N	\N	2	\N	\N	\N	\N
-price_01M6VF7HBW2YD00Z4ZX6817DJP	\N	pset_01M6RV43BD3JNDQWSS6GA78VN6	usd	{"value": "2", "precision": 20}	0	2026-11-07 11:59:51.558-05	2026-11-07 11:59:51.558-05	\N	\N	2	\N	\N	\N	\N
-price_01M6VF7J0456KEZB4CW1JS7YGX	\N	pset_01M6RV43BQ6PTD9J01MWFASXBY	cop	{"value": "2800", "precision": 20}	0	2026-11-07 11:59:52.199-05	2026-11-07 11:59:52.199-05	\N	\N	2800	\N	\N	\N	\N
-price_01M6VF7J049N2DN15BYGVWZM2S	\N	pset_01M6RV43BQ6PTD9J01MWFASXBY	eur	{"value": "1", "precision": 20}	0	2026-11-07 11:59:52.199-05	2026-11-07 11:59:52.199-05	\N	\N	1	\N	\N	\N	\N
-price_01M6VF7J048JXTZ7F5FP9G4WPW	\N	pset_01M6RV43BQ6PTD9J01MWFASXBY	usd	{"value": "1", "precision": 20}	0	2026-11-07 11:59:52.199-05	2026-11-07 11:59:52.199-05	\N	\N	1	\N	\N	\N	\N
-price_01M6VF7J7FQN0Q1P2TH1BYD3QY	\N	pset_01M6RV43BN1RN5SVYVBP75DJS8	cop	{"value": "136471", "precision": 20}	0	2026-11-07 11:59:52.436-05	2026-11-07 11:59:52.436-05	\N	\N	136471	\N	\N	\N	\N
-price_01M6VF7J7FENHNF1KTN307PHED	\N	pset_01M6RV43BN1RN5SVYVBP75DJS8	eur	{"value": "32", "precision": 20}	0	2026-11-07 11:59:52.436-05	2026-11-07 11:59:52.436-05	\N	\N	32	\N	\N	\N	\N
-price_01M6VF7J7F3ZHQZRSWF6JHMK0Q	\N	pset_01M6RV43BN1RN5SVYVBP75DJS8	usd	{"value": "35", "precision": 20}	0	2026-11-07 11:59:52.436-05	2026-11-07 11:59:52.436-05	\N	\N	35	\N	\N	\N	\N
-price_01M6VF7JJ9QBC30WGA82CPMYDY	\N	pset_01M6RV43BPT41G70CWM1AAWG9T	cop	{"value": "16500", "precision": 20}	0	2026-11-07 11:59:52.783-05	2026-11-07 11:59:52.783-05	\N	\N	16500	\N	\N	\N	\N
-price_01M6VF7JJ99AMJHHP8042G133K	\N	pset_01M6RV43BPT41G70CWM1AAWG9T	eur	{"value": "4", "precision": 20}	0	2026-11-07 11:59:52.783-05	2026-11-07 11:59:52.783-05	\N	\N	4	\N	\N	\N	\N
-price_01M6VF7JJ92V9D8YE038075HZB	\N	pset_01M6RV43BPT41G70CWM1AAWG9T	usd	{"value": "4", "precision": 20}	0	2026-11-07 11:59:52.783-05	2026-11-07 11:59:52.783-05	\N	\N	4	\N	\N	\N	\N
-price_01M6VF7JST14G7SWGCD1M6QXAZ	\N	pset_01M6RV43BS13PGE8FW9XB4P5PA	cop	{"value": "177882", "precision": 20}	0	2026-11-07 11:59:53.024-05	2026-11-07 11:59:53.024-05	\N	\N	177882	\N	\N	\N	\N
-price_01M6VF7JSVN92NF3RRNHNJQ12H	\N	pset_01M6RV43BS13PGE8FW9XB4P5PA	eur	{"value": "42", "precision": 20}	0	2026-11-07 11:59:53.024-05	2026-11-07 11:59:53.024-05	\N	\N	42	\N	\N	\N	\N
-price_01M6VF7JSVXBHBXKCZZC7K2PDV	\N	pset_01M6RV43BS13PGE8FW9XB4P5PA	usd	{"value": "46", "precision": 20}	0	2026-11-07 11:59:53.024-05	2026-11-07 11:59:53.024-05	\N	\N	46	\N	\N	\N	\N
-price_01M6VF7JZJ16XW87FJZNH6GXAJ	\N	pset_01M6RV43BN47FFNFEE063V2CB0	cop	{"value": "253176", "precision": 20}	0	2026-11-07 11:59:53.207-05	2026-11-07 11:59:53.207-05	\N	\N	253176	\N	\N	\N	\N
-price_01M6VF7JZJSVK7EQAAWTTMZMBZ	\N	pset_01M6RV43BN47FFNFEE063V2CB0	eur	{"value": "60", "precision": 20}	0	2026-11-07 11:59:53.207-05	2026-11-07 11:59:53.207-05	\N	\N	60	\N	\N	\N	\N
-price_01M6VF7JZJNSE9V67WCQEA801K	\N	pset_01M6RV43BN47FFNFEE063V2CB0	usd	{"value": "65", "precision": 20}	0	2026-11-07 11:59:53.207-05	2026-11-07 11:59:53.207-05	\N	\N	65	\N	\N	\N	\N
+price_01M6VF7GM3DT80GEDX6SGYP6R2	\N	pset_01M6RV43BEBP0HQ4P546GEYM8Y	cop	{"value": "54588", "precision": 20}	0	2026-11-07 11:59:50.794-05	2026-11-13 12:29:30.422-05	2026-11-13 12:29:30.359-05	\N	54588	\N	\N	\N	\N
+price_01M6VF7GM344REVF29Z9WD8B25	\N	pset_01M6RV43BEBP0HQ4P546GEYM8Y	eur	{"value": "13", "precision": 20}	0	2026-11-07 11:59:50.794-05	2026-11-13 12:29:30.422-05	2026-11-13 12:29:30.359-05	\N	13	\N	\N	\N	\N
+price_01M6VF7GM4E1FF2BSWB27S70C0	\N	pset_01M6RV43BEBP0HQ4P546GEYM8Y	usd	{"value": "14", "precision": 20}	0	2026-11-07 11:59:50.794-05	2026-11-13 12:29:30.422-05	2026-11-13 12:29:30.359-05	\N	14	\N	\N	\N	\N
+price_01M6VF7HHVA9TXZ38RN6VHYEV9	\N	pset_01M6RV43BECAVH4ZB7NVP7HP88	cop	{"value": "64941", "precision": 20}	0	2026-11-07 11:59:51.746-05	2026-11-13 12:29:30.395-05	2026-11-13 12:29:30.359-05	\N	64941	\N	\N	\N	\N
+price_01M6VF7HHVXMZ27BYPG9YBN7WC	\N	pset_01M6RV43BECAVH4ZB7NVP7HP88	eur	{"value": "15", "precision": 20}	0	2026-11-07 11:59:51.746-05	2026-11-13 12:29:30.395-05	2026-11-13 12:29:30.359-05	\N	15	\N	\N	\N	\N
+price_01M6VF7HHV3NW0FMVVEB7EVQW0	\N	pset_01M6RV43BECAVH4ZB7NVP7HP88	usd	{"value": "17", "precision": 20}	0	2026-11-07 11:59:51.746-05	2026-11-13 12:29:30.395-05	2026-11-13 12:29:30.359-05	\N	17	\N	\N	\N	\N
+price_01M6VF7GTH4T075054NME19GYS	\N	pset_01M6RV43BKB21295GB1AZP8A0V	cop	{"value": "45176", "precision": 20}	0	2026-11-07 11:59:50.997-05	2026-11-13 12:29:30.576-05	2026-11-13 12:29:30.359-05	\N	45176	\N	\N	\N	\N
+price_01M6VF7GTHFS4FZ4QRAXRZ94ZR	\N	pset_01M6RV43BKB21295GB1AZP8A0V	eur	{"value": "11", "precision": 20}	0	2026-11-07 11:59:50.997-05	2026-11-13 12:29:30.576-05	2026-11-13 12:29:30.359-05	\N	11	\N	\N	\N	\N
+price_01M6VF7GTHM1C5STYJS20WZ18J	\N	pset_01M6RV43BKB21295GB1AZP8A0V	usd	{"value": "12", "precision": 20}	0	2026-11-07 11:59:50.997-05	2026-11-13 12:29:30.576-05	2026-11-13 12:29:30.359-05	\N	12	\N	\N	\N	\N
+price_01M6VF7HT5R6NCGEQVJC9B1113	\N	pset_01M6RV43BMPFNFR218P6114BJA	cop	{"value": "16900", "precision": 20}	0	2026-11-07 11:59:52.013-05	2026-11-13 12:29:30.589-05	2026-11-13 12:29:30.359-05	\N	16900	\N	\N	\N	\N
+price_01M6VF7HT53J1NAHTA32V8Y4F1	\N	pset_01M6RV43BMPFNFR218P6114BJA	eur	{"value": "4", "precision": 20}	0	2026-11-07 11:59:52.013-05	2026-11-13 12:29:30.589-05	2026-11-13 12:29:30.359-05	\N	4	\N	\N	\N	\N
+price_01M6VF7HT5CZQBJ7YT7R00WE95	\N	pset_01M6RV43BMPFNFR218P6114BJA	usd	{"value": "4", "precision": 20}	0	2026-11-07 11:59:52.013-05	2026-11-13 12:29:30.589-05	2026-11-13 12:29:30.359-05	\N	4	\N	\N	\N	\N
+price_01M6VF7JMFK4T1YZQF7BRS384Q	\N	pset_01M6RV43BPK0XZDET9ZC9NPMBG	cop	{"value": "155294", "precision": 20}	0	2026-11-07 11:59:52.852-05	2026-11-13 12:29:30.664-05	2026-11-13 12:29:30.359-05	\N	155294	\N	\N	\N	\N
+price_01M6VF7JMFESAE3CF71QV4CH61	\N	pset_01M6RV43BPK0XZDET9ZC9NPMBG	eur	{"value": "37", "precision": 20}	0	2026-11-07 11:59:52.852-05	2026-11-13 12:29:30.664-05	2026-11-13 12:29:30.359-05	\N	37	\N	\N	\N	\N
+price_01M6VF7JMGTZFZCYRQ8BMXJY2S	\N	pset_01M6RV43BPK0XZDET9ZC9NPMBG	usd	{"value": "40", "precision": 20}	0	2026-11-07 11:59:52.852-05	2026-11-13 12:29:30.664-05	2026-11-13 12:29:30.359-05	\N	40	\N	\N	\N	\N
+price_01M6VF7K3500GKRGKS55EGCS8V	\N	pset_01M6RV43BPWDS4BJZXJKKAFMQE	cop	{"value": "8900", "precision": 20}	0	2026-11-07 11:59:53.323-05	2026-11-13 12:29:30.675-05	2026-11-13 12:29:30.359-05	\N	8900	\N	\N	\N	\N
+price_01M6VF7K354AQEX0W52JEV3Q29	\N	pset_01M6RV43BPWDS4BJZXJKKAFMQE	eur	{"value": "2", "precision": 20}	0	2026-11-07 11:59:53.323-05	2026-11-13 12:29:30.675-05	2026-11-13 12:29:30.359-05	\N	2	\N	\N	\N	\N
+price_01M6VF7K359MT9YFF33RETMK9M	\N	pset_01M6RV43BPWDS4BJZXJKKAFMQE	usd	{"value": "2", "precision": 20}	0	2026-11-07 11:59:53.323-05	2026-11-13 12:29:30.675-05	2026-11-13 12:29:30.359-05	\N	2	\N	\N	\N	\N
+price_01M6VF7J1RYNEHHSDTE1RWBWZY	\N	pset_01M6RV43BQYXVXA41AWTTK02Y0	cop	{"value": "26353", "precision": 20}	0	2026-11-07 11:59:52.252-05	2026-11-13 12:29:30.712-05	2026-11-13 12:29:30.359-05	\N	26353	\N	\N	\N	\N
+price_01M6VF7J1R362EVWKZ7HE9RM95	\N	pset_01M6RV43BQYXVXA41AWTTK02Y0	eur	{"value": "6", "precision": 20}	0	2026-11-07 11:59:52.252-05	2026-11-13 12:29:30.712-05	2026-11-13 12:29:30.359-05	\N	6	\N	\N	\N	\N
+price_01M6VF7J1R2K8G50A0Y5T3BNFG	\N	pset_01M6RV43BQYXVXA41AWTTK02Y0	usd	{"value": "7", "precision": 20}	0	2026-11-07 11:59:52.252-05	2026-11-13 12:29:30.712-05	2026-11-13 12:29:30.359-05	\N	7	\N	\N	\N	\N
+price_01M6VF7JBKYR4JJ2M5SE507F82	\N	pset_01M6RV43BRSRSGQ7896HNZGWSQ	cop	{"value": "21900", "precision": 20}	0	2026-11-07 11:59:52.568-05	2026-11-13 12:29:30.725-05	2026-11-13 12:29:30.359-05	\N	21900	\N	\N	\N	\N
+price_01M6VF7GZ1Q9Q78D0BGPY4QHWD	\N	pset_01M6RV43BHHR7JQZ2RD267EH81	cop	{"value": "28500", "precision": 20}	0	2026-11-07 11:59:51.142-05	2026-11-13 12:29:30.489-05	2026-11-13 12:29:30.359-05	\N	28500	\N	\N	\N	\N
+price_01M6VF7GZ12R0QTDGCYWPK528W	\N	pset_01M6RV43BHHR7JQZ2RD267EH81	eur	{"value": "7", "precision": 20}	0	2026-11-07 11:59:51.142-05	2026-11-13 12:29:30.489-05	2026-11-13 12:29:30.359-05	\N	7	\N	\N	\N	\N
+price_01M6VF7GZ2FZ4XY9DTS9EEX3MT	\N	pset_01M6RV43BHHR7JQZ2RD267EH81	usd	{"value": "7", "precision": 20}	0	2026-11-07 11:59:51.142-05	2026-11-13 12:29:30.489-05	2026-11-13 12:29:30.359-05	\N	7	\N	\N	\N	\N
+price_01M6VF7HWNGJYKJJ59A4JFZVCZ	\N	pset_01M6RV43BM0H4SC00N16E6DTV8	cop	{"value": "159059", "precision": 20}	0	2026-11-07 11:59:52.091-05	2026-11-13 12:29:30.6-05	2026-11-13 12:29:30.359-05	\N	159059	\N	\N	\N	\N
+price_01M6VF7HWP1MADA9C4NVJH7CYY	\N	pset_01M6RV43BM0H4SC00N16E6DTV8	eur	{"value": "38", "precision": 20}	0	2026-11-07 11:59:52.091-05	2026-11-13 12:29:30.601-05	2026-11-13 12:29:30.359-05	\N	38	\N	\N	\N	\N
+price_01M6VF7HWPB1APB10J60TMS8PM	\N	pset_01M6RV43BM0H4SC00N16E6DTV8	usd	{"value": "41", "precision": 20}	0	2026-11-07 11:59:52.091-05	2026-11-13 12:29:30.601-05	2026-11-13 12:29:30.359-05	\N	41	\N	\N	\N	\N
+price_01M6VF7J5A9YS86YC5DV5ENDTJ	\N	pset_01M6RV43BMPS4T68C6WMZDT8YS	cop	{"value": "14500", "precision": 20}	0	2026-11-07 11:59:52.368-05	2026-11-13 12:29:30.612-05	2026-11-13 12:29:30.359-05	\N	14500	\N	\N	\N	\N
+price_01M6VF7J5AN5XFS8JTVPWYJ4GT	\N	pset_01M6RV43BMPS4T68C6WMZDT8YS	eur	{"value": "3", "precision": 20}	0	2026-11-07 11:59:52.368-05	2026-11-13 12:29:30.612-05	2026-11-13 12:29:30.359-05	\N	3	\N	\N	\N	\N
+price_01M6VF7J5AT7Q8WJKVJZZTH0ET	\N	pset_01M6RV43BMPS4T68C6WMZDT8YS	usd	{"value": "4", "precision": 20}	0	2026-11-07 11:59:52.368-05	2026-11-13 12:29:30.612-05	2026-11-13 12:29:30.359-05	\N	4	\N	\N	\N	\N
+price_01M6VF7JXX5MSCXV959EF6V9YK	\N	pset_01M6RV43BN2AN3DKRRY2ATF4VJ	cop	{"value": "26900", "precision": 20}	0	2026-11-07 11:59:53.153-05	2026-11-13 12:29:30.633-05	2026-11-13 12:29:30.359-05	\N	26900	\N	\N	\N	\N
+price_01M6VF7JXX8KWR42AGD931SPS9	\N	pset_01M6RV43BN2AN3DKRRY2ATF4VJ	eur	{"value": "6", "precision": 20}	0	2026-11-07 11:59:53.153-05	2026-11-13 12:29:30.633-05	2026-11-13 12:29:30.359-05	\N	6	\N	\N	\N	\N
+price_01M6VF7JXX5SMWRJQSMW3AC80Q	\N	pset_01M6RV43BN2AN3DKRRY2ATF4VJ	usd	{"value": "7", "precision": 20}	0	2026-11-07 11:59:53.153-05	2026-11-13 12:29:30.633-05	2026-11-13 12:29:30.359-05	\N	7	\N	\N	\N	\N
+price_01M6VF7K5GSZQ6XV2KKVJZ15SX	\N	pset_01M6RV43BQW7YY8ZJ8JJV3S3XM	cop	{"value": "83765", "precision": 20}	0	2026-11-07 11:59:53.396-05	2026-11-13 12:29:30.689-05	2026-11-13 12:29:30.359-05	\N	83765	\N	\N	\N	\N
+price_01M6VF7K5GVZ403SAT7YNRRVVA	\N	pset_01M6RV43BQW7YY8ZJ8JJV3S3XM	eur	{"value": "20", "precision": 20}	0	2026-11-07 11:59:53.396-05	2026-11-13 12:29:30.689-05	2026-11-13 12:29:30.359-05	\N	20	\N	\N	\N	\N
+price_01M6VF7K5GXENSBNH83BF9YT7S	\N	pset_01M6RV43BQW7YY8ZJ8JJV3S3XM	usd	{"value": "21", "precision": 20}	0	2026-11-07 11:59:53.396-05	2026-11-13 12:29:30.689-05	2026-11-13 12:29:30.359-05	\N	21	\N	\N	\N	\N
+price_01M6VF7JDC4AXJSYC5MMETWKG1	\N	pset_01M6RV43BRSBPC10D36HWWW4XX	cop	{"value": "206118", "precision": 20}	0	2026-11-07 11:59:52.625-05	2026-11-13 12:29:30.737-05	2026-11-13 12:29:30.359-05	\N	206118	\N	\N	\N	\N
+price_01M6VF7JDCJZWNNYCQN5AZVEZJ	\N	pset_01M6RV43BRSBPC10D36HWWW4XX	eur	{"value": "49", "precision": 20}	0	2026-11-07 11:59:52.625-05	2026-11-13 12:29:30.737-05	2026-11-13 12:29:30.359-05	\N	49	\N	\N	\N	\N
+price_01M6VF7JDDYB6Z8XQAD91TY923	\N	pset_01M6RV43BRSBPC10D36HWWW4XX	usd	{"value": "53", "precision": 20}	0	2026-11-07 11:59:52.625-05	2026-11-13 12:29:30.737-05	2026-11-13 12:29:30.359-05	\N	53	\N	\N	\N	\N
+price_01M7AZA5A582T03P4T1JME07SD	\N	pset_01M7AZA5A5CG5KTA4D2BMYMXQV	usd	{"value": "8", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	8	\N	\N	\N	\N
+price_01M7AZA5A52PC4PZ25KW3EPZK9	\N	pset_01M7AZA5A5MMDYZHP4G0VXZAF9	cop	{"value": "2900", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	2900	\N	\N	\N	\N
+price_01M7AZA5A53JYB3PN0X58078MF	\N	pset_01M7AZA5A5MMDYZHP4G0VXZAF9	eur	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A5TFXBRHT0FEE8FSX5	\N	pset_01M7AZA5A5MMDYZHP4G0VXZAF9	usd	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A5RV53QMZSYNET4PRD	\N	pset_01M7AZA5A6V8VBBSYKHK847MMW	cop	{"value": "21600", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	21600	\N	\N	\N	\N
+price_01M7AZA5A52EP2SSXP1T5CAB69	\N	pset_01M7AZA5A6V8VBBSYKHK847MMW	eur	{"value": "5", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	5	\N	\N	\N	\N
+price_01M7AZA5A5T7M34G3G1NSP9YTC	\N	pset_01M7AZA5A6V8VBBSYKHK847MMW	usd	{"value": "6", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	6	\N	\N	\N	\N
+price_01M6VF7HBV5WN4W70HRNNS1WYH	\N	pset_01M6RV43BD3JNDQWSS6GA78VN6	cop	{"value": "6900", "precision": 20}	0	2026-11-07 11:59:51.558-05	2026-11-13 12:29:30.369-05	2026-11-13 12:29:30.359-05	\N	6900	\N	\N	\N	\N
+price_01M6VF7HBVQ0HFD0P6KZFDG07B	\N	pset_01M6RV43BD3JNDQWSS6GA78VN6	eur	{"value": "2", "precision": 20}	0	2026-11-07 11:59:51.558-05	2026-11-13 12:29:30.369-05	2026-11-13 12:29:30.359-05	\N	2	\N	\N	\N	\N
+price_01M6VF7HBW2YD00Z4ZX6817DJP	\N	pset_01M6RV43BD3JNDQWSS6GA78VN6	usd	{"value": "2", "precision": 20}	0	2026-11-07 11:59:51.558-05	2026-11-13 12:29:30.369-05	2026-11-13 12:29:30.359-05	\N	2	\N	\N	\N	\N
+price_01M6VF7H1FTHRYHMC5MT713S3W	\N	pset_01M6RV43BH81KHHXAE3K0KSM86	cop	{"value": "268235", "precision": 20}	0	2026-11-07 11:59:51.223-05	2026-11-13 12:29:30.498-05	2026-11-13 12:29:30.359-05	\N	268235	\N	\N	\N	\N
+price_01M6VF7H1FF01VRN51MC968FQJ	\N	pset_01M6RV43BH81KHHXAE3K0KSM86	eur	{"value": "64", "precision": 20}	0	2026-11-07 11:59:51.223-05	2026-11-13 12:29:30.498-05	2026-11-13 12:29:30.359-05	\N	64	\N	\N	\N	\N
+price_01M6VF7H1FT36TMX7AGHJ1M5EY	\N	pset_01M6RV43BH81KHHXAE3K0KSM86	usd	{"value": "69", "precision": 20}	0	2026-11-07 11:59:51.223-05	2026-11-13 12:29:30.498-05	2026-11-13 12:29:30.359-05	\N	69	\N	\N	\N	\N
+price_01M6VF7J7FQN0Q1P2TH1BYD3QY	\N	pset_01M6RV43BN1RN5SVYVBP75DJS8	cop	{"value": "136471", "precision": 20}	0	2026-11-07 11:59:52.436-05	2026-11-13 12:29:30.623-05	2026-11-13 12:29:30.359-05	\N	136471	\N	\N	\N	\N
+price_01M6VF7J7FENHNF1KTN307PHED	\N	pset_01M6RV43BN1RN5SVYVBP75DJS8	eur	{"value": "32", "precision": 20}	0	2026-11-07 11:59:52.436-05	2026-11-13 12:29:30.623-05	2026-11-13 12:29:30.359-05	\N	32	\N	\N	\N	\N
+price_01M6VF7J7F3ZHQZRSWF6JHMK0Q	\N	pset_01M6RV43BN1RN5SVYVBP75DJS8	usd	{"value": "35", "precision": 20}	0	2026-11-07 11:59:52.436-05	2026-11-13 12:29:30.623-05	2026-11-13 12:29:30.359-05	\N	35	\N	\N	\N	\N
+price_01M6VF7JZJ16XW87FJZNH6GXAJ	\N	pset_01M6RV43BN47FFNFEE063V2CB0	cop	{"value": "253176", "precision": 20}	0	2026-11-07 11:59:53.207-05	2026-11-13 12:29:30.642-05	2026-11-13 12:29:30.359-05	\N	253176	\N	\N	\N	\N
+price_01M6VF7JZJSVK7EQAAWTTMZMBZ	\N	pset_01M6RV43BN47FFNFEE063V2CB0	eur	{"value": "60", "precision": 20}	0	2026-11-07 11:59:53.207-05	2026-11-13 12:29:30.643-05	2026-11-13 12:29:30.359-05	\N	60	\N	\N	\N	\N
+price_01M6VF7JZJNSE9V67WCQEA801K	\N	pset_01M6RV43BN47FFNFEE063V2CB0	usd	{"value": "65", "precision": 20}	0	2026-11-07 11:59:53.207-05	2026-11-13 12:29:30.643-05	2026-11-13 12:29:30.359-05	\N	65	\N	\N	\N	\N
+price_01M6VF7JJ9QBC30WGA82CPMYDY	\N	pset_01M6RV43BPT41G70CWM1AAWG9T	cop	{"value": "16500", "precision": 20}	0	2026-11-07 11:59:52.783-05	2026-11-13 12:29:30.654-05	2026-11-13 12:29:30.359-05	\N	16500	\N	\N	\N	\N
+price_01M6VF7JJ99AMJHHP8042G133K	\N	pset_01M6RV43BPT41G70CWM1AAWG9T	eur	{"value": "4", "precision": 20}	0	2026-11-07 11:59:52.783-05	2026-11-13 12:29:30.654-05	2026-11-13 12:29:30.359-05	\N	4	\N	\N	\N	\N
+price_01M6VF7JJ92V9D8YE038075HZB	\N	pset_01M6RV43BPT41G70CWM1AAWG9T	usd	{"value": "4", "precision": 20}	0	2026-11-07 11:59:52.783-05	2026-11-13 12:29:30.654-05	2026-11-13 12:29:30.359-05	\N	4	\N	\N	\N	\N
+price_01M6VF7J0456KEZB4CW1JS7YGX	\N	pset_01M6RV43BQ6PTD9J01MWFASXBY	cop	{"value": "2800", "precision": 20}	0	2026-11-07 11:59:52.199-05	2026-11-13 12:29:30.701-05	2026-11-13 12:29:30.359-05	\N	2800	\N	\N	\N	\N
+price_01M6VF7J049N2DN15BYGVWZM2S	\N	pset_01M6RV43BQ6PTD9J01MWFASXBY	eur	{"value": "1", "precision": 20}	0	2026-11-07 11:59:52.199-05	2026-11-13 12:29:30.701-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M6VF7J048JXTZ7F5FP9G4WPW	\N	pset_01M6RV43BQ6PTD9J01MWFASXBY	usd	{"value": "1", "precision": 20}	0	2026-11-07 11:59:52.199-05	2026-11-13 12:29:30.701-05	2026-11-13 12:29:30.359-05	\N	1	\N	\N	\N	\N
+price_01M6VF7JST14G7SWGCD1M6QXAZ	\N	pset_01M6RV43BS13PGE8FW9XB4P5PA	cop	{"value": "177882", "precision": 20}	0	2026-11-07 11:59:53.024-05	2026-11-13 12:29:30.758-05	2026-11-13 12:29:30.359-05	\N	177882	\N	\N	\N	\N
+price_01M6VF7JSVN92NF3RRNHNJQ12H	\N	pset_01M6RV43BS13PGE8FW9XB4P5PA	eur	{"value": "42", "precision": 20}	0	2026-11-07 11:59:53.024-05	2026-11-13 12:29:30.758-05	2026-11-13 12:29:30.359-05	\N	42	\N	\N	\N	\N
+price_01M6VF7JSVXBHBXKCZZC7K2PDV	\N	pset_01M6RV43BS13PGE8FW9XB4P5PA	usd	{"value": "46", "precision": 20}	0	2026-11-07 11:59:53.024-05	2026-11-13 12:29:30.758-05	2026-11-13 12:29:30.359-05	\N	46	\N	\N	\N	\N
+price_01M7AZA5A6PPQX9TG3YE9BXT1W	\N	pset_01M7AZA5A6F5TM5R4S2Y49EFFA	cop	{"value": "1500", "precision": 20}	0	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N	\N	1500	\N	\N	\N	\N
+price_01M7AZA5A8BQ3FJZQG7RS60W3G	\N	pset_01M7AZA5A8GTY3CXW44MWXZN1G	cop	{"value": "1200", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1200	\N	\N	\N	\N
+price_01M7AZA5A8TBHW293HKN08ZKNJ	\N	pset_01M7AZA5A8GTY3CXW44MWXZN1G	eur	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A8P0CEQSVSFZRDAMVK	\N	pset_01M7AZA5A8GTY3CXW44MWXZN1G	usd	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A8PP85E71684ZANV7R	\N	pset_01M7AZA5A8X0DYPP3ZC229TYP6	cop	{"value": "16900", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	16900	\N	\N	\N	\N
+price_01M7AZA5A8DV4EPNZ74TDCEQD8	\N	pset_01M7AZA5A8X0DYPP3ZC229TYP6	eur	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5A8DY73NZEHJ030087V	\N	pset_01M7AZA5A8X0DYPP3ZC229TYP6	usd	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5A80SD5QDZKWJPKGNZZ	\N	pset_01M7AZA5A9N96NR8TSN88C5F7F	cop	{"value": "1500", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1500	\N	\N	\N	\N
+price_01M7AZA5A8BBP437HZCMM6SP5Z	\N	pset_01M7AZA5A9N96NR8TSN88C5F7F	eur	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A8S9BMZDW2DT08APX3	\N	pset_01M7AZA5A9N96NR8TSN88C5F7F	usd	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A9QD9VKYZD6X9XFHKT	\N	pset_01M7AZA5A9THZP7N6XFASATKAZ	cop	{"value": "16900", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	16900	\N	\N	\N	\N
+price_01M7AZA5A97MPYJX6VF68RZQ1J	\N	pset_01M7AZA5A9THZP7N6XFASATKAZ	eur	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5A9G11JDW9ERKYM4XX5	\N	pset_01M7AZA5A9THZP7N6XFASATKAZ	usd	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5A99VHRR6N5DDVKMK28	\N	pset_01M7AZA5A9XB8NB2CD52SDT56M	cop	{"value": "900", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	900	\N	\N	\N	\N
+price_01M7AZA5A9ZMYC7VEP7NZ0EV2C	\N	pset_01M7AZA5A9XB8NB2CD52SDT56M	eur	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A9T5C6EX1SMP6DZ893	\N	pset_01M7AZA5A9XB8NB2CD52SDT56M	usd	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5A995NSFYA3M22YCWNN	\N	pset_01M7AZA5A995NDR402BY4580F4	cop	{"value": "16000", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	16000	\N	\N	\N	\N
+price_01M7AZA5A93VVGKR2YR98M3CMN	\N	pset_01M7AZA5A995NDR402BY4580F4	eur	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5A99334NH0GTMC083D2	\N	pset_01M7AZA5A995NDR402BY4580F4	usd	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5AA98TD75H3GB2VNHWD	\N	pset_01M7AZA5AAEA8MT40A9WHD9GKW	cop	{"value": "1500", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1500	\N	\N	\N	\N
+price_01M7AZA5AAEGCET69NFY5A4GH3	\N	pset_01M7AZA5AAEA8MT40A9WHD9GKW	eur	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5AAAGTY4Y9GYYJ1NFAF	\N	pset_01M7AZA5AAEA8MT40A9WHD9GKW	usd	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5AAB9JFGBFT917HH0VJ	\N	pset_01M7AZA5AA713YZPCHDR91ZA7Q	cop	{"value": "16900", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	16900	\N	\N	\N	\N
+price_01M7AZA5AARV8YTMSAKG0PC0QA	\N	pset_01M7AZA5AA713YZPCHDR91ZA7Q	eur	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5AAE0APFXBT4CS97S1D	\N	pset_01M7AZA5AA713YZPCHDR91ZA7Q	usd	{"value": "4", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	4	\N	\N	\N	\N
+price_01M7AZA5AAGYJ8FRRN901ZASX6	\N	pset_01M7AZA5AA7VZEP90K7SV6MZHD	cop	{"value": "1100", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1100	\N	\N	\N	\N
+price_01M7AZA5AAWRAE645JSJYV700Z	\N	pset_01M7AZA5AA7VZEP90K7SV6MZHD	eur	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5AACFCEVW92RDFC2CEM	\N	pset_01M7AZA5AA7VZEP90K7SV6MZHD	usd	{"value": "1", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	1	\N	\N	\N	\N
+price_01M7AZA5AB8Q7V57VFRKE7VACV	\N	pset_01M7AZA5AB2R1VK864HCE7JVM9	cop	{"value": "12000", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	12000	\N	\N	\N	\N
+price_01M7AZA5AB0QCRA0CJVXN4D3RM	\N	pset_01M7AZA5AB2R1VK864HCE7JVM9	eur	{"value": "3", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	3	\N	\N	\N	\N
+price_01M7AZA5AB4W65C9FQABWHRYGQ	\N	pset_01M7AZA5AB2R1VK864HCE7JVM9	usd	{"value": "3", "precision": 20}	0	2026-11-13 12:29:31.213-05	2026-11-13 12:29:31.213-05	\N	\N	3	\N	\N	\N	\N
 \.
 
 
@@ -5799,40 +5026,68 @@ pset_01M6RPEW7MQEKSSN7EZFGZK0S6	2026-11-06 10:08:28.79-05	2026-11-06 11:29:22.25
 pset_01M6RPEW7MQV5NN9DM5N17JEEW	2026-11-06 10:08:28.79-05	2026-11-06 11:29:22.264-05	2026-11-06 11:29:21.998-05
 pset_01M6RPEW7NHK36GGEG1KTWYGEB	2026-11-06 10:08:28.79-05	2026-11-06 11:29:22.273-05	2026-11-06 11:29:21.998-05
 pset_01M6RPEW7N4Y95A3V51A42D0M7	2026-11-06 10:08:28.79-05	2026-11-06 11:29:22.281-05	2026-11-06 11:29:21.998-05
-pset_01M6RV43BD3JNDQWSS6GA78VN6	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BECAVH4ZB7NVP7HP88	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BEQKKSWAGGAHGEED2H	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BEBP0HQ4P546GEYM8Y	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BFPH4J75BQ9JGCJ0P5	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BF1F63YETZCN4E5RN8	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BGR8TNZJ2DBZFKJF2J	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BG9R5E0HRR60FE3WC9	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BHHR7JQZ2RD267EH81	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BH81KHHXAE3K0KSM86	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BJZFTP7VEG1Q33SBEF	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BJDJMAVZBR5V6DRG2M	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BJGR7XZ5Z81CV7JN3S	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BK71704A1NZBJKKVHB	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BK0XV8105MW01FAXCK	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BKB21295GB1AZP8A0V	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BMPFNFR218P6114BJA	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BM0H4SC00N16E6DTV8	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BMPS4T68C6WMZDT8YS	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BN1RN5SVYVBP75DJS8	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BN2AN3DKRRY2ATF4VJ	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BN47FFNFEE063V2CB0	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BPT41G70CWM1AAWG9T	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BPK0XZDET9ZC9NPMBG	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BPWDS4BJZXJKKAFMQE	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BQW7YY8ZJ8JJV3S3XM	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BQ6PTD9J01MWFASXBY	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BQYXVXA41AWTTK02Y0	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BRSRSGQ7896HNZGWSQ	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BRSBPC10D36HWWW4XX	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BR8KAG1J4V2G2AD3P4	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6RV43BS13PGE8FW9XB4P5PA	2026-11-06 11:29:58.522-05	2026-11-06 11:29:58.522-05	\N
-pset_01M6VRP8AZPBWS44X17S8HCDSS	2026-11-07 14:45:11.007-05	2026-11-07 14:45:11.007-05	\N
-pset_01M6VRP8AZPAD4RVAQS4PWFD3P	2026-11-07 14:45:11.008-05	2026-11-07 14:45:11.008-05	\N
+pset_01M6RV43BD3JNDQWSS6GA78VN6	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.36-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BECAVH4ZB7NVP7HP88	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.389-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BEQKKSWAGGAHGEED2H	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.403-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BEBP0HQ4P546GEYM8Y	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.414-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BFPH4J75BQ9JGCJ0P5	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.428-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BF1F63YETZCN4E5RN8	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.44-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BGR8TNZJ2DBZFKJF2J	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.459-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BG9R5E0HRR60FE3WC9	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.468-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BHHR7JQZ2RD267EH81	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.48-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BH81KHHXAE3K0KSM86	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.494-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BJZFTP7VEG1Q33SBEF	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.506-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BJDJMAVZBR5V6DRG2M	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.517-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BJGR7XZ5Z81CV7JN3S	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.529-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BK71704A1NZBJKKVHB	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.542-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BK0XV8105MW01FAXCK	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.556-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BKB21295GB1AZP8A0V	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.569-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BMPFNFR218P6114BJA	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.582-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BM0H4SC00N16E6DTV8	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.595-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BMPS4T68C6WMZDT8YS	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.608-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BN1RN5SVYVBP75DJS8	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.619-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BN2AN3DKRRY2ATF4VJ	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.629-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BN47FFNFEE063V2CB0	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.639-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BPT41G70CWM1AAWG9T	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.65-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BPK0XZDET9ZC9NPMBG	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.661-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BPWDS4BJZXJKKAFMQE	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.672-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BQW7YY8ZJ8JJV3S3XM	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.685-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BQ6PTD9J01MWFASXBY	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.695-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BQYXVXA41AWTTK02Y0	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.708-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BRSRSGQ7896HNZGWSQ	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.721-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BRSBPC10D36HWWW4XX	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.733-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BR8KAG1J4V2G2AD3P4	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.744-05	2026-11-13 12:29:30.359-05
+pset_01M6RV43BS13PGE8FW9XB4P5PA	2026-11-06 11:29:58.522-05	2026-11-13 12:29:30.755-05	2026-11-13 12:29:30.359-05
+pset_01M6VRP8AZPBWS44X17S8HCDSS	2026-11-07 14:45:11.007-05	2026-11-13 12:29:30.764-05	2026-11-13 12:29:30.359-05
+pset_01M6VRP8AZPAD4RVAQS4PWFD3P	2026-11-07 14:45:11.008-05	2026-11-13 12:29:30.775-05	2026-11-13 12:29:30.359-05
+pset_01M7AZA5A1PPG9X5QX8QFFWCWH	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A2SSN5DDMSZQC243WE	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A2NM2NKJ7JE59AQVSX	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A3KJTHP8E5PPM4NZKA	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A3T225XZT12SNA8VD1	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A3817M28368JN4MTMF	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A4APYSAC4BQHQ8MR5B	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A4P61RJNWYMVP2Q0VP	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A4AY0N14N2QEXHXA7V	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A5CG5KTA4D2BMYMXQV	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A5MMDYZHP4G0VXZAF9	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A6V8VBBSYKHK847MMW	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A6F5TM5R4S2Y49EFFA	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A6Z2Z5239PCW3GXQMG	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A7B9TX6YPTA9KZVNGD	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A79MVVKC8NM4B5G8KF	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A7AT5CC43XPC170PXG	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A8QNBWPHMWG1J72370	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A8GTY3CXW44MWXZN1G	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A8X0DYPP3ZC229TYP6	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A9N96NR8TSN88C5F7F	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A9THZP7N6XFASATKAZ	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A9XB8NB2CD52SDT56M	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5A995NDR402BY4580F4	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5AAEA8MT40A9WHD9GKW	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5AA713YZPCHDR91ZA7Q	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5AA7VZEP90K7SV6MZHD	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
+pset_01M7AZA5AB2R1VK864HCE7JVM9	2026-11-13 12:29:31.212-05	2026-11-13 12:29:31.212-05	\N
 \.
 
 
@@ -5869,23 +5124,37 @@ prod_01M6RPEW08AMZS17MYD0A0XQV9	Jugo de Naranja 100% Exprimido Natural	jugo-nara
 prod_01M6RPEW08K7G5BQ2AJVBNWSD8	Agua Mineral Natural de Manantial	agua-mineral-manantial	\N	Agua pura de manantial de montaña con minerales equilibrados. Venta individual o por paca mayorista para eventos y comercios.	f	published	https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 10:08:28.568-05	2026-11-06 11:29:22.129-05	2026-11-06 11:29:21.969-05	{"detal_label": "Botella x 1.5L", "mayor_label": "Paca Mayorista x 24 uds", "category_name": "Bebidas y Licores"}
 prod_01M6RPEW08KKFEMGCR8DHA8253	Detergente Líquido Ecológico Concentrado	detergente-liquido-ecologico	\N	Fórmula biodegradable de alto poder quitamanchas y aroma fresco duradero. Cuida tu ropa y el medio ambiente.	f	published	https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 10:08:28.568-05	2026-11-06 11:29:22.139-05	2026-11-06 11:29:21.969-05	{"detal_label": "Galón x 3 Litros", "mayor_label": "Bidón Institucional x 20L", "category_name": "Aseo y Hogar"}
 prod_01M6RPEW089JG2ZHZMY25K7FKE	Papel Higiénico Triple Hoja Ultra Suave	papel-higienico-triple-hoja	\N	Máxima suavidad, absorción y rendimiento con extracto de algodón. Disponible en paquete familiar o fardo mayorista.	f	published	https://images.unsplash.com/photo-1584556812952-905ffd0c611a?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 10:08:28.568-05	2026-11-06 11:29:22.149-05	2026-11-06 11:29:21.969-05	{"detal_label": "Paquete x 12 Rollos", "mayor_label": "Fardo Mayorista x 96 Rollos", "category_name": "Aseo y Hogar"}
-prod_01M6RV433V6XR5MWQQ2R2HZK77	Pan Artesanal Fresco de Masa Madre	pan-artesanal-masa-madre	\N	Horneado todas las mañanas con fermentación lenta. Corteza dorada y miga suave para desayunos o restaurantes.	f	published	https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:50.411-05	\N	{"sede": "Sede Principal", "barcode": "7702002002046", "cost_cop": 7600, "stock_qty": 150, "detal_label": "Hogaza x 650g", "mayor_label": "Canasta x 10 Hogazas", "mayor_units": 10, "discount_pct": 15, "category_name": "Despensa y Abarrotes", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433VBXFP15V95A7WYZJ7	Fresas Sabaneras Extra Dulces	fresas-frescas-500g	\N	Fresas recién recolectadas de la Sabana de Bogotá, clasificadas y listas para jugo, postres o negocio.	f	published	https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:50.717-05	\N	{"sede": "Sede Principal", "barcode": "7701001001025", "cost_cop": 4640, "stock_qty": 150, "detal_label": "Bandeja x 500g", "mayor_label": "Caja x 10 Bandejas (5kg)", "mayor_units": 10, "discount_pct": 15, "category_name": "Frutas y Verduras", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433VFVQK8CJ13HYDBF8C	Leche Entera de la Sabana UHT	leche-entera-fresca-1l	\N	Leche 100% pura de vaca de hatos certificados en Cundinamarca y Antioquia. Venta por bolsa/caja o paca x 12 litros.	f	published	https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:50.888-05	\N	{"sede": "Sede Principal", "barcode": "7703003003012", "cost_cop": 3840, "stock_qty": 150, "detal_label": "Caja x 1 Litro", "mayor_label": "Paca x 12 Litros", "mayor_units": 10, "discount_pct": 15, "category_name": "Lácteos y Huevos", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433VH280P701DXANFBRN	Aceite Gourmet Vegetal / Oliva Extra	aceite-oliva-virgen-extra	\N	Aceite puro libre de colesterol para cocina familiar o fritura limpia en restaurantes. Botella o caja cerrada.	f	published	https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:51.04-05	\N	{"sede": "Sede Principal", "barcode": "7702002002022", "cost_cop": 22800, "stock_qty": 150, "detal_label": "Botella x 1000ml", "mayor_label": "Caja x 6 Botellas", "mayor_units": 10, "discount_pct": 15, "category_name": "Despensa y Abarrotes", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433W5X97CNW0881T4HVS	Huevos Rojos Camperos AA	huevos-camperos-docena	\N	Huevos frescos AA de granja avícola colombiana. Llévalos por cubeta de 30 unidades o caja mayorista de 12 cubetas (360 uds).	f	published	https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:51.88-05	\N	{"sede": "Sede Principal", "barcode": "7703003003029", "cost_cop": 13520, "stock_qty": 150, "detal_label": "Cubeta x 30 Unidades AA", "mayor_label": "Caja Mayorista x 360 uds (12 Cubetas)", "mayor_units": 10, "discount_pct": 0, "category_name": "Lácteos y Huevos", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433W9FM6BGE5SP0V9VXE	Agua Manantial de Páramo Sin Gas	agua-mineral-manantial	\N	Agua cristalina de manantial colombiano en botella individual o paca termoencogida para tiendas y eventos.	f	published	https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:52.14-05	\N	{"sede": "Sede Principal", "barcode": "7705005005023", "cost_cop": 2240, "stock_qty": 150, "detal_label": "Botella x 1.5L", "mayor_label": "Paca Mayorista x 24 uds", "mayor_units": 10, "discount_pct": 0, "category_name": "Bebidas y Licores", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433WFGYYK1YXC74TA0VY	Detergente Líquido Concentrado Multiusos	detergente-liquido-ecologico	\N	Máximo poder desmanchador y fragancia fresca duradera. Disponible en galón para hogar o pimpina institucional.	f	published	https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.287-05	2026-11-07 11:59:52.49-05	\N	{"sede": "Sede Principal", "barcode": "7706006006013", "cost_cop": 17520, "stock_qty": 150, "detal_label": "Galón x 3 Litros", "mayor_label": "Pimpina Mayorista x 20L", "mayor_units": 10, "discount_pct": 0, "category_name": "Aseo y Hogar", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433WTRZ4DGQ5HHJCEV93	Jugo de Naranja Tangelo 100% Natural	jugo-naranja-exprimido	\N	Exprimido de naranjas frescas del Eje Cafetero sin azúcar añadida ni conservantes.	f	published	https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:53.251-05	\N	{"sede": "Sede Principal", "barcode": "7705005005016", "cost_cop": 7120, "stock_qty": 150, "detal_label": "Botella x 1L", "mayor_label": "Caja x 12 Botellas", "mayor_units": 10, "discount_pct": 0, "category_name": "Bebidas y Licores", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433V3S45S2XK53QKXJG7	Arroz Blanco del Tolima Grano Entero	arroz-blanco-extra-grano	\N	Arroz colombiano seleccionado que crece y queda suelto. Lleva por kilo o por arroba/paca mayorista de 25 bolsas.	f	published	https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 12:44:41.338-05	\N	{"sede": "Sede Principal", "barcode": "7702002002039", "cost_cop": 67000, "stock_qty": 150, "detal_label": "Bolsa x 1kg", "mayor_label": "Paca Mayorista x 25kg (2 Arrobas)", "mayor_units": 10, "discount_pct": 0, "category_name": "Despensa y Abarrotes", "detal_margin_pct": 20, "mayor_margin_pct": 10}
-prod_01M6RV433V2SMZXSHC9ET34Q7P	Banano Urabá Tipo Exportación	banano-organico-exportacion	\N	Bananos dulces ricos en potasio de Urabá. Disponibles por mano familiar o caja cerrada para tiendas y restaurantes.	f	published	https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:49.968-05	\N	{"sede": "Sede Principal", "barcode": "7701001001032", "cost_cop": 1000, "stock_qty": 150, "detal_label": "Mano x 1kg", "mayor_label": "Caja Mayorista x 12kg", "mayor_units": 10, "discount_pct": 0, "category_name": "Frutas y Verduras", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433V8QZPH3PNVY46ZNEP	Café de Colombia Origen Huila Tostado	cafe-grano-artesanal	\N	Café 100% Colombiano Excelso de altura con notas a panela y cacao. Disponible por libra o paca mayorista x 12 libras.	f	published	https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:50.567-05	\N	{"sede": "Sede Principal", "barcode": "7702002002015", "cost_cop": 18320, "stock_qty": 150, "detal_label": "Bolsa x 500g (1 Libra)", "mayor_label": "Paca x 12 Libras (6kg)", "mayor_units": 10, "discount_pct": 0, "category_name": "Despensa y Abarrotes", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433VXTN0Q3M4KFEPFEVY	Aguacate Hass de Antioquia Seleccionado	aguacate-hass-organico	\N	Aguacates Hass cremosos de exportación cultivados en el Oriente Antioqueño. Lleva por malla familiar o canastilla mayorista de 10kg.	f	published	https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:51.312-05	\N	{"sede": "Sede Principal", "barcode": "7701001001018", "cost_cop": 5520, "stock_qty": 150, "detal_label": "Malla x 1kg", "mayor_label": "Canastilla x 10kg (Ahorra 20%)", "mayor_units": 10, "discount_pct": 0, "category_name": "Frutas y Verduras", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433WAC11MFF8J8MYGGXV	Queso Doble Crema / Mozzarella Tajado	queso-mozzarella-fresco	\N	Queso fresco colombiano de hilado suave que estira perfecto en arepas, sanduches, pizzas y panadería.	f	published	https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:52.299-05	\N	{"sede": "Sede Principal", "barcode": "7703003003036", "cost_cop": 11600, "stock_qty": 150, "detal_label": "Bloque x 500g", "mayor_label": "Barra Mayorista x 2.5kg (x2 barras)", "mayor_units": 10, "discount_pct": 0, "category_name": "Lácteos y Huevos", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433WKGNMKY7EYCP575XW	Papel Higiénico Triple Hoja Rinde Más	papel-higienico-triple-hoja	\N	Suavidad acolchada con extracto de algodón y metraje extra. Paquete familiar o paca distribuidora.	f	published	https://images.unsplash.com/photo-1584556812952-905ffd0c611a?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.287-05	2026-11-07 11:59:52.903-05	\N	{"sede": "Sede Principal", "barcode": "7706006006020", "cost_cop": 15120, "stock_qty": 150, "detal_label": "Paquete x 12 Rollos", "mayor_label": "Fardo Mayorista x 96 Rollos", "mayor_units": 10, "discount_pct": 0, "category_name": "Aseo y Hogar", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6VRP832RAWH9B74NB480E0K	Aceite Premier Puro Girasol	aceite-premier-puro-girasol-721	\N	Producto fresco disponible al detal y por mayor.	f	published	https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-07 14:45:10.759-05	2026-11-07 14:45:10.759-05	\N	{"sede": "Sede Principal", "barcode": "7702025102004", "pasillo": "Góndola Central", "cost_cop": 9600, "stock_qty": 150, "detal_label": "Unidad Estándar", "mayor_label": "Caja Mayorista x 12 uds", "mayor_units": 12, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433WSANFXX1A1XPDAKKT	Churrasco / Lomo de Res Madurado	lomo-res-madurado	\N	Corte premium de ganado seleccionado en los Llanos y Córdoba, empacado al vacío con cadena de frío garantizada.	f	published	https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:53.083-05	\N	{"sede": "Sede Principal", "barcode": "7704004004019", "cost_cop": 21520, "stock_qty": 150, "detal_label": "Bandeja x 500g", "mayor_label": "Pieza Entera al Vacío x 5kg", "mayor_units": 10, "discount_pct": 0, "category_name": "Carnes y Charcutería", "detal_margin_pct": 20, "mayor_margin_pct": 15}
-prod_01M6RV433WHK3TK8WS4BB3NCD0	Pechuga de Pollo Campesino Sin Hueso	pechuga-pollo-fresca	\N	Filetes de pechuga fresca limpia sin marinado artificial. Ideal para el mercado semanal o asaderos y restaurantes.	f	published	https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-07 11:59:52.689-05	\N	{"sede": "Sede Principal", "barcode": "7704004004026", "cost_cop": 13200, "stock_qty": 150, "detal_label": "Bandeja x 1kg", "mayor_label": "Canastilla Mayorista x 10kg", "mayor_units": 10, "discount_pct": 15, "category_name": "Carnes y Charcutería", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433V6XR5MWQQ2R2HZK77	Pan Artesanal Fresco de Masa Madre	pan-artesanal-masa-madre	\N	Horneado todas las mañanas con fermentación lenta. Corteza dorada y miga suave para desayunos o restaurantes.	f	published	https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.323-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7702002002046", "cost_cop": 7600, "stock_qty": 150, "detal_label": "Hogaza x 650g", "mayor_label": "Canasta x 10 Hogazas", "mayor_units": 10, "discount_pct": 15, "category_name": "Despensa y Abarrotes", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433W5X97CNW0881T4HVS	Huevos Rojos Camperos AA	huevos-camperos-docena	\N	Huevos frescos AA de granja avícola colombiana. Llévalos por cubeta de 30 unidades o caja mayorista de 12 cubetas (360 uds).	f	published	https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.391-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7703003003029", "cost_cop": 13520, "stock_qty": 150, "detal_label": "Cubeta x 30 Unidades AA", "mayor_label": "Caja Mayorista x 360 uds (12 Cubetas)", "mayor_units": 10, "discount_pct": 0, "category_name": "Lácteos y Huevos", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433VBXFP15V95A7WYZJ7	Fresas Sabaneras Extra Dulces	fresas-frescas-500g	\N	Fresas recién recolectadas de la Sabana de Bogotá, clasificadas y listas para jugo, postres o negocio.	f	published	https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.346-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7701001001025", "cost_cop": 4640, "stock_qty": 150, "detal_label": "Bandeja x 500g", "mayor_label": "Caja x 10 Bandejas (5kg)", "mayor_units": 10, "discount_pct": 15, "category_name": "Frutas y Verduras", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433VFVQK8CJ13HYDBF8C	Leche Entera de la Sabana UHT	leche-entera-fresca-1l	\N	Leche 100% pura de vaca de hatos certificados en Cundinamarca y Antioquia. Venta por bolsa/caja o paca x 12 litros.	f	published	https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.371-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7703003003012", "cost_cop": 3840, "stock_qty": 150, "detal_label": "Caja x 1 Litro", "mayor_label": "Paca x 12 Litros", "mayor_units": 10, "discount_pct": 15, "category_name": "Lácteos y Huevos", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433VH280P701DXANFBRN	Aceite Gourmet Vegetal / Oliva Extra	aceite-oliva-virgen-extra	\N	Aceite puro libre de colesterol para cocina familiar o fritura limpia en restaurantes. Botella o caja cerrada.	f	published	https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.378-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7702002002022", "cost_cop": 22800, "stock_qty": 150, "detal_label": "Botella x 1000ml", "mayor_label": "Caja x 6 Botellas", "mayor_units": 10, "discount_pct": 15, "category_name": "Despensa y Abarrotes", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433W9FM6BGE5SP0V9VXE	Agua Manantial de Páramo Sin Gas	agua-mineral-manantial	\N	Agua cristalina de manantial colombiano en botella individual o paca termoencogida para tiendas y eventos.	f	published	https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.406-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7705005005023", "cost_cop": 2240, "stock_qty": 150, "detal_label": "Botella x 1.5L", "mayor_label": "Paca Mayorista x 24 uds", "mayor_units": 10, "discount_pct": 0, "category_name": "Bebidas y Licores", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433WFGYYK1YXC74TA0VY	Detergente Líquido Concentrado Multiusos	detergente-liquido-ecologico	\N	Máximo poder desmanchador y fragancia fresca duradera. Disponible en galón para hogar o pimpina institucional.	f	published	https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.287-05	2026-11-13 12:29:30.421-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7706006006013", "cost_cop": 17520, "stock_qty": 150, "detal_label": "Galón x 3 Litros", "mayor_label": "Pimpina Mayorista x 20L", "mayor_units": 10, "discount_pct": 0, "category_name": "Aseo y Hogar", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433WTRZ4DGQ5HHJCEV93	Jugo de Naranja Tangelo 100% Natural	jugo-naranja-exprimido	\N	Exprimido de naranjas frescas del Eje Cafetero sin azúcar añadida ni conservantes.	f	published	https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.435-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7705005005016", "cost_cop": 7120, "stock_qty": 150, "detal_label": "Botella x 1L", "mayor_label": "Caja x 12 Botellas", "mayor_units": 10, "discount_pct": 0, "category_name": "Bebidas y Licores", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433V3S45S2XK53QKXJG7	Arroz Blanco del Tolima Grano Entero	arroz-blanco-extra-grano	\N	Arroz colombiano seleccionado que crece y queda suelto. Lleva por kilo o por arroba/paca mayorista de 25 bolsas.	f	published	https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.447-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7702002002039", "cost_cop": 67000, "stock_qty": 150, "detal_label": "Bolsa x 1kg", "mayor_label": "Paca Mayorista x 25kg (2 Arrobas)", "mayor_units": 10, "discount_pct": 0, "category_name": "Despensa y Abarrotes", "detal_margin_pct": 20, "mayor_margin_pct": 10}
+prod_01M6RV433V2SMZXSHC9ET34Q7P	Banano Urabá Tipo Exportación	banano-organico-exportacion	\N	Bananos dulces ricos en potasio de Urabá. Disponibles por mano familiar o caja cerrada para tiendas y restaurantes.	f	published	https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.471-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7701001001032", "cost_cop": 1000, "stock_qty": 150, "detal_label": "Mano x 1kg", "mayor_label": "Caja Mayorista x 12kg", "mayor_units": 10, "discount_pct": 0, "category_name": "Frutas y Verduras", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433V8QZPH3PNVY46ZNEP	Café de Colombia Origen Huila Tostado	cafe-grano-artesanal	\N	Café 100% Colombiano Excelso de altura con notas a panela y cacao. Disponible por libra o paca mayorista x 12 libras.	f	published	https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.487-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7702002002015", "cost_cop": 18320, "stock_qty": 150, "detal_label": "Bolsa x 500g (1 Libra)", "mayor_label": "Paca x 12 Libras (6kg)", "mayor_units": 10, "discount_pct": 0, "category_name": "Despensa y Abarrotes", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433VXTN0Q3M4KFEPFEVY	Aguacate Hass de Antioquia Seleccionado	aguacate-hass-organico	\N	Aguacates Hass cremosos de exportación cultivados en el Oriente Antioqueño. Lleva por malla familiar o canastilla mayorista de 10kg.	f	published	https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.501-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7701001001018", "cost_cop": 5520, "stock_qty": 150, "detal_label": "Malla x 1kg", "mayor_label": "Canastilla x 10kg (Ahorra 20%)", "mayor_units": 10, "discount_pct": 0, "category_name": "Frutas y Verduras", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433WAC11MFF8J8MYGGXV	Queso Doble Crema / Mozzarella Tajado	queso-mozzarella-fresco	\N	Queso fresco colombiano de hilado suave que estira perfecto en arepas, sanduches, pizzas y panadería.	f	published	https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.52-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7703003003036", "cost_cop": 11600, "stock_qty": 150, "detal_label": "Bloque x 500g", "mayor_label": "Barra Mayorista x 2.5kg (x2 barras)", "mayor_units": 10, "discount_pct": 0, "category_name": "Lácteos y Huevos", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433WKGNMKY7EYCP575XW	Papel Higiénico Triple Hoja Rinde Más	papel-higienico-triple-hoja	\N	Suavidad acolchada con extracto de algodón y metraje extra. Paquete familiar o paca distribuidora.	f	published	https://images.unsplash.com/photo-1584556812952-905ffd0c611a?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.287-05	2026-11-13 12:29:30.534-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7706006006020", "cost_cop": 15120, "stock_qty": 150, "detal_label": "Paquete x 12 Rollos", "mayor_label": "Fardo Mayorista x 96 Rollos", "mayor_units": 10, "discount_pct": 0, "category_name": "Aseo y Hogar", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6VRP832RAWH9B74NB480E0K	Aceite Premier Puro Girasol	aceite-premier-puro-girasol-721	\N	Producto fresco disponible al detal y por mayor.	f	published	https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-07 14:45:10.759-05	2026-11-13 12:29:30.55-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7702025102004", "pasillo": "Góndola Central", "cost_cop": 9600, "stock_qty": 150, "detal_label": "Unidad Estándar", "mayor_label": "Caja Mayorista x 12 uds", "mayor_units": 12, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433WSANFXX1A1XPDAKKT	Churrasco / Lomo de Res Madurado	lomo-res-madurado	\N	Corte premium de ganado seleccionado en los Llanos y Córdoba, empacado al vacío con cadena de frío garantizada.	f	published	https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.571-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7704004004019", "cost_cop": 21520, "stock_qty": 150, "detal_label": "Bandeja x 500g", "mayor_label": "Pieza Entera al Vacío x 5kg", "mayor_units": 10, "discount_pct": 0, "category_name": "Carnes y Charcutería", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M6RV433WHK3TK8WS4BB3NCD0	Pechuga de Pollo Campesino Sin Hueso	pechuga-pollo-fresca	\N	Filetes de pechuga fresca limpia sin marinado artificial. Ideal para el mercado semanal o asaderos y restaurantes.	f	published	https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=800&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-06 11:29:58.286-05	2026-11-13 12:29:30.587-05	2026-11-13 12:29:30.322-05	{"sede": "Sede Principal", "barcode": "7704004004026", "cost_cop": 13200, "stock_qty": 150, "detal_label": "Bandeja x 1kg", "mayor_label": "Canastilla Mayorista x 10kg", "mayor_units": 10, "discount_pct": 15, "category_name": "Carnes y Charcutería", "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA520TTS02XMW50VKCR4X	Desodorante Rexona Women Clinical Classic Tubo 60g	rexona-women-clinical-tubo-60g	\N	Desodorante antitranspirante Rexona Women Clinical Classic en crema tubo 60g. Máxima protección dermatológica contra la sudoración y el mal olor.	f	published	https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7702010123901", "pasillo": "Aseo y Hogar", "code_ref": "Santander Pág 4/4 (#39)", "cost_cop": 16000, "stock_qty": 250, "detal_label": "Tubo Crema x 60g", "mayor_label": "Caja x 12 Tubos", "mayor_units": 12, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA520XPX02GTD9DPE8H3Y	Desodorante Rexona Men Clinical Clean Tubo 60g	rexona-men-clinical-clean-tubo-60g	\N	Desodorante antitranspirante Rexona Men Clinical Clean en tubo crema 60g. 3 veces más protección contra el sudor y fragancia masculina fresca.	f	published	https://images.unsplash.com/photo-1585751119414-ef2636f8aede?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7702010123918", "pasillo": "Aseo y Hogar", "code_ref": "Santander Pág 4/4 (#40)", "cost_cop": 16000, "stock_qty": 250, "detal_label": "Tubo Crema x 60g", "mayor_label": "Caja x 12 Tubos", "mayor_units": 12, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA520R524K5DKXMXK1FDZ	Desodorante Rexona Women Clinical Classic Tubo 30g	rexona-women-clinical-tubo-30g	\N	Presentación práctica para bolso o viaje. Rexona Women Clinical Classic 30g con 96 horas de protección avanzada antitranspirante.	f	published	https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7702010123925", "pasillo": "Aseo y Hogar", "code_ref": "Santander Pág 4/4 (#41)", "cost_cop": 9600, "stock_qty": 250, "detal_label": "Tubo Crema x 30g", "mayor_label": "Caja x 12 Tubos", "mayor_units": 12, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA52030S7D9MRA2BTE3QE	Jabón Puro Hortensias y Flores Blancas Barra 180g	jabon-puro-hortensias-flores-blancas-180g	\N	Jabón en barra Puro con delicada fragancia a Hortensias y Flores Blancas. Alto poder de limpieza y cuidado de prendas delicadas.	f	published	https://images.unsplash.com/photo-1607006314187-578f7e6f3d9d?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7702010123932", "pasillo": "Aseo y Hogar", "code_ref": "Santander Pág 4/4 (#42)", "cost_cop": 2400, "stock_qty": 250, "detal_label": "Barra x 180g", "mayor_label": "Caja / Fardo x 25 Barras", "mayor_units": 25, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA520NC8Y5PYEFNZ5RSAT	Gaseosa Big Cola 1.75 Litros No Retornable (Paca x 8)	big-cola-1-75l-paca-x8	\N	Gaseosa Big Cola tamaño familiar de 1.75L PET no retornable. Sabor refrescante inconfundible al mejor precio de mercado.	f	published	https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7703010103371", "pasillo": "Bebidas y Licores", "code_ref": "AJE Fact 1 (PTE10337)", "cost_cop": 3200, "stock_qty": 250, "detal_label": "Botella x 1.75 Litros", "mayor_label": "Paca x 8 Botellas", "mayor_units": 8, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA520BYDYSPPV7QHQNM0Q	Gaseosa Big Cola 1.75L - Promo Especial Bonificada (Paca x 8)	big-cola-1-75l-promo-bonificada	\N	Edición promocional bonificada de Big Cola 1.75L con precio de fábrica preferencial para clientes mayoristas y tiendas.	f	published	https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7703010103388", "pasillo": "Bebidas y Licores", "code_ref": "AJE Fact 1 (PTE10337-B)", "cost_cop": 2700, "stock_qty": 250, "detal_label": "Botella x 1.75 Litros (Promo)", "mayor_label": "Paca x 8 Botellas (Bonificada)", "mayor_units": 8, "discount_pct": 15, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA520REMWA8TJH89AK0N6	Gaseosa Big Sabor Uva 400ml PET (Paca x 12)	big-uva-400ml-paca-x12	\N	Gaseosa Big sabor uva dulce y refrescante en presentación personal de 400ml en botella plástica no retornable.	f	published	https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7703010100158", "pasillo": "Bebidas y Licores", "code_ref": "AJE Fact 2 (PTE10015)", "cost_cop": 1200, "stock_qty": 250, "detal_label": "Botella Personal x 400ml", "mayor_label": "Paca x 12 Botellas", "mayor_units": 12, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA520MJ70VFJHQCYFE2Q4	Bebida Cifrut Citrus Cítricos 250ml (Paca x 15)	cifrut-citrus-250ml-paca-x15	\N	Deliciosa bebida refrescante Cifrut sabor a cítricos con vitamina C en práctica botella pet de 250ml para loncheras y tiendas.	f	published	https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7703010100363", "pasillo": "Bebidas y Licores", "code_ref": "AJE Fact 2 (PTE10036)", "cost_cop": 960, "stock_qty": 250, "detal_label": "Botella x 250ml", "mayor_label": "Paca x 15 Botellas", "mayor_units": 15, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA5218VXYMT96TK0GX8AX	Bebida Cifrut Sabor Mora 250ml (Paca x 15)	cifrut-mora-250ml-paca-x15	\N	Bebida Cifrut sabor mora silvestre con jugo de fruta natural. Ideal para acompañar comidas y refrigerios.	f	published	https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7703010100639", "pasillo": "Bebidas y Licores", "code_ref": "AJE Fact 2 (PTE10063)", "cost_cop": 960, "stock_qty": 250, "detal_label": "Botella x 250ml", "mayor_label": "Paca x 15 Botellas", "mayor_units": 15, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA521FWZQH8VA4TS3G7BR	Bebida Cifrut Fruit Ponche de Frutas 250ml (Paca x 15)	cifrut-fruit-ponche-250ml-paca-x15	\N	Cifrut Fruit Punch combinación de frutas tropicales en botella de 250ml. Gran rotación en tiendas y autoservicios.	f	published	https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7703010100745", "pasillo": "Bebidas y Licores", "code_ref": "AJE Fact 2 (PTE10074)", "cost_cop": 960, "stock_qty": 250, "detal_label": "Botella x 250ml", "mayor_label": "Paca x 15 Botellas", "mayor_units": 15, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA521F3C8D1041RWKRJG3	Gaseosa Big Sabor Piña Tropical 400ml (Paca x 12)	big-pina-400ml-paca-x12	\N	Bebida gaseosa Big piña tropical con burbujas intensas. Botella personal de 400ml para consumo inmediato.	f	published	https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7703010100776", "pasillo": "Bebidas y Licores", "code_ref": "AJE Fact 2 (PTE10077)", "cost_cop": 1200, "stock_qty": 250, "detal_label": "Botella Personal x 400ml", "mayor_label": "Paca x 12 Botellas", "mayor_units": 12, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA521NY3ZRQF4AF4QV8RA	Agua Pura de Mesa Vida 620ml (Bonificación Paca x 20)	agua-vida-620ml-bonificada	\N	Agua de mesa pura tratada y purificada Vida de 620ml. Hidratación limpia y saludable a precio bonificado de distribuidor.	f	published	https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7703010103104", "pasillo": "Bebidas y Licores", "code_ref": "AJE Fact 2 (PTE10310-B)", "cost_cop": 800, "stock_qty": 250, "detal_label": "Botella x 620ml", "mayor_label": "Paca x 20 Botellas", "mayor_units": 20, "discount_pct": 15, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA5214JSFNBG7DTF3KN16	Gaseosa Big Sabor Manzana 400ml No Retornable (Paca x 12)	big-manzana-400ml-paca-x12	\N	Gaseosa Big Manzana roja en envase pet de 400ml. Delicioso sabor frutal con gas para toda la familia.	f	published	https://images.unsplash.com/photo-1576186726580-a816e8b12896?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7703010103517", "pasillo": "Bebidas y Licores", "code_ref": "AJE Fact 2 (PTE10351)", "cost_cop": 1200, "stock_qty": 250, "detal_label": "Botella Personal x 400ml", "mayor_label": "Paca x 12 Botellas", "mayor_units": 12, "discount_pct": 0, "detal_margin_pct": 20, "mayor_margin_pct": 15}
+prod_01M7AZA521DSZC6NMT56S5K6KB	Gaseosa Big Sabor Manzana 400ml - Promo Bonificación x 12	big-manzana-400ml-promo-bonificada	\N	Lote bonificado de Big Manzana 400ml con descuento especial para mayoristas y ventas por volumen.	f	published	https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?auto=format&fit=crop&w=600&q=80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	{"sede": "Sede Principal", "barcode": "7703010103524", "pasillo": "Bebidas y Licores", "code_ref": "AJE Fact 2 (PTE10351-B)", "cost_cop": 1000, "stock_qty": 250, "detal_label": "Botella Personal x 400ml", "mayor_label": "Paca x 12 Botellas (Promo)", "mayor_units": 12, "discount_pct": 15, "detal_margin_pct": 20, "mayor_margin_pct": 15}
 \.
 
 
@@ -5973,6 +5242,20 @@ prod_01M6RV433W9FM6BGE5SP0V9VXE	pcat_01M6RV432Q6Y910JA2N9WMG2AJ
 prod_01M6RV433WFGYYK1YXC74TA0VY	pcat_01M6RV432Q1EDEV8B8R5TTR5XW
 prod_01M6RV433WKGNMKY7EYCP575XW	pcat_01M6RV432Q1EDEV8B8R5TTR5XW
 prod_01M6VRP832RAWH9B74NB480E0K	pcat_01M6RV432Q1EDEV8B8R5TTR5XW
+prod_01M7AZA520TTS02XMW50VKCR4X	pcat_01M6RV432Q1EDEV8B8R5TTR5XW
+prod_01M7AZA520XPX02GTD9DPE8H3Y	pcat_01M6RV432Q1EDEV8B8R5TTR5XW
+prod_01M7AZA520R524K5DKXMXK1FDZ	pcat_01M6RV432Q1EDEV8B8R5TTR5XW
+prod_01M7AZA52030S7D9MRA2BTE3QE	pcat_01M6RV432Q1EDEV8B8R5TTR5XW
+prod_01M7AZA520NC8Y5PYEFNZ5RSAT	pcat_01M6RV432Q6Y910JA2N9WMG2AJ
+prod_01M7AZA520BYDYSPPV7QHQNM0Q	pcat_01M6RV432Q6Y910JA2N9WMG2AJ
+prod_01M7AZA520REMWA8TJH89AK0N6	pcat_01M6RV432Q6Y910JA2N9WMG2AJ
+prod_01M7AZA520MJ70VFJHQCYFE2Q4	pcat_01M6RV432Q6Y910JA2N9WMG2AJ
+prod_01M7AZA5218VXYMT96TK0GX8AX	pcat_01M6RV432Q6Y910JA2N9WMG2AJ
+prod_01M7AZA521FWZQH8VA4TS3G7BR	pcat_01M6RV432Q6Y910JA2N9WMG2AJ
+prod_01M7AZA521F3C8D1041RWKRJG3	pcat_01M6RV432Q6Y910JA2N9WMG2AJ
+prod_01M7AZA521NY3ZRQF4AF4QV8RA	pcat_01M6RV432Q6Y910JA2N9WMG2AJ
+prod_01M7AZA5214JSFNBG7DTF3KN16	pcat_01M6RV432Q6Y910JA2N9WMG2AJ
+prod_01M7AZA521DSZC6NMT56S5K6KB	pcat_01M6RV432Q6Y910JA2N9WMG2AJ
 \.
 
 
@@ -5993,7 +5276,21 @@ opt_01M6Q03ESYJKFKAC2D5NNPF8G4	Size	\N	2026-11-05 18:18:31.486-05	2026-11-05 18:
 opt_01M6Q03ESY8EQCRADHA36JNPWV	Color	\N	2026-11-05 18:18:31.487-05	2026-11-05 18:18:31.487-05	\N	f
 opt_01M6Q0TVJJEW1WXMGA2J1TDHYX	Presentación	\N	2026-11-05 18:31:18.226-05	2026-11-05 18:31:18.226-05	\N	f
 opt_01M6RPEVW497V2GJSVCSM9R6C2	Modalidad	\N	2026-11-06 10:08:28.42-05	2026-11-06 10:08:28.42-05	\N	f
-opt_01M6VRP832R4S6RNXPE8528V3Q	Modalidad	\N	2026-11-07 14:45:10.76-05	2026-11-07 14:45:10.76-05	\N	t
+opt_01M6VRP832R4S6RNXPE8528V3Q	Modalidad	\N	2026-11-07 14:45:10.76-05	2026-11-13 12:29:30.826-05	2026-11-13 12:29:30.826-05	t
+opt_01M7AZA521A9DBB6AAKD3QV458	Modalidad	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	t
+opt_01M7AZA5213NQD3XJH56XNABMR	Modalidad	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	t
+opt_01M7AZA52193RGK31EZHQ2450M	Modalidad	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	t
+opt_01M7AZA521A2BHNDPGSEY6BHYR	Modalidad	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	t
+opt_01M7AZA52155SQXZJGX3DZJS56	Modalidad	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	t
+opt_01M7AZA521MJQF4GXYN0W9YNGD	Modalidad	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	t
+opt_01M7AZA521RTBA2XNYZGVM1GWK	Modalidad	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	t
+opt_01M7AZA521M8NYTW6J35HB58B6	Modalidad	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	t
+opt_01M7AZA5213VAMXQ1XXR84GWSG	Modalidad	\N	2026-11-13 12:29:30.957-05	2026-11-13 12:29:30.957-05	\N	t
+opt_01M7AZA5211FBZXJKKDZKZJ3S3	Modalidad	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	t
+opt_01M7AZA521G2WQZAG2TV0Q6PVJ	Modalidad	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	t
+opt_01M7AZA521X7VP0213CCZRQBVY	Modalidad	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	t
+opt_01M7AZA521T01J17CBKXTR0HET	Modalidad	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	t
+opt_01M7AZA52197WDEST0XMZX8B7D	Modalidad	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	t
 \.
 
 
@@ -6012,8 +5309,36 @@ optval_01M6Q0TVJH3VBTJQCPN4HBVAWX	Unidad	opt_01M6Q0TVJJEW1WXMGA2J1TDHYX	\N	2026-
 optval_01M6Q0TVJHY7N9KXJATTERP5DJ	Pack Ahorro	opt_01M6Q0TVJJEW1WXMGA2J1TDHYX	\N	2026-11-05 18:31:18.226-05	2026-11-05 18:31:18.226-05	\N	\N
 optval_01M6RPEVW33Q58ZGSK94N0GV9K	Al Detal (Unidad)	opt_01M6RPEVW497V2GJSVCSM9R6C2	\N	2026-11-06 10:08:28.42-05	2026-11-06 10:08:28.42-05	\N	\N
 optval_01M6RPEVW3T5RXC7JHF3SA8GHQ	Al por Mayor (Caja / Bulto)	opt_01M6RPEVW497V2GJSVCSM9R6C2	\N	2026-11-06 10:08:28.42-05	2026-11-06 10:08:28.42-05	\N	\N
-optval_01M6VRP8379EAY8W649GRSRZX4	Al Detal (Unidad)	opt_01M6VRP832R4S6RNXPE8528V3Q	\N	2026-11-07 14:45:10.76-05	2026-11-07 14:45:10.76-05	\N	\N
-optval_01M6VRP837KP2TCHKSSS5FNDCQ	Al por Mayor (Caja / Bulto)	opt_01M6VRP832R4S6RNXPE8528V3Q	\N	2026-11-07 14:45:10.76-05	2026-11-07 14:45:10.76-05	\N	\N
+optval_01M6VRP8379EAY8W649GRSRZX4	Al Detal (Unidad)	opt_01M6VRP832R4S6RNXPE8528V3Q	\N	2026-11-07 14:45:10.76-05	2026-11-13 12:29:30.835-05	2026-11-13 12:29:30.826-05	\N
+optval_01M6VRP837KP2TCHKSSS5FNDCQ	Al por Mayor (Caja / Bulto)	opt_01M6VRP832R4S6RNXPE8528V3Q	\N	2026-11-07 14:45:10.76-05	2026-11-13 12:29:30.835-05	2026-11-13 12:29:30.826-05	\N
+optval_01M7AZA529W57GDYFCNAZGNYG1	Al Detal (Unidad)	opt_01M7AZA521A9DBB6AAKD3QV458	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52965H3RVSG409N4GJV	Al por Mayor (Caja / Bulto)	opt_01M7AZA521A9DBB6AAKD3QV458	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA529WA6QG7QH7J16V7H2	Al Detal (Unidad)	opt_01M7AZA5213NQD3XJH56XNABMR	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA5291C4A3H2HBNQYMBMF	Al por Mayor (Caja / Bulto)	opt_01M7AZA5213NQD3XJH56XNABMR	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52AK06JNP5J62CQ6HA9	Al Detal (Unidad)	opt_01M7AZA52193RGK31EZHQ2450M	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52AMX0W0VTPP00AMJYE	Al por Mayor (Caja / Bulto)	opt_01M7AZA52193RGK31EZHQ2450M	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52AYXXR908QWWH4ENEC	Al Detal (Unidad)	opt_01M7AZA521A2BHNDPGSEY6BHYR	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52A3ZDAFM5NAREDM54Q	Al por Mayor (Caja / Bulto)	opt_01M7AZA521A2BHNDPGSEY6BHYR	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52AZNVW2VN25FWE5FW9	Al Detal (Unidad)	opt_01M7AZA52155SQXZJGX3DZJS56	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52A7CEFNPTC2F2NWZ12	Al por Mayor (Caja / Bulto)	opt_01M7AZA52155SQXZJGX3DZJS56	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52AH6RZZYHM494AJE0E	Al Detal (Unidad)	opt_01M7AZA521MJQF4GXYN0W9YNGD	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52AR99MZVN93WXY0H0W	Al por Mayor (Caja / Bulto)	opt_01M7AZA521MJQF4GXYN0W9YNGD	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52A97CYCYSB0T9GZJ11	Al Detal (Unidad)	opt_01M7AZA521RTBA2XNYZGVM1GWK	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52A4CW56P5T438NDZJX	Al por Mayor (Caja / Bulto)	opt_01M7AZA521RTBA2XNYZGVM1GWK	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52BKKPFFRK8RK4MKS2H	Al Detal (Unidad)	opt_01M7AZA521M8NYTW6J35HB58B6	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52BHZ2N61E9MCVRD3F8	Al por Mayor (Caja / Bulto)	opt_01M7AZA521M8NYTW6J35HB58B6	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52B0NF80Z6N3E69WGQ3	Al Detal (Unidad)	opt_01M7AZA5213VAMXQ1XXR84GWSG	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52BQNN2Q1N47HJREPDT	Al por Mayor (Caja / Bulto)	opt_01M7AZA5213VAMXQ1XXR84GWSG	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52B8NQYRES5VPC72ZGY	Al Detal (Unidad)	opt_01M7AZA5211FBZXJKKDZKZJ3S3	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52B8A6VV3W86XEXF91W	Al por Mayor (Caja / Bulto)	opt_01M7AZA5211FBZXJKKDZKZJ3S3	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52B2BPY7N6SX9VK73VQ	Al Detal (Unidad)	opt_01M7AZA521G2WQZAG2TV0Q6PVJ	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52B9BVFWGV6VNFZ14Q7	Al por Mayor (Caja / Bulto)	opt_01M7AZA521G2WQZAG2TV0Q6PVJ	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52B8MDJ5JEMGZWMGY22	Al Detal (Unidad)	opt_01M7AZA521X7VP0213CCZRQBVY	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52BCQX01AVFEFSRZQ4A	Al por Mayor (Caja / Bulto)	opt_01M7AZA521X7VP0213CCZRQBVY	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52BVEHNTZ6XSAS8HADJ	Al Detal (Unidad)	opt_01M7AZA521T01J17CBKXTR0HET	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52C7ETJN6073KQECNS9	Al por Mayor (Caja / Bulto)	opt_01M7AZA521T01J17CBKXTR0HET	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52C1CZVM4MG8WG29RAW	Al Detal (Unidad)	opt_01M7AZA52197WDEST0XMZX8B7D	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
+optval_01M7AZA52CHGXTQWDT4FXH2SRH	Al por Mayor (Caja / Bulto)	opt_01M7AZA52197WDEST0XMZX8B7D	\N	2026-11-13 12:29:30.958-05	2026-11-13 12:29:30.958-05	\N	\N
 \.
 
 
@@ -6067,7 +5392,21 @@ prodopt_01M6RV434AMT02TTNYKMA0YSKA	prod_01M6RV433WTRZ4DGQ5HHJCEV93	opt_01M6RPEVW
 prodopt_01M6RV434A8Q7R476RA6PV84C4	prod_01M6RV433W9FM6BGE5SP0V9VXE	opt_01M6RPEVW497V2GJSVCSM9R6C2	2026-11-06 11:29:58.287-05	2026-11-06 11:29:58.287-05	\N
 prodopt_01M6RV434AKZZ48RCYG9DE4BDY	prod_01M6RV433WFGYYK1YXC74TA0VY	opt_01M6RPEVW497V2GJSVCSM9R6C2	2026-11-06 11:29:58.287-05	2026-11-06 11:29:58.287-05	\N
 prodopt_01M6RV434A83W6XNA7BTERGQNT	prod_01M6RV433WKGNMKY7EYCP575XW	opt_01M6RPEVW497V2GJSVCSM9R6C2	2026-11-06 11:29:58.287-05	2026-11-06 11:29:58.287-05	\N
-prodopt_01M6VRP855AQNWN2TVQD6J6A3N	prod_01M6VRP832RAWH9B74NB480E0K	opt_01M6VRP832R4S6RNXPE8528V3Q	2026-11-07 14:45:10.823-05	2026-11-07 14:45:10.823-05	\N
+prodopt_01M6VRP855AQNWN2TVQD6J6A3N	prod_01M6VRP832RAWH9B74NB480E0K	opt_01M6VRP832R4S6RNXPE8528V3Q	2026-11-07 14:45:10.823-05	2026-11-13 12:29:30.826-05	2026-11-13 12:29:30.824-05
+prodopt_01M7AZA541VTK790S2ZG8KRQ9D	prod_01M7AZA520TTS02XMW50VKCR4X	opt_01M7AZA521A9DBB6AAKD3QV458	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA54252HYM39YM4A7BCB1	prod_01M7AZA520XPX02GTD9DPE8H3Y	opt_01M7AZA5213NQD3XJH56XNABMR	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA5425QFDF77479KETF6J	prod_01M7AZA520R524K5DKXMXK1FDZ	opt_01M7AZA52193RGK31EZHQ2450M	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA5428RNX2TVK6JZMEE88	prod_01M7AZA52030S7D9MRA2BTE3QE	opt_01M7AZA521A2BHNDPGSEY6BHYR	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA542Y899J1APGH02169V	prod_01M7AZA520NC8Y5PYEFNZ5RSAT	opt_01M7AZA52155SQXZJGX3DZJS56	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA542RF41NCBM7CM118JJ	prod_01M7AZA520BYDYSPPV7QHQNM0Q	opt_01M7AZA521MJQF4GXYN0W9YNGD	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA5424E88V1XEQKMRNWAT	prod_01M7AZA520REMWA8TJH89AK0N6	opt_01M7AZA521RTBA2XNYZGVM1GWK	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA542H24SVV9AHG4587PB	prod_01M7AZA520MJ70VFJHQCYFE2Q4	opt_01M7AZA521M8NYTW6J35HB58B6	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA542F7E6CBKHNQ5ECBTE	prod_01M7AZA5218VXYMT96TK0GX8AX	opt_01M7AZA5213VAMXQ1XXR84GWSG	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA5420M405VR4A3P6H7EB	prod_01M7AZA521FWZQH8VA4TS3G7BR	opt_01M7AZA5211FBZXJKKDZKZJ3S3	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA5426J9M82D7Q0P5GP8D	prod_01M7AZA521F3C8D1041RWKRJG3	opt_01M7AZA521G2WQZAG2TV0Q6PVJ	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA542NG1BKJK077HVYYQY	prod_01M7AZA521NY3ZRQF4AF4QV8RA	opt_01M7AZA521X7VP0213CCZRQBVY	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA5424J2QG6JES8M6DANE	prod_01M7AZA5214JSFNBG7DTF3KN16	opt_01M7AZA521T01J17CBKXTR0HET	2026-11-13 12:29:31.013-05	2026-11-13 12:29:31.013-05	\N
+prodopt_01M7AZA542NNSVZ4PWRG1DJZ8M	prod_01M7AZA521DSZC6NMT56S5K6KB	opt_01M7AZA52197WDEST0XMZX8B7D	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
 \.
 
 
@@ -6174,8 +5513,36 @@ prodoptval_01M6RV434DV0DVPGXS5P04CWRQ	prodopt_01M6RV434AKZZ48RCYG9DE4BDY	optval_
 prodoptval_01M6RV434D5AT9WHGCWD7515TD	prodopt_01M6RV434AKZZ48RCYG9DE4BDY	optval_01M6RPEVW3T5RXC7JHF3SA8GHQ	2026-11-06 11:29:58.287-05	2026-11-06 11:29:58.287-05	\N
 prodoptval_01M6RV434DNDNCVMSYZ2K6E269	prodopt_01M6RV434A83W6XNA7BTERGQNT	optval_01M6RPEVW33Q58ZGSK94N0GV9K	2026-11-06 11:29:58.287-05	2026-11-06 11:29:58.287-05	\N
 prodoptval_01M6RV434DARPNTYJ1X70SD8S5	prodopt_01M6RV434A83W6XNA7BTERGQNT	optval_01M6RPEVW3T5RXC7JHF3SA8GHQ	2026-11-06 11:29:58.287-05	2026-11-06 11:29:58.287-05	\N
-prodoptval_01M6VRP855VPMNRKSTY337ENBS	prodopt_01M6VRP855AQNWN2TVQD6J6A3N	optval_01M6VRP8379EAY8W649GRSRZX4	2026-11-07 14:45:10.823-05	2026-11-07 14:45:10.823-05	\N
-prodoptval_01M6VRP856MBPX80VX5KF5GYZA	prodopt_01M6VRP855AQNWN2TVQD6J6A3N	optval_01M6VRP837KP2TCHKSSS5FNDCQ	2026-11-07 14:45:10.823-05	2026-11-07 14:45:10.823-05	\N
+prodoptval_01M6VRP855VPMNRKSTY337ENBS	prodopt_01M6VRP855AQNWN2TVQD6J6A3N	optval_01M6VRP8379EAY8W649GRSRZX4	2026-11-07 14:45:10.823-05	2026-11-13 12:29:30.826-05	2026-11-13 12:29:30.822-05
+prodoptval_01M6VRP856MBPX80VX5KF5GYZA	prodopt_01M6VRP855AQNWN2TVQD6J6A3N	optval_01M6VRP837KP2TCHKSSS5FNDCQ	2026-11-07 14:45:10.823-05	2026-11-13 12:29:30.826-05	2026-11-13 12:29:30.822-05
+prodoptval_01M7AZA54360F8AT8DTDA26KG2	prodopt_01M7AZA541VTK790S2ZG8KRQ9D	optval_01M7AZA529W57GDYFCNAZGNYG1	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA543Y93ETP6P62YYFAPW	prodopt_01M7AZA541VTK790S2ZG8KRQ9D	optval_01M7AZA52965H3RVSG409N4GJV	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA5439KWJ2SC392Y29Q46	prodopt_01M7AZA54252HYM39YM4A7BCB1	optval_01M7AZA529WA6QG7QH7J16V7H2	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA543Z9K4MS30Z9SHH0CA	prodopt_01M7AZA54252HYM39YM4A7BCB1	optval_01M7AZA5291C4A3H2HBNQYMBMF	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA543VY3RNR7VKQBN856P	prodopt_01M7AZA5425QFDF77479KETF6J	optval_01M7AZA52AK06JNP5J62CQ6HA9	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA543MRHAXMHT9XQE48GN	prodopt_01M7AZA5425QFDF77479KETF6J	optval_01M7AZA52AMX0W0VTPP00AMJYE	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA543HWW624RWGCVJ723A	prodopt_01M7AZA5428RNX2TVK6JZMEE88	optval_01M7AZA52AYXXR908QWWH4ENEC	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA543SP4MEAYKK6RRX7GD	prodopt_01M7AZA5428RNX2TVK6JZMEE88	optval_01M7AZA52A3ZDAFM5NAREDM54Q	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA54362N764W8CX6053E0	prodopt_01M7AZA542Y899J1APGH02169V	optval_01M7AZA52AZNVW2VN25FWE5FW9	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA5441J16JEC911886ZEG	prodopt_01M7AZA542Y899J1APGH02169V	optval_01M7AZA52A7CEFNPTC2F2NWZ12	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544F4TCCP74RMYGT6XJ	prodopt_01M7AZA542RF41NCBM7CM118JJ	optval_01M7AZA52AH6RZZYHM494AJE0E	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544N7HFV3722TGJGDP2	prodopt_01M7AZA542RF41NCBM7CM118JJ	optval_01M7AZA52AR99MZVN93WXY0H0W	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA5449QTFMX7VVCPRT9J3	prodopt_01M7AZA5424E88V1XEQKMRNWAT	optval_01M7AZA52A97CYCYSB0T9GZJ11	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA54414B4T821MJC7A6AW	prodopt_01M7AZA5424E88V1XEQKMRNWAT	optval_01M7AZA52A4CW56P5T438NDZJX	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544SZHANGCS21CVXYS9	prodopt_01M7AZA542H24SVV9AHG4587PB	optval_01M7AZA52BKKPFFRK8RK4MKS2H	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544889EYHCYNS7XB5KM	prodopt_01M7AZA542H24SVV9AHG4587PB	optval_01M7AZA52BHZ2N61E9MCVRD3F8	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544SAJ1SVECW927MG3B	prodopt_01M7AZA542F7E6CBKHNQ5ECBTE	optval_01M7AZA52B0NF80Z6N3E69WGQ3	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA5440JRSBHPY5HYHT3R8	prodopt_01M7AZA542F7E6CBKHNQ5ECBTE	optval_01M7AZA52BQNN2Q1N47HJREPDT	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544A8B92TW7PGWHHG6A	prodopt_01M7AZA5420M405VR4A3P6H7EB	optval_01M7AZA52B8NQYRES5VPC72ZGY	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544Q9469C9PRS2C3TPH	prodopt_01M7AZA5420M405VR4A3P6H7EB	optval_01M7AZA52B8A6VV3W86XEXF91W	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544BGDHW4WCZ2DZV4FY	prodopt_01M7AZA5426J9M82D7Q0P5GP8D	optval_01M7AZA52B2BPY7N6SX9VK73VQ	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544033AQA28J2D7GFT5	prodopt_01M7AZA5426J9M82D7Q0P5GP8D	optval_01M7AZA52B9BVFWGV6VNFZ14Q7	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544QVDRVPPKT2ND9KJB	prodopt_01M7AZA542NG1BKJK077HVYYQY	optval_01M7AZA52B8MDJ5JEMGZWMGY22	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544E3X0H1DHP0W4ZM53	prodopt_01M7AZA542NG1BKJK077HVYYQY	optval_01M7AZA52BCQX01AVFEFSRZQ4A	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA544JCMZ63DHSRRP8FZ4	prodopt_01M7AZA5424J2QG6JES8M6DANE	optval_01M7AZA52BVEHNTZ6XSAS8HADJ	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA5451E21DZN0M3MVHKR6	prodopt_01M7AZA5424J2QG6JES8M6DANE	optval_01M7AZA52C7ETJN6073KQECNS9	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA545KQ5TRE7J03YQQ3S6	prodopt_01M7AZA542NNSVZ4PWRG1DJZ8M	optval_01M7AZA52C1CZVM4MG8WG29RAW	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
+prodoptval_01M7AZA545047MX1S3SNB4Q0QF	prodopt_01M7AZA542NNSVZ4PWRG1DJZ8M	optval_01M7AZA52CHGXTQWDT4FXH2SRH	2026-11-13 12:29:31.014-05	2026-11-13 12:29:31.014-05	\N
 \.
 
 
@@ -6212,23 +5579,37 @@ prod_01M6RPEW08AMZS17MYD0A0XQV9	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RPEW3EP
 prod_01M6RPEW08K7G5BQ2AJVBNWSD8	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RPEW3EAG3177H318D43VAR	2026-11-06 10:08:28.652636-05	2026-11-06 11:29:21.98-05	2026-11-06 11:29:21.979-05
 prod_01M6RPEW08KKFEMGCR8DHA8253	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RPEW3EZA3ZAY1CYC1J6CBW	2026-11-06 10:08:28.652636-05	2026-11-06 11:29:21.98-05	2026-11-06 11:29:21.979-05
 prod_01M6RPEW089JG2ZHZMY25K7FKE	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RPEW3EFT1DHNJ3WVAJ4T88	2026-11-06 10:08:28.652636-05	2026-11-06 11:29:21.98-05	2026-11-06 11:29:21.979-05
-prod_01M6RV433VXTN0Q3M4KFEPFEVY	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437ACM4CDC8C2J9PM04E	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433VBXFP15V95A7WYZJ7	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437BEG464VP22BB6NMJV	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433V2SMZXSHC9ET34Q7P	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437BPF5SKTGFV85P33QZ	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433V8QZPH3PNVY46ZNEP	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437BXZZH2K95SDFDPZ18	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433VH280P701DXANFBRN	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437B9PBNH5K8RCRQMH6A	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433V3S45S2XK53QKXJG7	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437C0KY8G2PZ9TFWXRW5	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433V6XR5MWQQ2R2HZK77	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CTK7GDEAGEA0KV4XE	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433VFVQK8CJ13HYDBF8C	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CPS1DCSH02CNCH6FG	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433W5X97CNW0881T4HVS	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CRE93E45RZQXC3NRW	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433WAC11MFF8J8MYGGXV	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CHD4VHZJG1QDXGPHM	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433WSANFXX1A1XPDAKKT	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CS7DGC8DYHNAYWMPH	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433WHK3TK8WS4BB3NCD0	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CFK2GJJ3FCG23JY16	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433WTRZ4DGQ5HHJCEV93	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CBHB1P3A3CA7JENP8	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433W9FM6BGE5SP0V9VXE	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CGGVX0DBD6SSHC7KE	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433WFGYYK1YXC74TA0VY	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437DH3DHGD9BHHNWX7XS	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6RV433WKGNMKY7EYCP575XW	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437DEC5S0FTTXVBZFY4V	2026-11-06 11:29:58.378852-05	2026-11-06 11:29:58.378852-05	\N
-prod_01M6VRP832RAWH9B74NB480E0K	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6VRP86G9A1PZ2EJN0C9PW8J	2026-11-07 14:45:10.864584-05	2026-11-07 14:45:10.864584-05	\N
+prod_01M6RV433VXTN0Q3M4KFEPFEVY	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437ACM4CDC8C2J9PM04E	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433VBXFP15V95A7WYZJ7	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437BEG464VP22BB6NMJV	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433V2SMZXSHC9ET34Q7P	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437BPF5SKTGFV85P33QZ	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433V8QZPH3PNVY46ZNEP	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437BXZZH2K95SDFDPZ18	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433VH280P701DXANFBRN	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437B9PBNH5K8RCRQMH6A	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433V3S45S2XK53QKXJG7	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437C0KY8G2PZ9TFWXRW5	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433V6XR5MWQQ2R2HZK77	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CTK7GDEAGEA0KV4XE	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433VFVQK8CJ13HYDBF8C	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CPS1DCSH02CNCH6FG	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433W5X97CNW0881T4HVS	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CRE93E45RZQXC3NRW	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433WAC11MFF8J8MYGGXV	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CHD4VHZJG1QDXGPHM	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433WSANFXX1A1XPDAKKT	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CS7DGC8DYHNAYWMPH	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433WHK3TK8WS4BB3NCD0	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CFK2GJJ3FCG23JY16	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433WTRZ4DGQ5HHJCEV93	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CBHB1P3A3CA7JENP8	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.341-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433W9FM6BGE5SP0V9VXE	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437CGGVX0DBD6SSHC7KE	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.342-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433WFGYYK1YXC74TA0VY	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437DH3DHGD9BHHNWX7XS	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.342-05	2026-11-13 12:29:30.341-05
+prod_01M6RV433WKGNMKY7EYCP575XW	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6RV437DEC5S0FTTXVBZFY4V	2026-11-06 11:29:58.378852-05	2026-11-13 12:29:30.342-05	2026-11-13 12:29:30.341-05
+prod_01M6VRP832RAWH9B74NB480E0K	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M6VRP86G9A1PZ2EJN0C9PW8J	2026-11-07 14:45:10.864584-05	2026-11-13 12:29:30.342-05	2026-11-13 12:29:30.341-05
+prod_01M7AZA520TTS02XMW50VKCR4X	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA565CHZK1FXF64AA773K	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA520XPX02GTD9DPE8H3Y	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA566QS7FCAX2ESARNE20	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA520R524K5DKXMXK1FDZ	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA56602TRFG349NXCB3RT	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA52030S7D9MRA2BTE3QE	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA566FJYH35HEK2XWPTC2	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA520NC8Y5PYEFNZ5RSAT	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA566GWD3AKMBGQ0V3BC9	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA520BYDYSPPV7QHQNM0Q	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA5663E5MJN4STRQ4YETA	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA520REMWA8TJH89AK0N6	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA566D9HEP69T3D49YE60	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA520MJ70VFJHQCYFE2Q4	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA5669T1R2HADHWZ182B6	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA5218VXYMT96TK0GX8AX	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA567B5M9CRB1D8GKBCCQ	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA521FWZQH8VA4TS3G7BR	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA567CMPGRF5GVPPCEQ17	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA521F3C8D1041RWKRJG3	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA56794RW4D6NN28FHPFP	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA521NY3ZRQF4AF4QV8RA	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA567R4KRSRFTCB328K4W	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA5214JSFNBG7DTF3KN16	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA56781J87MYTCS80X8W8	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
+prod_01M7AZA521DSZC6NMT56S5K6KB	sc_01M6Q03EJC9CS5HCFC8Y1GDNH1	prodsc_01M7AZA567N986YW5W3EX07K88	2026-11-13 12:29:31.077525-05	2026-11-13 12:29:31.077525-05	\N
 \.
 
 
@@ -6265,23 +5646,37 @@ prod_01M6RPEW08AMZS17MYD0A0XQV9	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RPEW42V
 prod_01M6RPEW08K7G5BQ2AJVBNWSD8	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RPEW42ZWJNJFX98GM817JP	2026-11-06 10:08:28.673112-05	2026-11-06 11:29:21.983-05	2026-11-06 11:29:21.982-05
 prod_01M6RPEW08KKFEMGCR8DHA8253	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RPEW4312EHCKB0H1HC5HV6	2026-11-06 10:08:28.673112-05	2026-11-06 11:29:21.983-05	2026-11-06 11:29:21.982-05
 prod_01M6RPEW089JG2ZHZMY25K7FKE	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RPEW43GG6XAMDJGD617PEX	2026-11-06 10:08:28.673112-05	2026-11-06 11:29:21.983-05	2026-11-06 11:29:21.982-05
-prod_01M6RV433VXTN0Q3M4KFEPFEVY	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV43810BQ9D92K65PW5Y7E	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433VBXFP15V95A7WYZJ7	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV43814VC60THEENQWE8PV	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433V2SMZXSHC9ET34Q7P	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV43817DCFRH3412DJ0BT6	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433V8QZPH3PNVY46ZNEP	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4381FH5GBXXR88RY7HNW	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433VH280P701DXANFBRN	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4381K7VP8RC2PN60Z5R5	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433V3S45S2XK53QKXJG7	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382SXJM0JWXK5VYPP4S	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433V6XR5MWQQ2R2HZK77	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382Z8WWZXSR7KEENTJ5	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433VFVQK8CJ13HYDBF8C	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382XE7737Q7YXT42GNE	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433W5X97CNW0881T4HVS	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV438218DK79G632NPNAFT	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433WAC11MFF8J8MYGGXV	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382660T14HG5VGRDMB1	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433WSANFXX1A1XPDAKKT	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382RA0QD55VAJ406DC0	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433WHK3TK8WS4BB3NCD0	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382BJ37Q7X50SZKM1DH	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433WTRZ4DGQ5HHJCEV93	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV43824KYD87ZZT6BQ86ST	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433W9FM6BGE5SP0V9VXE	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382V6ZZ0JCRXASH5B0T	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433WFGYYK1YXC74TA0VY	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV438356Q2NKKMQ85TT7GT	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6RV433WKGNMKY7EYCP575XW	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV43830R02FDDNARVRAM30	2026-11-06 11:29:58.402085-05	2026-11-06 11:29:58.402085-05	\N
-prod_01M6VRP832RAWH9B74NB480E0K	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6VRP87EP5TWTEME9TEYEJVG	2026-11-07 14:45:10.894343-05	2026-11-07 14:45:10.894343-05	\N
+prod_01M6RV433VXTN0Q3M4KFEPFEVY	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV43810BQ9D92K65PW5Y7E	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433VBXFP15V95A7WYZJ7	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV43814VC60THEENQWE8PV	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433V2SMZXSHC9ET34Q7P	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV43817DCFRH3412DJ0BT6	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433V8QZPH3PNVY46ZNEP	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4381FH5GBXXR88RY7HNW	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433VH280P701DXANFBRN	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4381K7VP8RC2PN60Z5R5	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433V3S45S2XK53QKXJG7	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382SXJM0JWXK5VYPP4S	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433V6XR5MWQQ2R2HZK77	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382Z8WWZXSR7KEENTJ5	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433VFVQK8CJ13HYDBF8C	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382XE7737Q7YXT42GNE	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433W5X97CNW0881T4HVS	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV438218DK79G632NPNAFT	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433WAC11MFF8J8MYGGXV	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382660T14HG5VGRDMB1	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433WSANFXX1A1XPDAKKT	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382RA0QD55VAJ406DC0	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433WHK3TK8WS4BB3NCD0	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382BJ37Q7X50SZKM1DH	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433WTRZ4DGQ5HHJCEV93	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV43824KYD87ZZT6BQ86ST	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433W9FM6BGE5SP0V9VXE	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV4382V6ZZ0JCRXASH5B0T	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433WFGYYK1YXC74TA0VY	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV438356Q2NKKMQ85TT7GT	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6RV433WKGNMKY7EYCP575XW	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6RV43830R02FDDNARVRAM30	2026-11-06 11:29:58.402085-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M6VRP832RAWH9B74NB480E0K	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M6VRP87EP5TWTEME9TEYEJVG	2026-11-07 14:45:10.894343-05	2026-11-13 12:29:30.338-05	2026-11-13 12:29:30.337-05
+prod_01M7AZA520TTS02XMW50VKCR4X	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA573QMWYXE1K4ZDGR765	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA520XPX02GTD9DPE8H3Y	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA574PH9EBJMP3K1YBPKB	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA520R524K5DKXMXK1FDZ	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA574PEB72ZDMJWM1B47E	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA52030S7D9MRA2BTE3QE	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA5748P8XYH5CSFY54HYG	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA520NC8Y5PYEFNZ5RSAT	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA574BSGJ30BPKMWTRYQB	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA520BYDYSPPV7QHQNM0Q	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA574WD9YY5SM4H04VC44	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA520REMWA8TJH89AK0N6	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA5748DBZN5HM1MS2ZKJE	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA520MJ70VFJHQCYFE2Q4	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA574XN8T29YEAFB2VS2J	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA5218VXYMT96TK0GX8AX	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA57416JXXVR13P90MYPK	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA521FWZQH8VA4TS3G7BR	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA5745C2T2HHTRFHJ3CY1	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA521F3C8D1041RWKRJG3	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA575XR8KCAY1ZGJ09F9W	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA521NY3ZRQF4AF4QV8RA	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA575Z43TFZ2SZPMCNW12	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA5214JSFNBG7DTF3KN16	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA5759BZK2SMBENTC605J	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
+prod_01M7AZA521DSZC6NMT56S5K6KB	sp_01M6Q03EE7BCVGA9WD3BEAAGHS	prodsp_01M7AZA575A7JZ8R6WYETMS4ZA	2026-11-13 12:29:31.107704-05	2026-11-13 12:29:31.107704-05	\N
 \.
 
 
@@ -6314,8 +5709,23 @@ COPY public.product_type (id, value, metadata, created_at, updated_at, deleted_a
 --
 
 COPY public.product_variant (id, title, sku, barcode, ean, upc, allow_backorder, manage_inventory, hs_code, origin_country, mid_code, material, weight, length, height, width, metadata, variant_rank, product_id, created_at, updated_at, deleted_at, thumbnail) FROM stdin;
-variant_01M6VRP8806KMGC80QGV9EREHN	Al Detal (Unidad)	DETAL-7702025102004	7702025102004	77020251020041	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6VRP832RAWH9B74NB480E0K	2026-11-07 14:45:10.913-05	2026-11-07 14:45:10.913-05	\N	\N
-variant_01M6VRP880Y4KY9B7BPGWRQ2BX	Al por Mayor (Caja / Bulto)	MAYOR-7702025102004	7702025102004-M	77020251020042	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6VRP832RAWH9B74NB480E0K	2026-11-07 14:45:10.913-05	2026-11-07 14:45:10.913-05	\N	\N
+variant_01M6RV438VZSHK9WWJRH71R4EW	Al por Mayor (Caja / Bulto)	MAYOR-PAN-ARTESANAL-MASA-MADRE	7702002002046-M	77020020020462	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V6XR5MWQQ2R2HZK77	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.346-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438T1HCR4DFG9GGM64N9	Al por Mayor (Caja / Bulto)	MAYOR-FRESAS-FRESCAS-500G	7701001001025-M	77010010010252	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VBXFP15V95A7WYZJ7	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.371-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438VCX78CJCYAXK9QNMW	Al Detal (Unidad)	DETAL-LECHE-ENTERA-FRESCA-1L	7703003003012	77030030030121	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VFVQK8CJ13HYDBF8C	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.377-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438WPAQCDPY1ND3PX146	Al por Mayor (Caja / Bulto)	MAYOR-LECHE-ENTERA-FRESCA-1L	7703003003012-M	77030030030122	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VFVQK8CJ13HYDBF8C	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.377-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438V2CD3BRK8BH3D816M	Al Detal (Unidad)	DETAL-ACEITE-OLIVA-VIRGEN-EXTRA	7702002002022	77020020020221	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VH280P701DXANFBRN	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.391-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438WYJ8BRACD7ME89E3K	Al Detal (Unidad)	DETAL-HUEVOS-CAMPEROS-DOCENA	7703003003029	77030030030291	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433W5X97CNW0881T4HVS	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.405-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438WXQ27KDR4P5VX2YQA	Al por Mayor (Caja / Bulto)	MAYOR-HUEVOS-CAMPEROS-DOCENA	7703003003029-M	77030030030292	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433W5X97CNW0881T4HVS	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.405-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438VF8QQFTSV19FYGW42	Al por Mayor (Caja / Bulto)	MAYOR-ARROZ-BLANCO-EXTRA-GRANO	7702002002039-M	77020020020392	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V3S45S2XK53QKXJG7	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.47-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438VRYW3STBR7FJ03VGV	Al Detal (Unidad)	DETAL-ARROZ-BLANCO-EXTRA-GRANO	7702002002039	77020020020391	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V3S45S2XK53QKXJG7	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.47-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438T853C3FF9N4XHJ8HS	Al Detal (Unidad)	DETAL-CAFE-GRANO-ARTESANAL	7702002002015	77020020020151	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V8QZPH3PNVY46ZNEP	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.5-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438TCX28QC97PH70ZPXE	Al por Mayor (Caja / Bulto)	MAYOR-CAFE-GRANO-ARTESANAL	7702002002015-M	77020020020152	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V8QZPH3PNVY46ZNEP	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.5-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438SA66M12ECRFBARBHA	Al Detal (Unidad)	DETAL-AGUACATE-HASS-ORGANICO	7701001001018	77010010010181	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VXTN0Q3M4KFEPFEVY	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.519-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438SWKFM9SKAC7GZGNXB	Al por Mayor (Caja / Bulto)	MAYOR-AGUACATE-HASS-ORGANICO	7701001001018-M	77010010010182	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VXTN0Q3M4KFEPFEVY	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.519-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438WT0872HSQH1DTX8HQ	Al Detal (Unidad)	DETAL-QUESO-MOZZARELLA-FRESCO	7703003003036	77030030030361	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WAC11MFF8J8MYGGXV	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.534-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438WE21JDZT9851MDQMC	Al por Mayor (Caja / Bulto)	MAYOR-QUESO-MOZZARELLA-FRESCO	7703003003036-M	77030030030362	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WAC11MFF8J8MYGGXV	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.534-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6VRP8806KMGC80QGV9EREHN	Al Detal (Unidad)	DETAL-7702025102004	7702025102004	77020251020041	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6VRP832RAWH9B74NB480E0K	2026-11-07 14:45:10.913-05	2026-11-13 12:29:30.57-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6VRP880Y4KY9B7BPGWRQ2BX	Al por Mayor (Caja / Bulto)	MAYOR-7702025102004	7702025102004-M	77020251020042	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6VRP832RAWH9B74NB480E0K	2026-11-07 14:45:10.913-05	2026-11-13 12:29:30.57-05	2026-11-13 12:29:30.322-05	\N
 variant_01M6Q03EXWMVBBE73BJT5D7GY8	S / Black	SHIRT-S-BLACK	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6Q03ETMVSFYX1YFMRV52WFM	2026-11-05 18:18:31.616-05	2026-11-06 10:08:27.969-05	2026-11-06 10:08:27.945-05	\N
 variant_01M6Q03EXXMBYP27A71VN2TDCD	S / White	SHIRT-S-WHITE	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6Q03ETMVSFYX1YFMRV52WFM	2026-11-05 18:18:31.616-05	2026-11-06 10:08:27.969-05	2026-11-06 10:08:27.945-05	\N
 variant_01M6Q03EXXWZ6EPAE1EJPG30TK	M / Black	SHIRT-M-BLACK	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6Q03ETMVSFYX1YFMRV52WFM	2026-11-05 18:18:31.616-05	2026-11-06 10:08:27.969-05	2026-11-06 10:08:27.945-05	\N
@@ -6344,6 +5754,34 @@ variant_01M6Q0TVSWDP2C14ARWDV7RS82	Unidad	SKU-LECHE-ENTERA-FRESCA-1L-1	\N	\N	\N	
 variant_01M6Q0TVSWTKCQRTQ85B9FN3FJ	Unidad	SKU-HUEVOS-CAMPEROS-DOCENA-1	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6Q0TVNVGK5HCTWXPDWAWQR1	2026-11-05 18:31:18.461-05	2026-11-06 10:08:28.059-05	2026-11-06 10:08:27.945-05	\N
 variant_01M6Q0TVSWQTE12VDJBKYMKSFE	Unidad	SKU-JUGO-NARANJA-EXPRIMIDO-1	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6Q0TVNVAZY133GAN1HH5XEW	2026-11-05 18:31:18.461-05	2026-11-06 10:08:28.068-05	2026-11-06 10:08:27.945-05	\N
 variant_01M6Q0TVSWGVFP9Y8T73777M4H	Unidad	SKU-PAN-ARTESANAL-MASA-MADRE-1	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6Q0TVNVR8Q95SX58M1A1PR8	2026-11-05 18:31:18.461-05	2026-11-06 10:08:28.079-05	2026-11-06 10:08:27.945-05	\N
+variant_01M7AZA588TDK6WDVFSBH0E0AT	Al Detal (Unidad)	DETAL-7702010123901	7702010123901	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520TTS02XMW50VKCR4X	2026-11-13 12:29:31.148-05	2026-11-13 12:29:31.148-05	\N	\N
+variant_01M7AZA588Q9AX190K4F6H7B1W	Al por Mayor (Caja / Bulto)	MAYOR-7702010123901	7702010123901-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520TTS02XMW50VKCR4X	2026-11-13 12:29:31.148-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA589J2CXS8AAEF7JZVBK	Al Detal (Unidad)	DETAL-7702010123918	7702010123918	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520XPX02GTD9DPE8H3Y	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58904DYPEAM7QQFR7QV	Al por Mayor (Caja / Bulto)	MAYOR-7702010123918	7702010123918-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520XPX02GTD9DPE8H3Y	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA589899YV5Y066V1NBG8	Al Detal (Unidad)	DETAL-7702010123925	7702010123925	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520R524K5DKXMXK1FDZ	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA589QB2E6Z5EAYMSKT3T	Al por Mayor (Caja / Bulto)	MAYOR-7702010123925	7702010123925-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520R524K5DKXMXK1FDZ	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA589W9TP2D53ZB48TYCV	Al Detal (Unidad)	DETAL-7702010123932	7702010123932	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA52030S7D9MRA2BTE3QE	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA589C2RWN6D9Y3F5G24T	Al por Mayor (Caja / Bulto)	MAYOR-7702010123932	7702010123932-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA52030S7D9MRA2BTE3QE	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA589RP3WPNCPQJ1FDZ1Y	Al Detal (Unidad)	DETAL-7703010103371	7703010103371	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520NC8Y5PYEFNZ5RSAT	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58A89CN3BTXH4F0K544	Al por Mayor (Caja / Bulto)	MAYOR-7703010103371	7703010103371-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520NC8Y5PYEFNZ5RSAT	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58AJ8R4GEPJM8MPCPEH	Al Detal (Unidad)	DETAL-7703010103388	7703010103388	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520BYDYSPPV7QHQNM0Q	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58AAAHC9B9AVCAZ5XMW	Al por Mayor (Caja / Bulto)	MAYOR-7703010103388	7703010103388-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520BYDYSPPV7QHQNM0Q	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58AD5KVPJR2DJA0EJ07	Al Detal (Unidad)	DETAL-7703010100158	7703010100158	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520REMWA8TJH89AK0N6	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58AD5H6AWFVXQGHQY3J	Al por Mayor (Caja / Bulto)	MAYOR-7703010100158	7703010100158-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520REMWA8TJH89AK0N6	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58AYTPSJZ1J795AASD8	Al Detal (Unidad)	DETAL-7703010100363	7703010100363	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520MJ70VFJHQCYFE2Q4	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58AH1HQ3QKMD6RNGZMZ	Al por Mayor (Caja / Bulto)	MAYOR-7703010100363	7703010100363-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA520MJ70VFJHQCYFE2Q4	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58BRA40EVEPVCFETBHN	Al Detal (Unidad)	DETAL-7703010100639	7703010100639	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA5218VXYMT96TK0GX8AX	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58B41H3D15TMPHVYXJE	Al por Mayor (Caja / Bulto)	MAYOR-7703010100639	7703010100639-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA5218VXYMT96TK0GX8AX	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58BK5T5MM7RMS2WDMTP	Al Detal (Unidad)	DETAL-7703010100745	7703010100745	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA521FWZQH8VA4TS3G7BR	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58BMVAMDSENKTWHZT9E	Al por Mayor (Caja / Bulto)	MAYOR-7703010100745	7703010100745-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA521FWZQH8VA4TS3G7BR	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58BA3EDPECF1QM2PR97	Al Detal (Unidad)	DETAL-7703010100776	7703010100776	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA521F3C8D1041RWKRJG3	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58BVZ85E6S3MAKKCN3R	Al por Mayor (Caja / Bulto)	MAYOR-7703010100776	7703010100776-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA521F3C8D1041RWKRJG3	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58BDQ3D3Q95V974B361	Al Detal (Unidad)	DETAL-7703010103104	7703010103104	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA521NY3ZRQF4AF4QV8RA	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58BXH7TWRW4Y8DXS4Z5	Al por Mayor (Caja / Bulto)	MAYOR-7703010103104	7703010103104-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA521NY3ZRQF4AF4QV8RA	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58C330C7903HJ2QK4K6	Al Detal (Unidad)	DETAL-7703010103517	7703010103517	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA5214JSFNBG7DTF3KN16	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58C4X8VZD8XN3ZQQ1P1	Al por Mayor (Caja / Bulto)	MAYOR-7703010103517	7703010103517-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA5214JSFNBG7DTF3KN16	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58CGEBG2F9JNGJAFHKQ	Al Detal (Unidad)	DETAL-7703010103524	7703010103524	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA521DSZC6NMT56S5K6KB	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
+variant_01M7AZA58CNGSF9JWESM979XS4	Al por Mayor (Caja / Bulto)	MAYOR-7703010103524	7703010103524-M	\N	\N	t	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M7AZA521DSZC6NMT56S5K6KB	2026-11-13 12:29:31.149-05	2026-11-13 12:29:31.149-05	\N	\N
 variant_01M6RPEW4QV0T09N9QSKV6A4D7	Al Detal (Unidad)	DETAL-AGUACATE-HASS-ORGANICO	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RPEW07RE5HGX8MNWG22ACV	2026-11-06 10:08:28.7-05	2026-11-06 11:29:21.993-05	2026-11-06 11:29:21.969-05	\N
 variant_01M6RPEW4QTZNY278QRX15CDFF	Al por Mayor (Caja / Bulto)	MAYOR-AGUACATE-HASS-ORGANICO	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RPEW07RE5HGX8MNWG22ACV	2026-11-06 10:08:28.7-05	2026-11-06 11:29:21.993-05	2026-11-06 11:29:21.969-05	\N
 variant_01M6RPEW4QMK28407427CPP97G	Al Detal (Unidad)	DETAL-FRESAS-FRESCAS-500G	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RPEW08B012SRX8884NNF8R	2026-11-06 10:08:28.7-05	2026-11-06 11:29:22.003-05	2026-11-06 11:29:21.969-05	\N
@@ -6376,38 +5814,23 @@ variant_01M6RPEW4VYA9WKTPKGF5E1B70	Al Detal (Unidad)	DETAL-DETERGENTE-LIQUIDO-EC
 variant_01M6RPEW4VESD7JMA603EJY2ZJ	Al por Mayor (Caja / Bulto)	MAYOR-DETERGENTE-LIQUIDO-ECOLOGICO	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RPEW08KKFEMGCR8DHA8253	2026-11-06 10:08:28.7-05	2026-11-06 11:29:22.148-05	2026-11-06 11:29:21.969-05	\N
 variant_01M6RPEW4V6SBSHSR8ZJ8AT4SJ	Al Detal (Unidad)	DETAL-PAPEL-HIGIENICO-TRIPLE-HOJA	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RPEW089JG2ZHZMY25K7FKE	2026-11-06 10:08:28.7-05	2026-11-06 11:29:22.159-05	2026-11-06 11:29:21.969-05	\N
 variant_01M6RPEW4VQ7HAZ1WN5JF3ZEBC	Al por Mayor (Caja / Bulto)	MAYOR-PAPEL-HIGIENICO-TRIPLE-HOJA	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RPEW089JG2ZHZMY25K7FKE	2026-11-06 10:08:28.7-05	2026-11-06 11:29:22.159-05	2026-11-06 11:29:21.969-05	\N
-variant_01M6RV438VF8QQFTSV19FYGW42	Al por Mayor (Caja / Bulto)	MAYOR-ARROZ-BLANCO-EXTRA-GRANO	7702002002039-M	77020020020392	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V3S45S2XK53QKXJG7	2026-11-06 11:29:58.431-05	2026-11-07 12:44:41.517-05	\N	\N
-variant_01M6RV438VFVK9DWN42CWQKXJ1	Al Detal (Unidad)	DETAL-PAN-ARTESANAL-MASA-MADRE	7702002002046	77020020020461	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V6XR5MWQQ2R2HZK77	2026-11-06 11:29:58.431-05	2026-11-07 11:59:50.44-05	\N	\N
-variant_01M6RV438VZSHK9WWJRH71R4EW	Al por Mayor (Caja / Bulto)	MAYOR-PAN-ARTESANAL-MASA-MADRE	7702002002046-M	77020020020462	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V6XR5MWQQ2R2HZK77	2026-11-06 11:29:58.431-05	2026-11-07 11:59:50.493-05	\N	\N
-variant_01M6RV438T853C3FF9N4XHJ8HS	Al Detal (Unidad)	DETAL-CAFE-GRANO-ARTESANAL	7702002002015	77020020020151	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V8QZPH3PNVY46ZNEP	2026-11-06 11:29:58.431-05	2026-11-07 11:59:50.605-05	\N	\N
-variant_01M6RV438TCX28QC97PH70ZPXE	Al por Mayor (Caja / Bulto)	MAYOR-CAFE-GRANO-ARTESANAL	7702002002015-M	77020020020152	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V8QZPH3PNVY46ZNEP	2026-11-06 11:29:58.431-05	2026-11-07 11:59:50.65-05	\N	\N
-variant_01M6RV438T1HCR4DFG9GGM64N9	Al por Mayor (Caja / Bulto)	MAYOR-FRESAS-FRESCAS-500G	7701001001025-M	77010010010252	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VBXFP15V95A7WYZJ7	2026-11-06 11:29:58.431-05	2026-11-07 11:59:50.749-05	\N	\N
-variant_01M6RV438VCX78CJCYAXK9QNMW	Al Detal (Unidad)	DETAL-LECHE-ENTERA-FRESCA-1L	7703003003012	77030030030121	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VFVQK8CJ13HYDBF8C	2026-11-06 11:29:58.431-05	2026-11-07 11:59:50.918-05	\N	\N
-variant_01M6RV438WPAQCDPY1ND3PX146	Al por Mayor (Caja / Bulto)	MAYOR-LECHE-ENTERA-FRESCA-1L	7703003003012-M	77030030030122	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VFVQK8CJ13HYDBF8C	2026-11-06 11:29:58.431-05	2026-11-07 11:59:50.967-05	\N	\N
-variant_01M6RV438V2CD3BRK8BH3D816M	Al Detal (Unidad)	DETAL-ACEITE-OLIVA-VIRGEN-EXTRA	7702002002022	77020020020221	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VH280P701DXANFBRN	2026-11-06 11:29:58.431-05	2026-11-07 11:59:51.091-05	\N	\N
-variant_01M6RV438SA66M12ECRFBARBHA	Al Detal (Unidad)	DETAL-AGUACATE-HASS-ORGANICO	7701001001018	77010010010181	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VXTN0Q3M4KFEPFEVY	2026-11-06 11:29:58.431-05	2026-11-07 11:59:51.416-05	\N	\N
-variant_01M6RV438SWKFM9SKAC7GZGNXB	Al por Mayor (Caja / Bulto)	MAYOR-AGUACATE-HASS-ORGANICO	7701001001018-M	77010010010182	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VXTN0Q3M4KFEPFEVY	2026-11-06 11:29:58.431-05	2026-11-07 11:59:51.652-05	\N	\N
-variant_01M6RV438WYJ8BRACD7ME89E3K	Al Detal (Unidad)	DETAL-HUEVOS-CAMPEROS-DOCENA	7703003003029	77030030030291	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433W5X97CNW0881T4HVS	2026-11-06 11:29:58.431-05	2026-11-07 11:59:51.97-05	\N	\N
-variant_01M6RV438WXQ27KDR4P5VX2YQA	Al por Mayor (Caja / Bulto)	MAYOR-HUEVOS-CAMPEROS-DOCENA	7703003003029-M	77030030030292	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433W5X97CNW0881T4HVS	2026-11-06 11:29:58.431-05	2026-11-07 11:59:52.042-05	\N	\N
-variant_01M6RV438WT0872HSQH1DTX8HQ	Al Detal (Unidad)	DETAL-QUESO-MOZZARELLA-FRESCO	7703003003036	77030030030361	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WAC11MFF8J8MYGGXV	2026-11-06 11:29:58.431-05	2026-11-07 11:59:52.334-05	\N	\N
-variant_01M6RV438WE21JDZT9851MDQMC	Al por Mayor (Caja / Bulto)	MAYOR-QUESO-MOZZARELLA-FRESCO	7703003003036-M	77030030030362	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WAC11MFF8J8MYGGXV	2026-11-06 11:29:58.431-05	2026-11-07 11:59:52.394-05	\N	\N
-variant_01M6RV438VRYW3STBR7FJ03VGV	Al Detal (Unidad)	DETAL-ARROZ-BLANCO-EXTRA-GRANO	7702002002039	77020020020391	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V3S45S2XK53QKXJG7	2026-11-06 11:29:58.431-05	2026-11-07 12:44:41.437-05	\N	\N
-variant_01M6RV438XJMSCVT1QKRT9G30B	Al por Mayor (Caja / Bulto)	MAYOR-JUGO-NARANJA-EXPRIMIDO	7705005005016-M	77050050050162	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WTRZ4DGQ5HHJCEV93	2026-11-06 11:29:58.432-05	2026-11-07 11:59:53.354-05	\N	\N
-variant_01M6RV438TCF06HPPW4FGHV0D3	Al por Mayor (Caja / Bulto)	MAYOR-BANANO-ORGANICO-EXPORTACION	7701001001032-M	77010010010322	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V2SMZXSHC9ET34Q7P	2026-11-06 11:29:58.431-05	2026-11-07 11:59:50.048-05	\N	\N
-variant_01M6RV438T3T62AHS19DZS6F01	Al Detal (Unidad)	DETAL-BANANO-ORGANICO-EXPORTACION	7701001001032	77010010010321	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V2SMZXSHC9ET34Q7P	2026-11-06 11:29:58.431-05	2026-11-07 11:59:50.127-05	\N	\N
-variant_01M6RV438SQB06J75G9HZCXJ4P	Al Detal (Unidad)	DETAL-FRESAS-FRESCAS-500G	7701001001025	77010010010251	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VBXFP15V95A7WYZJ7	2026-11-06 11:29:58.431-05	2026-11-07 11:59:50.825-05	\N	\N
-variant_01M6RV438V0GPXE6GFZAZSS25P	Al por Mayor (Caja / Bulto)	MAYOR-ACEITE-OLIVA-VIRGEN-EXTRA	7702002002022-M	77020020020222	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VH280P701DXANFBRN	2026-11-06 11:29:58.431-05	2026-11-07 11:59:51.174-05	\N	\N
-variant_01M6RV438X7TVFCK97VN8EN9YB	Al Detal (Unidad)	DETAL-AGUA-MINERAL-MANANTIAL	7705005005023	77050050050231	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433W9FM6BGE5SP0V9VXE	2026-11-06 11:29:58.432-05	2026-11-07 11:59:52.171-05	\N	\N
-variant_01M6RV438YXBQZBEVYYYYAWJRK	Al por Mayor (Caja / Bulto)	MAYOR-AGUA-MINERAL-MANANTIAL	7705005005023-M	77050050050232	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433W9FM6BGE5SP0V9VXE	2026-11-06 11:29:58.432-05	2026-11-07 11:59:52.224-05	\N	\N
-variant_01M6RV438Y2JEAYKQRK744DG9Z	Al Detal (Unidad)	DETAL-DETERGENTE-LIQUIDO-ECOLOGICO	7706006006013	77060060060131	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WFGYYK1YXC74TA0VY	2026-11-06 11:29:58.432-05	2026-11-07 11:59:52.528-05	\N	\N
-variant_01M6RV438YGVS38R3HZ17X7Y7Y	Al por Mayor (Caja / Bulto)	MAYOR-DETERGENTE-LIQUIDO-ECOLOGICO	7706006006013-M	77060060060132	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WFGYYK1YXC74TA0VY	2026-11-06 11:29:58.432-05	2026-11-07 11:59:52.591-05	\N	\N
-variant_01M6RV438XZJD85SZANXMEPSVN	Al Detal (Unidad)	DETAL-PECHUGA-POLLO-FRESCA	7704004004026	77040040040261	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WHK3TK8WS4BB3NCD0	2026-11-06 11:29:58.431-05	2026-11-07 11:59:52.733-05	\N	\N
-variant_01M6RV438XX7RR7Y93RG8WEBB3	Al por Mayor (Caja / Bulto)	MAYOR-PECHUGA-POLLO-FRESCA	7704004004026-M	77040040040262	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WHK3TK8WS4BB3NCD0	2026-11-06 11:29:58.432-05	2026-11-07 11:59:52.813-05	\N	\N
-variant_01M6RV438YD4WDJVCMWY7K6E0F	Al Detal (Unidad)	DETAL-PAPEL-HIGIENICO-TRIPLE-HOJA	7706006006020	77060060060201	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WKGNMKY7EYCP575XW	2026-11-06 11:29:58.432-05	2026-11-07 11:59:52.937-05	\N	\N
-variant_01M6RV438Y28J96X2CMGMW4TNX	Al por Mayor (Caja / Bulto)	MAYOR-PAPEL-HIGIENICO-TRIPLE-HOJA	7706006006020-M	77060060060202	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WKGNMKY7EYCP575XW	2026-11-06 11:29:58.432-05	2026-11-07 11:59:52.992-05	\N	\N
-variant_01M6RV438XZGSWSRWXA7SPFGG4	Al Detal (Unidad)	DETAL-LOMO-RES-MADURADO	7704004004019	77040040040191	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WSANFXX1A1XPDAKKT	2026-11-06 11:29:58.431-05	2026-11-07 11:59:53.122-05	\N	\N
-variant_01M6RV438XW54Z055JVRTVFVCS	Al por Mayor (Caja / Bulto)	MAYOR-LOMO-RES-MADURADO	7704004004019-M	77040040040192	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WSANFXX1A1XPDAKKT	2026-11-06 11:29:58.431-05	2026-11-07 11:59:53.175-05	\N	\N
-variant_01M6RV438XYE826Q1BTQA318RF	Al Detal (Unidad)	DETAL-JUGO-NARANJA-EXPRIMIDO	7705005005016	77050050050161	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WTRZ4DGQ5HHJCEV93	2026-11-06 11:29:58.432-05	2026-11-07 11:59:53.291-05	\N	\N
+variant_01M6RV438VFVK9DWN42CWQKXJ1	Al Detal (Unidad)	DETAL-PAN-ARTESANAL-MASA-MADRE	7702002002046	77020020020461	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V6XR5MWQQ2R2HZK77	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.346-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438SQB06J75G9HZCXJ4P	Al Detal (Unidad)	DETAL-FRESAS-FRESCAS-500G	7701001001025	77010010010251	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VBXFP15V95A7WYZJ7	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.371-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438V0GPXE6GFZAZSS25P	Al por Mayor (Caja / Bulto)	MAYOR-ACEITE-OLIVA-VIRGEN-EXTRA	7702002002022-M	77020020020222	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433VH280P701DXANFBRN	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.391-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438X7TVFCK97VN8EN9YB	Al Detal (Unidad)	DETAL-AGUA-MINERAL-MANANTIAL	7705005005023	77050050050231	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433W9FM6BGE5SP0V9VXE	2026-11-06 11:29:58.432-05	2026-11-13 12:29:30.42-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438YXBQZBEVYYYYAWJRK	Al por Mayor (Caja / Bulto)	MAYOR-AGUA-MINERAL-MANANTIAL	7705005005023-M	77050050050232	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433W9FM6BGE5SP0V9VXE	2026-11-06 11:29:58.432-05	2026-11-13 12:29:30.42-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438Y2JEAYKQRK744DG9Z	Al Detal (Unidad)	DETAL-DETERGENTE-LIQUIDO-ECOLOGICO	7706006006013	77060060060131	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WFGYYK1YXC74TA0VY	2026-11-06 11:29:58.432-05	2026-11-13 12:29:30.435-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438YGVS38R3HZ17X7Y7Y	Al por Mayor (Caja / Bulto)	MAYOR-DETERGENTE-LIQUIDO-ECOLOGICO	7706006006013-M	77060060060132	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WFGYYK1YXC74TA0VY	2026-11-06 11:29:58.432-05	2026-11-13 12:29:30.435-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438XJMSCVT1QKRT9G30B	Al por Mayor (Caja / Bulto)	MAYOR-JUGO-NARANJA-EXPRIMIDO	7705005005016-M	77050050050162	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WTRZ4DGQ5HHJCEV93	2026-11-06 11:29:58.432-05	2026-11-13 12:29:30.446-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438XYE826Q1BTQA318RF	Al Detal (Unidad)	DETAL-JUGO-NARANJA-EXPRIMIDO	7705005005016	77050050050161	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WTRZ4DGQ5HHJCEV93	2026-11-06 11:29:58.432-05	2026-11-13 12:29:30.447-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438TCF06HPPW4FGHV0D3	Al por Mayor (Caja / Bulto)	MAYOR-BANANO-ORGANICO-EXPORTACION	7701001001032-M	77010010010322	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V2SMZXSHC9ET34Q7P	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.486-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438T3T62AHS19DZS6F01	Al Detal (Unidad)	DETAL-BANANO-ORGANICO-EXPORTACION	7701001001032	77010010010321	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433V2SMZXSHC9ET34Q7P	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.486-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438YD4WDJVCMWY7K6E0F	Al Detal (Unidad)	DETAL-PAPEL-HIGIENICO-TRIPLE-HOJA	7706006006020	77060060060201	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WKGNMKY7EYCP575XW	2026-11-06 11:29:58.432-05	2026-11-13 12:29:30.55-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438Y28J96X2CMGMW4TNX	Al por Mayor (Caja / Bulto)	MAYOR-PAPEL-HIGIENICO-TRIPLE-HOJA	7706006006020-M	77060060060202	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WKGNMKY7EYCP575XW	2026-11-06 11:29:58.432-05	2026-11-13 12:29:30.55-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438XZGSWSRWXA7SPFGG4	Al Detal (Unidad)	DETAL-LOMO-RES-MADURADO	7704004004019	77040040040191	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WSANFXX1A1XPDAKKT	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.587-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438XW54Z055JVRTVFVCS	Al por Mayor (Caja / Bulto)	MAYOR-LOMO-RES-MADURADO	7704004004019-M	77040040040192	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WSANFXX1A1XPDAKKT	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.587-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438XZJD85SZANXMEPSVN	Al Detal (Unidad)	DETAL-PECHUGA-POLLO-FRESCA	7704004004026	77040040040261	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WHK3TK8WS4BB3NCD0	2026-11-06 11:29:58.431-05	2026-11-13 12:29:30.602-05	2026-11-13 12:29:30.322-05	\N
+variant_01M6RV438XX7RR7Y93RG8WEBB3	Al por Mayor (Caja / Bulto)	MAYOR-PECHUGA-POLLO-FRESCA	7704004004026-M	77040040040262	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01M6RV433WHK3TK8WS4BB3NCD0	2026-11-06 11:29:58.432-05	2026-11-13 12:29:30.602-05	2026-11-13 12:29:30.322-05	\N
 \.
 
 
@@ -6476,40 +5899,40 @@ variant_01M6RPEW4VYA9WKTPKGF5E1B70	iitem_01M6RPEW62C5X092Z3CAKJJPCZ	pvitem_01M6R
 variant_01M6RPEW4VESD7JMA603EJY2ZJ	iitem_01M6RPEW62Q3Y6BNEZDKHBBN9A	pvitem_01M6RPEW6V84RQ3FF77VW0D8B6	1	2026-11-06 10:08:28.759856-05	2026-11-06 11:29:21.946-05	2026-11-06 11:29:21.944-05
 variant_01M6RPEW4V6SBSHSR8ZJ8AT4SJ	iitem_01M6RPEW62PSAQ2WMC8T3F48PH	pvitem_01M6RPEW6VM9EW16PWBA5W4TNE	1	2026-11-06 10:08:28.759856-05	2026-11-06 11:29:21.946-05	2026-11-06 11:29:21.944-05
 variant_01M6RPEW4VQ7HAZ1WN5JF3ZEBC	iitem_01M6RPEW62ZSRBXA2T55XNY11J	pvitem_01M6RPEW6V853BXKKMW5N3402T	1	2026-11-06 10:08:28.759856-05	2026-11-06 11:29:21.946-05	2026-11-06 11:29:21.944-05
-variant_01M6RV438SA66M12ECRFBARBHA	iitem_01M6RV439XM629J2W67DTV929B	pvitem_01M6RV43ASY0TZT54BMXHJ4GRX	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438SWKFM9SKAC7GZGNXB	iitem_01M6RV439XQNKF4MA8TRFYT6K5	pvitem_01M6RV43ATAMFWYEC2RAB55AY1	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438SQB06J75G9HZCXJ4P	iitem_01M6RV439XS3J0XKTKYX8J1M2K	pvitem_01M6RV43ATF3KFWFNR6J7ZJWQS	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438T1HCR4DFG9GGM64N9	iitem_01M6RV439XF008GP00GQKT2N7E	pvitem_01M6RV43ATA10EH5E2AMHMC1W0	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438T3T62AHS19DZS6F01	iitem_01M6RV439YGVAPYPMN55HEZM62	pvitem_01M6RV43AT0TR6ETQVPMF6G8SQ	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438TCF06HPPW4FGHV0D3	iitem_01M6RV439YNGWKCF1ERHXG23SH	pvitem_01M6RV43AV6RWJHA06P8DX6G7A	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438T853C3FF9N4XHJ8HS	iitem_01M6RV439Y08C5WDPJF3PYTHJP	pvitem_01M6RV43AVAXYFR1Z2W0TBRZVM	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438TCX28QC97PH70ZPXE	iitem_01M6RV439YCT9Y2KH49TH3B54A	pvitem_01M6RV43AVWJ7XGKNVVEY6RRNS	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438V2CD3BRK8BH3D816M	iitem_01M6RV439YEMQBWB1K4SQXT81R	pvitem_01M6RV43AVCYRP0AWYRY6BA77N	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438V0GPXE6GFZAZSS25P	iitem_01M6RV439YG3SWBN0KJSVA46DZ	pvitem_01M6RV43AVSBHYHTSJ2BF97EMQ	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438VRYW3STBR7FJ03VGV	iitem_01M6RV439Y1P551YKDPFYZEKTS	pvitem_01M6RV43AV8EHJZPC2B3WH104F	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438VF8QQFTSV19FYGW42	iitem_01M6RV439Z3JY3BHRK2K9J8QTZ	pvitem_01M6RV43AVCMG7VZ3HMQEQGFS6	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438VFVK9DWN42CWQKXJ1	iitem_01M6RV439ZPB7WNZ0ERAEPDDYP	pvitem_01M6RV43AVV85VFQ925258FVAV	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438VZSHK9WWJRH71R4EW	iitem_01M6RV439Z7D8XX7RY0H61P7WF	pvitem_01M6RV43AVEPN6XG733PSV9T11	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438VCX78CJCYAXK9QNMW	iitem_01M6RV439Z4YGKFSMP7SX8ZTNE	pvitem_01M6RV43AWZ3M27WJAXDNQRW5G	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438WPAQCDPY1ND3PX146	iitem_01M6RV439Z6EQFMAC1RSRB0ME7	pvitem_01M6RV43AW1K9CTKR99GSGGT5S	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438WYJ8BRACD7ME89E3K	iitem_01M6RV439ZMBXK2EPJXA344XK6	pvitem_01M6RV43AWBKX1SXAZR0JP3VFB	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438WXQ27KDR4P5VX2YQA	iitem_01M6RV439ZQAJ5D2S4DQ73KF93	pvitem_01M6RV43AWA9W61AV32RFRKAYC	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438WT0872HSQH1DTX8HQ	iitem_01M6RV439Z5R5SWHXEYS5D2124	pvitem_01M6RV43AW4Y13YVB4C1EVQ6RP	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438WE21JDZT9851MDQMC	iitem_01M6RV439ZCMKFZJKKEF1SCPY4	pvitem_01M6RV43AW0D0HKA1YEFRVS4T3	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438XZGSWSRWXA7SPFGG4	iitem_01M6RV439ZXB9KBYPPFK9JPZJM	pvitem_01M6RV43AW25QYTVC7SRGWDWF8	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438XW54Z055JVRTVFVCS	iitem_01M6RV43A0CE1XXG7J1KP5S7ZV	pvitem_01M6RV43AWA9FR3AARSKCGCNVW	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438XZJD85SZANXMEPSVN	iitem_01M6RV43A0TGDSD2M9QB5C82ZR	pvitem_01M6RV43AW85DD481W2YYDKKK5	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438XX7RR7Y93RG8WEBB3	iitem_01M6RV43A059BZ9RFGVBX7FK7G	pvitem_01M6RV43AWPDYPF29GPT99GG3D	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438XYE826Q1BTQA318RF	iitem_01M6RV43A0YRMED8HC4RE4GHPR	pvitem_01M6RV43AXQE36JE60NPVHTZA2	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438XJMSCVT1QKRT9G30B	iitem_01M6RV43A00DSBMSYN3J485BG7	pvitem_01M6RV43AXYKTR7RME23S4T668	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438X7TVFCK97VN8EN9YB	iitem_01M6RV43A0HQ97JSMCFFCBBZJ0	pvitem_01M6RV43AXKNGAB7Z4QVXRAFPB	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438YXBQZBEVYYYYAWJRK	iitem_01M6RV43A0Q16DHWHNV44Y16JJ	pvitem_01M6RV43AX6TC8754FY8KRS01N	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438Y2JEAYKQRK744DG9Z	iitem_01M6RV43A0FXDQKHYZM5P1FZDX	pvitem_01M6RV43AX5C1VF7APKNSG9E99	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438YGVS38R3HZ17X7Y7Y	iitem_01M6RV43A1B5HDFHRSPD8HKP85	pvitem_01M6RV43AXE5DHWXSB124XESHJ	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438YD4WDJVCMWY7K6E0F	iitem_01M6RV43A1EQTDJ4WVDMY1JP5G	pvitem_01M6RV43AXS0PYDWA0KXW0VEKE	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6RV438Y28J96X2CMGMW4TNX	iitem_01M6RV43A1C5EEXGYE9G7SH84A	pvitem_01M6RV43AX74EC7B8PKXF97NBC	1	2026-11-06 11:29:58.49096-05	2026-11-06 11:29:58.49096-05	\N
-variant_01M6VRP8806KMGC80QGV9EREHN	iitem_01M6VRP89F6NG3CWJYRSFQ6K45	pvitem_01M6VRP8A9S51QGPX6HCK8G298	1	2026-11-07 14:45:10.985835-05	2026-11-07 14:45:10.985835-05	\N
-variant_01M6VRP880Y4KY9B7BPGWRQ2BX	iitem_01M6VRP89FA5756PX1E58M8S1G	pvitem_01M6VRP8AAHG3E6WWT83Y1Q1V8	1	2026-11-07 14:45:10.985835-05	2026-11-07 14:45:10.985835-05	\N
+variant_01M6RV438SA66M12ECRFBARBHA	iitem_01M6RV439XM629J2W67DTV929B	pvitem_01M6RV43ASY0TZT54BMXHJ4GRX	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.292-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438SWKFM9SKAC7GZGNXB	iitem_01M6RV439XQNKF4MA8TRFYT6K5	pvitem_01M6RV43ATAMFWYEC2RAB55AY1	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.292-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438SQB06J75G9HZCXJ4P	iitem_01M6RV439XS3J0XKTKYX8J1M2K	pvitem_01M6RV43ATF3KFWFNR6J7ZJWQS	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.292-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438T1HCR4DFG9GGM64N9	iitem_01M6RV439XF008GP00GQKT2N7E	pvitem_01M6RV43ATA10EH5E2AMHMC1W0	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.292-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438T3T62AHS19DZS6F01	iitem_01M6RV439YGVAPYPMN55HEZM62	pvitem_01M6RV43AT0TR6ETQVPMF6G8SQ	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.292-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438TCF06HPPW4FGHV0D3	iitem_01M6RV439YNGWKCF1ERHXG23SH	pvitem_01M6RV43AV6RWJHA06P8DX6G7A	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.292-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438T853C3FF9N4XHJ8HS	iitem_01M6RV439Y08C5WDPJF3PYTHJP	pvitem_01M6RV43AVAXYFR1Z2W0TBRZVM	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.292-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438TCX28QC97PH70ZPXE	iitem_01M6RV439YCT9Y2KH49TH3B54A	pvitem_01M6RV43AVWJ7XGKNVVEY6RRNS	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438V2CD3BRK8BH3D816M	iitem_01M6RV439YEMQBWB1K4SQXT81R	pvitem_01M6RV43AVCYRP0AWYRY6BA77N	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438V0GPXE6GFZAZSS25P	iitem_01M6RV439YG3SWBN0KJSVA46DZ	pvitem_01M6RV43AVSBHYHTSJ2BF97EMQ	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438VRYW3STBR7FJ03VGV	iitem_01M6RV439Y1P551YKDPFYZEKTS	pvitem_01M6RV43AV8EHJZPC2B3WH104F	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438VF8QQFTSV19FYGW42	iitem_01M6RV439Z3JY3BHRK2K9J8QTZ	pvitem_01M6RV43AVCMG7VZ3HMQEQGFS6	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438VFVK9DWN42CWQKXJ1	iitem_01M6RV439ZPB7WNZ0ERAEPDDYP	pvitem_01M6RV43AVV85VFQ925258FVAV	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438VZSHK9WWJRH71R4EW	iitem_01M6RV439Z7D8XX7RY0H61P7WF	pvitem_01M6RV43AVEPN6XG733PSV9T11	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438VCX78CJCYAXK9QNMW	iitem_01M6RV439Z4YGKFSMP7SX8ZTNE	pvitem_01M6RV43AWZ3M27WJAXDNQRW5G	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438WPAQCDPY1ND3PX146	iitem_01M6RV439Z6EQFMAC1RSRB0ME7	pvitem_01M6RV43AW1K9CTKR99GSGGT5S	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438WYJ8BRACD7ME89E3K	iitem_01M6RV439ZMBXK2EPJXA344XK6	pvitem_01M6RV43AWBKX1SXAZR0JP3VFB	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438WXQ27KDR4P5VX2YQA	iitem_01M6RV439ZQAJ5D2S4DQ73KF93	pvitem_01M6RV43AWA9W61AV32RFRKAYC	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438WT0872HSQH1DTX8HQ	iitem_01M6RV439Z5R5SWHXEYS5D2124	pvitem_01M6RV43AW4Y13YVB4C1EVQ6RP	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438WE21JDZT9851MDQMC	iitem_01M6RV439ZCMKFZJKKEF1SCPY4	pvitem_01M6RV43AW0D0HKA1YEFRVS4T3	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438XZGSWSRWXA7SPFGG4	iitem_01M6RV439ZXB9KBYPPFK9JPZJM	pvitem_01M6RV43AW25QYTVC7SRGWDWF8	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438XW54Z055JVRTVFVCS	iitem_01M6RV43A0CE1XXG7J1KP5S7ZV	pvitem_01M6RV43AWA9FR3AARSKCGCNVW	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438XZJD85SZANXMEPSVN	iitem_01M6RV43A0TGDSD2M9QB5C82ZR	pvitem_01M6RV43AW85DD481W2YYDKKK5	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438XX7RR7Y93RG8WEBB3	iitem_01M6RV43A059BZ9RFGVBX7FK7G	pvitem_01M6RV43AWPDYPF29GPT99GG3D	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438XYE826Q1BTQA318RF	iitem_01M6RV43A0YRMED8HC4RE4GHPR	pvitem_01M6RV43AXQE36JE60NPVHTZA2	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438XJMSCVT1QKRT9G30B	iitem_01M6RV43A00DSBMSYN3J485BG7	pvitem_01M6RV43AXYKTR7RME23S4T668	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438X7TVFCK97VN8EN9YB	iitem_01M6RV43A0HQ97JSMCFFCBBZJ0	pvitem_01M6RV43AXKNGAB7Z4QVXRAFPB	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438YXBQZBEVYYYYAWJRK	iitem_01M6RV43A0Q16DHWHNV44Y16JJ	pvitem_01M6RV43AX6TC8754FY8KRS01N	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438Y2JEAYKQRK744DG9Z	iitem_01M6RV43A0FXDQKHYZM5P1FZDX	pvitem_01M6RV43AX5C1VF7APKNSG9E99	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438YGVS38R3HZ17X7Y7Y	iitem_01M6RV43A1B5HDFHRSPD8HKP85	pvitem_01M6RV43AXE5DHWXSB124XESHJ	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438YD4WDJVCMWY7K6E0F	iitem_01M6RV43A1EQTDJ4WVDMY1JP5G	pvitem_01M6RV43AXS0PYDWA0KXW0VEKE	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6RV438Y28J96X2CMGMW4TNX	iitem_01M6RV43A1C5EEXGYE9G7SH84A	pvitem_01M6RV43AX74EC7B8PKXF97NBC	1	2026-11-06 11:29:58.49096-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6VRP8806KMGC80QGV9EREHN	iitem_01M6VRP89F6NG3CWJYRSFQ6K45	pvitem_01M6VRP8A9S51QGPX6HCK8G298	1	2026-11-07 14:45:10.985835-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
+variant_01M6VRP880Y4KY9B7BPGWRQ2BX	iitem_01M6VRP89FA5756PX1E58M8S1G	pvitem_01M6VRP8AAHG3E6WWT83Y1Q1V8	1	2026-11-07 14:45:10.985835-05	2026-11-13 12:29:30.293-05	2026-11-13 12:29:30.291-05
 \.
 
 
@@ -6620,6 +6043,34 @@ variant_01M6RV438YD4WDJVCMWY7K6E0F	optval_01M6RPEVW33Q58ZGSK94N0GV9K
 variant_01M6RV438Y28J96X2CMGMW4TNX	optval_01M6RPEVW3T5RXC7JHF3SA8GHQ
 variant_01M6VRP8806KMGC80QGV9EREHN	optval_01M6VRP8379EAY8W649GRSRZX4
 variant_01M6VRP880Y4KY9B7BPGWRQ2BX	optval_01M6VRP837KP2TCHKSSS5FNDCQ
+variant_01M7AZA588TDK6WDVFSBH0E0AT	optval_01M7AZA529W57GDYFCNAZGNYG1
+variant_01M7AZA588Q9AX190K4F6H7B1W	optval_01M7AZA52965H3RVSG409N4GJV
+variant_01M7AZA589J2CXS8AAEF7JZVBK	optval_01M7AZA529WA6QG7QH7J16V7H2
+variant_01M7AZA58904DYPEAM7QQFR7QV	optval_01M7AZA5291C4A3H2HBNQYMBMF
+variant_01M7AZA589899YV5Y066V1NBG8	optval_01M7AZA52AK06JNP5J62CQ6HA9
+variant_01M7AZA589QB2E6Z5EAYMSKT3T	optval_01M7AZA52AMX0W0VTPP00AMJYE
+variant_01M7AZA589W9TP2D53ZB48TYCV	optval_01M7AZA52AYXXR908QWWH4ENEC
+variant_01M7AZA589C2RWN6D9Y3F5G24T	optval_01M7AZA52A3ZDAFM5NAREDM54Q
+variant_01M7AZA589RP3WPNCPQJ1FDZ1Y	optval_01M7AZA52AZNVW2VN25FWE5FW9
+variant_01M7AZA58A89CN3BTXH4F0K544	optval_01M7AZA52A7CEFNPTC2F2NWZ12
+variant_01M7AZA58AJ8R4GEPJM8MPCPEH	optval_01M7AZA52AH6RZZYHM494AJE0E
+variant_01M7AZA58AAAHC9B9AVCAZ5XMW	optval_01M7AZA52AR99MZVN93WXY0H0W
+variant_01M7AZA58AD5KVPJR2DJA0EJ07	optval_01M7AZA52A97CYCYSB0T9GZJ11
+variant_01M7AZA58AD5H6AWFVXQGHQY3J	optval_01M7AZA52A4CW56P5T438NDZJX
+variant_01M7AZA58AYTPSJZ1J795AASD8	optval_01M7AZA52BKKPFFRK8RK4MKS2H
+variant_01M7AZA58AH1HQ3QKMD6RNGZMZ	optval_01M7AZA52BHZ2N61E9MCVRD3F8
+variant_01M7AZA58BRA40EVEPVCFETBHN	optval_01M7AZA52B0NF80Z6N3E69WGQ3
+variant_01M7AZA58B41H3D15TMPHVYXJE	optval_01M7AZA52BQNN2Q1N47HJREPDT
+variant_01M7AZA58BK5T5MM7RMS2WDMTP	optval_01M7AZA52B8NQYRES5VPC72ZGY
+variant_01M7AZA58BMVAMDSENKTWHZT9E	optval_01M7AZA52B8A6VV3W86XEXF91W
+variant_01M7AZA58BA3EDPECF1QM2PR97	optval_01M7AZA52B2BPY7N6SX9VK73VQ
+variant_01M7AZA58BVZ85E6S3MAKKCN3R	optval_01M7AZA52B9BVFWGV6VNFZ14Q7
+variant_01M7AZA58BDQ3D3Q95V974B361	optval_01M7AZA52B8MDJ5JEMGZWMGY22
+variant_01M7AZA58BXH7TWRW4Y8DXS4Z5	optval_01M7AZA52BCQX01AVFEFSRZQ4A
+variant_01M7AZA58C330C7903HJ2QK4K6	optval_01M7AZA52BVEHNTZ6XSAS8HADJ
+variant_01M7AZA58C4X8VZD8XN3ZQQ1P1	optval_01M7AZA52C7ETJN6073KQECNS9
+variant_01M7AZA58CGEBG2F9JNGJAFHKQ	optval_01M7AZA52C1CZVM4MG8WG29RAW
+variant_01M7AZA58CNGSF9JWESM979XS4	optval_01M7AZA52CHGXTQWDT4FXH2SRH
 \.
 
 
@@ -6688,40 +6139,68 @@ variant_01M6RPEW4VYA9WKTPKGF5E1B70	pset_01M6RPEW7MQEKSSN7EZFGZK0S6	pvps_01M6RPEW
 variant_01M6RPEW4VESD7JMA603EJY2ZJ	pset_01M6RPEW7MQV5NN9DM5N17JEEW	pvps_01M6RPEW90XC1QDXXK3H4GJQG4	2026-11-06 10:08:28.829607-05	2026-11-06 11:29:21.976-05	2026-11-06 11:29:21.975-05
 variant_01M6RPEW4V6SBSHSR8ZJ8AT4SJ	pset_01M6RPEW7NHK36GGEG1KTWYGEB	pvps_01M6RPEW901MY9VJR1WK3VMGS3	2026-11-06 10:08:28.829607-05	2026-11-06 11:29:21.977-05	2026-11-06 11:29:21.975-05
 variant_01M6RPEW4VQ7HAZ1WN5JF3ZEBC	pset_01M6RPEW7N4Y95A3V51A42D0M7	pvps_01M6RPEW905ZGP7SZFK6D1WDBH	2026-11-06 10:08:28.829607-05	2026-11-06 11:29:21.977-05	2026-11-06 11:29:21.975-05
-variant_01M6RV438SA66M12ECRFBARBHA	pset_01M6RV43BD3JNDQWSS6GA78VN6	pvps_01M6RV43DZEF2M85XD8PYWT3AC	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438SWKFM9SKAC7GZGNXB	pset_01M6RV43BECAVH4ZB7NVP7HP88	pvps_01M6RV43DZ6FHBCG8RDCMFZK24	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438SQB06J75G9HZCXJ4P	pset_01M6RV43BEQKKSWAGGAHGEED2H	pvps_01M6RV43DZW1J35TNAGCXJE66C	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438T1HCR4DFG9GGM64N9	pset_01M6RV43BEBP0HQ4P546GEYM8Y	pvps_01M6RV43E0P7RSNVNDTD0FVDA9	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438T3T62AHS19DZS6F01	pset_01M6RV43BFPH4J75BQ9JGCJ0P5	pvps_01M6RV43E0AG2WF8HAAWR3DN9B	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438TCF06HPPW4FGHV0D3	pset_01M6RV43BF1F63YETZCN4E5RN8	pvps_01M6RV43E030ZHAN5BSQFQ6WQK	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438T853C3FF9N4XHJ8HS	pset_01M6RV43BGR8TNZJ2DBZFKJF2J	pvps_01M6RV43E0WA40DDX540MC15G6	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438TCX28QC97PH70ZPXE	pset_01M6RV43BG9R5E0HRR60FE3WC9	pvps_01M6RV43E0J4AGJ08X4VWAQ0AN	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438V2CD3BRK8BH3D816M	pset_01M6RV43BHHR7JQZ2RD267EH81	pvps_01M6RV43E0CG3H1GCRR17VHGDN	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438V0GPXE6GFZAZSS25P	pset_01M6RV43BH81KHHXAE3K0KSM86	pvps_01M6RV43E0XSXMJK7TB42CSSXF	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438VRYW3STBR7FJ03VGV	pset_01M6RV43BJZFTP7VEG1Q33SBEF	pvps_01M6RV43E0RQWYDRADQPWNEQ3V	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438VF8QQFTSV19FYGW42	pset_01M6RV43BJDJMAVZBR5V6DRG2M	pvps_01M6RV43E0BVJF0XWTHAZ8XDY3	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438VFVK9DWN42CWQKXJ1	pset_01M6RV43BJGR7XZ5Z81CV7JN3S	pvps_01M6RV43E1HQKCWKDQ9CFF4KEN	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438VZSHK9WWJRH71R4EW	pset_01M6RV43BK71704A1NZBJKKVHB	pvps_01M6RV43E16MSYW302Y2MCTM1B	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438VCX78CJCYAXK9QNMW	pset_01M6RV43BK0XV8105MW01FAXCK	pvps_01M6RV43E1AFMTQZPPGP550VFX	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438WPAQCDPY1ND3PX146	pset_01M6RV43BKB21295GB1AZP8A0V	pvps_01M6RV43E1GY3S9JBATPHJZM0D	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438WYJ8BRACD7ME89E3K	pset_01M6RV43BMPFNFR218P6114BJA	pvps_01M6RV43E1S8CSKGA4EPFSAGG2	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438WXQ27KDR4P5VX2YQA	pset_01M6RV43BM0H4SC00N16E6DTV8	pvps_01M6RV43E1HJT2BW4ZD4CS4SBP	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438WT0872HSQH1DTX8HQ	pset_01M6RV43BMPS4T68C6WMZDT8YS	pvps_01M6RV43E1C9WZPSFB8H83B07E	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438WE21JDZT9851MDQMC	pset_01M6RV43BN1RN5SVYVBP75DJS8	pvps_01M6RV43E1FNGXE5PAFYN39FQW	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438XZGSWSRWXA7SPFGG4	pset_01M6RV43BN2AN3DKRRY2ATF4VJ	pvps_01M6RV43E1G5C1CTH07C4CYVMT	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438XW54Z055JVRTVFVCS	pset_01M6RV43BN47FFNFEE063V2CB0	pvps_01M6RV43E1XEDAJNZDGB3FAKMC	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438XZJD85SZANXMEPSVN	pset_01M6RV43BPT41G70CWM1AAWG9T	pvps_01M6RV43E1X7BH96WGAHAG5NX5	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438XX7RR7Y93RG8WEBB3	pset_01M6RV43BPK0XZDET9ZC9NPMBG	pvps_01M6RV43E20ADXK7119QBDRSC3	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438XYE826Q1BTQA318RF	pset_01M6RV43BPWDS4BJZXJKKAFMQE	pvps_01M6RV43E2AHRA207Z3DQNXZPR	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438XJMSCVT1QKRT9G30B	pset_01M6RV43BQW7YY8ZJ8JJV3S3XM	pvps_01M6RV43E23RJ3VAZ6KTNSRKZR	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438X7TVFCK97VN8EN9YB	pset_01M6RV43BQ6PTD9J01MWFASXBY	pvps_01M6RV43E2ZCDEF37KD1F12Z6R	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438YXBQZBEVYYYYAWJRK	pset_01M6RV43BQYXVXA41AWTTK02Y0	pvps_01M6RV43E27T2GQCT2393TVCJ8	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438Y2JEAYKQRK744DG9Z	pset_01M6RV43BRSRSGQ7896HNZGWSQ	pvps_01M6RV43E2E3C19ZRZHVK9EHSM	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438YGVS38R3HZ17X7Y7Y	pset_01M6RV43BRSBPC10D36HWWW4XX	pvps_01M6RV43E2WAH696V75DH1BFNF	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438YD4WDJVCMWY7K6E0F	pset_01M6RV43BR8KAG1J4V2G2AD3P4	pvps_01M6RV43E2HVCAARFH8F505F44	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6RV438Y28J96X2CMGMW4TNX	pset_01M6RV43BS13PGE8FW9XB4P5PA	pvps_01M6RV43E2M1KJGZDSTV17SAK9	2026-11-06 11:29:58.592355-05	2026-11-06 11:29:58.592355-05	\N
-variant_01M6VRP8806KMGC80QGV9EREHN	pset_01M6VRP8AZPBWS44X17S8HCDSS	pvps_01M6VRP8BVXB9YF4GGMJ7WJRRB	2026-11-07 14:45:11.034836-05	2026-11-07 14:45:11.034836-05	\N
-variant_01M6VRP880Y4KY9B7BPGWRQ2BX	pset_01M6VRP8AZPAD4RVAQS4PWFD3P	pvps_01M6VRP8BV96ZZPJ2DF010F3V2	2026-11-07 14:45:11.034836-05	2026-11-07 14:45:11.034836-05	\N
+variant_01M6RV438SA66M12ECRFBARBHA	pset_01M6RV43BD3JNDQWSS6GA78VN6	pvps_01M6RV43DZEF2M85XD8PYWT3AC	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438SWKFM9SKAC7GZGNXB	pset_01M6RV43BECAVH4ZB7NVP7HP88	pvps_01M6RV43DZ6FHBCG8RDCMFZK24	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438SQB06J75G9HZCXJ4P	pset_01M6RV43BEQKKSWAGGAHGEED2H	pvps_01M6RV43DZW1J35TNAGCXJE66C	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438T1HCR4DFG9GGM64N9	pset_01M6RV43BEBP0HQ4P546GEYM8Y	pvps_01M6RV43E0P7RSNVNDTD0FVDA9	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438T3T62AHS19DZS6F01	pset_01M6RV43BFPH4J75BQ9JGCJ0P5	pvps_01M6RV43E0AG2WF8HAAWR3DN9B	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438TCF06HPPW4FGHV0D3	pset_01M6RV43BF1F63YETZCN4E5RN8	pvps_01M6RV43E030ZHAN5BSQFQ6WQK	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438T853C3FF9N4XHJ8HS	pset_01M6RV43BGR8TNZJ2DBZFKJF2J	pvps_01M6RV43E0WA40DDX540MC15G6	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438TCX28QC97PH70ZPXE	pset_01M6RV43BG9R5E0HRR60FE3WC9	pvps_01M6RV43E0J4AGJ08X4VWAQ0AN	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438V2CD3BRK8BH3D816M	pset_01M6RV43BHHR7JQZ2RD267EH81	pvps_01M6RV43E0CG3H1GCRR17VHGDN	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438V0GPXE6GFZAZSS25P	pset_01M6RV43BH81KHHXAE3K0KSM86	pvps_01M6RV43E0XSXMJK7TB42CSSXF	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438VRYW3STBR7FJ03VGV	pset_01M6RV43BJZFTP7VEG1Q33SBEF	pvps_01M6RV43E0RQWYDRADQPWNEQ3V	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438VF8QQFTSV19FYGW42	pset_01M6RV43BJDJMAVZBR5V6DRG2M	pvps_01M6RV43E0BVJF0XWTHAZ8XDY3	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438VFVK9DWN42CWQKXJ1	pset_01M6RV43BJGR7XZ5Z81CV7JN3S	pvps_01M6RV43E1HQKCWKDQ9CFF4KEN	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438VZSHK9WWJRH71R4EW	pset_01M6RV43BK71704A1NZBJKKVHB	pvps_01M6RV43E16MSYW302Y2MCTM1B	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438VCX78CJCYAXK9QNMW	pset_01M6RV43BK0XV8105MW01FAXCK	pvps_01M6RV43E1AFMTQZPPGP550VFX	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438WPAQCDPY1ND3PX146	pset_01M6RV43BKB21295GB1AZP8A0V	pvps_01M6RV43E1GY3S9JBATPHJZM0D	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438WYJ8BRACD7ME89E3K	pset_01M6RV43BMPFNFR218P6114BJA	pvps_01M6RV43E1S8CSKGA4EPFSAGG2	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438WXQ27KDR4P5VX2YQA	pset_01M6RV43BM0H4SC00N16E6DTV8	pvps_01M6RV43E1HJT2BW4ZD4CS4SBP	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438WT0872HSQH1DTX8HQ	pset_01M6RV43BMPS4T68C6WMZDT8YS	pvps_01M6RV43E1C9WZPSFB8H83B07E	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438WE21JDZT9851MDQMC	pset_01M6RV43BN1RN5SVYVBP75DJS8	pvps_01M6RV43E1FNGXE5PAFYN39FQW	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438XZGSWSRWXA7SPFGG4	pset_01M6RV43BN2AN3DKRRY2ATF4VJ	pvps_01M6RV43E1G5C1CTH07C4CYVMT	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438XW54Z055JVRTVFVCS	pset_01M6RV43BN47FFNFEE063V2CB0	pvps_01M6RV43E1XEDAJNZDGB3FAKMC	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438XZJD85SZANXMEPSVN	pset_01M6RV43BPT41G70CWM1AAWG9T	pvps_01M6RV43E1X7BH96WGAHAG5NX5	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438XX7RR7Y93RG8WEBB3	pset_01M6RV43BPK0XZDET9ZC9NPMBG	pvps_01M6RV43E20ADXK7119QBDRSC3	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438XYE826Q1BTQA318RF	pset_01M6RV43BPWDS4BJZXJKKAFMQE	pvps_01M6RV43E2AHRA207Z3DQNXZPR	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438XJMSCVT1QKRT9G30B	pset_01M6RV43BQW7YY8ZJ8JJV3S3XM	pvps_01M6RV43E23RJ3VAZ6KTNSRKZR	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438X7TVFCK97VN8EN9YB	pset_01M6RV43BQ6PTD9J01MWFASXBY	pvps_01M6RV43E2ZCDEF37KD1F12Z6R	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438YXBQZBEVYYYYAWJRK	pset_01M6RV43BQYXVXA41AWTTK02Y0	pvps_01M6RV43E27T2GQCT2393TVCJ8	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438Y2JEAYKQRK744DG9Z	pset_01M6RV43BRSRSGQ7896HNZGWSQ	pvps_01M6RV43E2E3C19ZRZHVK9EHSM	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438YGVS38R3HZ17X7Y7Y	pset_01M6RV43BRSBPC10D36HWWW4XX	pvps_01M6RV43E2WAH696V75DH1BFNF	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438YD4WDJVCMWY7K6E0F	pset_01M6RV43BR8KAG1J4V2G2AD3P4	pvps_01M6RV43E2HVCAARFH8F505F44	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6RV438Y28J96X2CMGMW4TNX	pset_01M6RV43BS13PGE8FW9XB4P5PA	pvps_01M6RV43E2M1KJGZDSTV17SAK9	2026-11-06 11:29:58.592355-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6VRP8806KMGC80QGV9EREHN	pset_01M6VRP8AZPBWS44X17S8HCDSS	pvps_01M6VRP8BVXB9YF4GGMJ7WJRRB	2026-11-07 14:45:11.034836-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M6VRP880Y4KY9B7BPGWRQ2BX	pset_01M6VRP8AZPAD4RVAQS4PWFD3P	pvps_01M6VRP8BV96ZZPJ2DF010F3V2	2026-11-07 14:45:11.034836-05	2026-11-13 12:29:30.33-05	2026-11-13 12:29:30.328-05
+variant_01M7AZA588TDK6WDVFSBH0E0AT	pset_01M7AZA5A1PPG9X5QX8QFFWCWH	pvps_01M7AZA5CNZ1VA9V3TTR3WRH6V	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA588Q9AX190K4F6H7B1W	pset_01M7AZA5A2SSN5DDMSZQC243WE	pvps_01M7AZA5CPGPTS8XGC2G8624MJ	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA589J2CXS8AAEF7JZVBK	pset_01M7AZA5A2NM2NKJ7JE59AQVSX	pvps_01M7AZA5CPPNE9P5HQPPGA5EGA	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58904DYPEAM7QQFR7QV	pset_01M7AZA5A3KJTHP8E5PPM4NZKA	pvps_01M7AZA5CPZHXHPF6ZEM5VJG1G	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA589899YV5Y066V1NBG8	pset_01M7AZA5A3T225XZT12SNA8VD1	pvps_01M7AZA5CPE0PJQMZ6Z04FQG3D	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA589QB2E6Z5EAYMSKT3T	pset_01M7AZA5A3817M28368JN4MTMF	pvps_01M7AZA5CP1KNKC24PG1SYY2PV	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA589W9TP2D53ZB48TYCV	pset_01M7AZA5A4APYSAC4BQHQ8MR5B	pvps_01M7AZA5CPXWBERG26QR1XC8BE	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA589C2RWN6D9Y3F5G24T	pset_01M7AZA5A4P61RJNWYMVP2Q0VP	pvps_01M7AZA5CP92489REBF8ASBM4R	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA589RP3WPNCPQJ1FDZ1Y	pset_01M7AZA5A4AY0N14N2QEXHXA7V	pvps_01M7AZA5CPR05TSH9DSKQGF274	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58A89CN3BTXH4F0K544	pset_01M7AZA5A5CG5KTA4D2BMYMXQV	pvps_01M7AZA5CPDH2WPD3G0S8METBR	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58AJ8R4GEPJM8MPCPEH	pset_01M7AZA5A5MMDYZHP4G0VXZAF9	pvps_01M7AZA5CQ9606M1WFTP332P2H	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58AAAHC9B9AVCAZ5XMW	pset_01M7AZA5A6V8VBBSYKHK847MMW	pvps_01M7AZA5CQAQREKSP5Y4RKPAAY	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58AD5KVPJR2DJA0EJ07	pset_01M7AZA5A6F5TM5R4S2Y49EFFA	pvps_01M7AZA5CQS693KFYYXFGP8R01	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58AD5H6AWFVXQGHQY3J	pset_01M7AZA5A6Z2Z5239PCW3GXQMG	pvps_01M7AZA5CQK2JR3KB6XF6QW90Q	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58AYTPSJZ1J795AASD8	pset_01M7AZA5A7B9TX6YPTA9KZVNGD	pvps_01M7AZA5CQY645SXAGK6RR47T3	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58AH1HQ3QKMD6RNGZMZ	pset_01M7AZA5A79MVVKC8NM4B5G8KF	pvps_01M7AZA5CQTDJV67R8VCFC6GYC	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58BRA40EVEPVCFETBHN	pset_01M7AZA5A7AT5CC43XPC170PXG	pvps_01M7AZA5CQFKW18ZSQ98269JVH	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58B41H3D15TMPHVYXJE	pset_01M7AZA5A8QNBWPHMWG1J72370	pvps_01M7AZA5CQN3B5V2M1BZ3YN58V	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58BK5T5MM7RMS2WDMTP	pset_01M7AZA5A8GTY3CXW44MWXZN1G	pvps_01M7AZA5CQ0C6EAT1Q7S1R34X5	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58BMVAMDSENKTWHZT9E	pset_01M7AZA5A8X0DYPP3ZC229TYP6	pvps_01M7AZA5CQHPBNVBWS1M934T37	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58BA3EDPECF1QM2PR97	pset_01M7AZA5A9N96NR8TSN88C5F7F	pvps_01M7AZA5CQRNBHN7WM342VK9JY	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58BVZ85E6S3MAKKCN3R	pset_01M7AZA5A9THZP7N6XFASATKAZ	pvps_01M7AZA5CRJKAJAM8V2RKDR56T	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58BDQ3D3Q95V974B361	pset_01M7AZA5A9XB8NB2CD52SDT56M	pvps_01M7AZA5CR3K4CW0HT8DV91YCY	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58BXH7TWRW4Y8DXS4Z5	pset_01M7AZA5A995NDR402BY4580F4	pvps_01M7AZA5CRCP6KHRW35EPNDJS2	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58C330C7903HJ2QK4K6	pset_01M7AZA5AAEA8MT40A9WHD9GKW	pvps_01M7AZA5CR4MZFMVATGHYYV34V	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58C4X8VZD8XN3ZQQ1P1	pset_01M7AZA5AA713YZPCHDR91ZA7Q	pvps_01M7AZA5CR18NVXQ4KRR4V5WSJ	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58CGEBG2F9JNGJAFHKQ	pset_01M7AZA5AA7VZEP90K7SV6MZHD	pvps_01M7AZA5CRWWZMDRBNDEPNDMRC	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
+variant_01M7AZA58CNGSF9JWESM979XS4	pset_01M7AZA5AB2R1VK864HCE7JVM9	pvps_01M7AZA5CR31505RZ0FGQTW8GV	2026-11-13 12:29:31.285516-05	2026-11-13 12:29:31.285516-05	\N
 \.
 
 
@@ -7214,6 +6693,8 @@ srhsync_01M6RQDMASWE3NSECMK02W3BGZ	95e20f16-2b22-4a91-80e1-c31c118e0c4b	done	\N	
 srhsync_01M6RQDM0DQQHDGM31A7JXQVS8	95e20f16-2b22-4a91-80e1-c31c118e0c4b	done	\N	prod_01M6RPEW08XDN4YM5CJZA5BJ18	16	2026-11-06 10:25:16.172-05	2026-11-06 10:25:16.523-05	\N	srhver_01M6Q02W0K9Z5XY9P8XYBE6WFS	2026-11-06 10:25:16.174-05	2026-11-06 10:25:16.525-05	\N	f
 srhsync_01M6RV4K3SP77EYJ31WZGJNBEE	15aad455-6cb6-453c-804a-da80e0fe3e5c	done	\N	\N	0	2026-11-06 11:30:14.648-05	2026-11-06 11:30:14.658-05	\N	srhver_01M6Q02W0K9Z5XY9P8XYBE6WFS	2026-11-06 11:30:14.649-05	2026-11-06 11:30:14.66-05	\N	f
 srhsync_01M6RV4JTTMDC0AT4DQVTT6WEM	15aad455-6cb6-453c-804a-da80e0fe3e5c	done	\N	prod_01M6RV433WTRZ4DGQ5HHJCEV93	16	2026-11-06 11:30:14.359-05	2026-11-06 11:30:14.667-05	\N	srhver_01M6Q02W0K9Z5XY9P8XYBE6WFS	2026-11-06 11:30:14.363-05	2026-11-06 11:30:14.669-05	\N	f
+srhsync_01M7AZAQPB9BT45KJGSD4M5PM5	6c1356e3-e345-4bb4-a9fa-214471b2390a	done	\N	\N	0	2026-11-13 12:29:50.026-05	2026-11-13 12:29:50.038-05	\N	srhver_01M6Q02W0K9Z5XY9P8XYBE6WFS	2026-11-13 12:29:50.027-05	2026-11-13 12:29:50.039-05	\N	f
+srhsync_01M7AZAQC1YCH4EF1Y5T40Q10M	6c1356e3-e345-4bb4-a9fa-214471b2390a	done	\N	prod_01M7AZA521NY3ZRQF4AF4QV8RA	14	2026-11-13 12:29:49.694-05	2026-11-13 12:29:50.045-05	\N	srhver_01M6Q02W0K9Z5XY9P8XYBE6WFS	2026-11-13 12:29:49.698-05	2026-11-13 12:29:50.048-05	\N	f
 \.
 
 
@@ -7222,7 +6703,7 @@ srhsync_01M6RV4JTTMDC0AT4DQVTT6WEM	15aad455-6cb6-453c-804a-da80e0fe3e5c	done	\N	
 --
 
 COPY public.search_index_version (id, version, provider, physical_name, definition_hash, status, search_index_id, created_at, updated_at, deleted_at) FROM stdin;
-srhver_01M6Q02W0K9Z5XY9P8XYBE6WFS	1	search-postgres	product_v1	324ab6ef68362abc058dc1b556ccf9f4	ready	srhidx_01M6Q02W0DH4997EFP2Z84CB29	2026-11-05 18:18:12.244-05	2026-11-06 11:30:14.665-05	\N
+srhver_01M6Q02W0K9Z5XY9P8XYBE6WFS	1	search-postgres	product_v1	324ab6ef68362abc058dc1b556ccf9f4	ready	srhidx_01M6Q02W0DH4997EFP2Z84CB29	2026-11-05 18:18:12.244-05	2026-11-13 12:29:50.043-05	\N
 \.
 
 
@@ -7231,23 +6712,20 @@ srhver_01M6Q02W0K9Z5XY9P8XYBE6WFS	1	search-postgres	product_v1	324ab6ef68362abc0
 --
 
 COPY public.search_pg_product_v1 (id, document, indexed, search_vector, search_text, created_at, updated_at) FROM stdin;
-prod_01M6RV433V6XR5MWQQ2R2HZK77	{"id": "prod_01M6RV433V6XR5MWQQ2R2HZK77", "title": "Pan Artesanal Fresco de Masa Madre", "handle": "pan-artesanal-masa-madre", "labels": [], "status": "published", "category": ["Despensa y Abarrotes"], "thumbnail": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Horneado todas las mañanas con fermentación lenta. Corteza dorada y miga suave para desayunos o restaurantes.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 21, "max_price_usd": 23, "min_price_eur": 2, "min_price_usd": 2, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 2, "original_price_usd": 2}	{"id": "prod_01M6RV433V6XR5MWQQ2R2HZK77", "title": "Pan Artesanal Fresco de Masa Madre", "handle": "pan-artesanal-masa-madre", "status": "published", "category": ["Despensa y Abarrotes"], "thumbnail": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Horneado todas las mañanas con fermentación lenta. Corteza dorada y miga suave para desayunos o restaurantes.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 21, "max_price_usd": 23, "min_price_eur": 2, "min_price_usd": 2, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 2, "original_price_usd": 2}	'al':24B,28B 'artesan':2A 'bulto':32B 'caja':31B 'con':11 'corteza':14 'de':4A 'desayuno':20 'detal':25B 'dorada':15 'fermentacion':12 'fresco':3A 'horneado':7 'las':9 'lenta':13 'madr':6A 'manana':10 'masa':5A 'mayor':30B 'miga':17 'modalidad':23B,27B 'o':21 'pan':1A 'para':19 'por':29B 'restaurant':22 'suav':18 'toda':8 'unidad':26B 'y':16	Pan Artesanal Fresco de Masa Madre Horneado todas las mañanas con fermentación lenta. Corteza dorada y miga suave para desayunos o restaurantes. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:50.576062-05
-prod_01M6RV433VBXFP15V95A7WYZJ7	{"id": "prod_01M6RV433VBXFP15V95A7WYZJ7", "title": "Fresas Sabaneras Extra Dulces", "handle": "fresas-frescas-500g", "labels": [], "status": "published", "category": ["Frutas y Verduras"], "thumbnail": "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Fresas recién recolectadas de la Sabana de Bogotá, clasificadas y listas para jugo, postres o negocio.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 13, "max_price_usd": 14, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M6RV433VBXFP15V95A7WYZJ7", "title": "Fresas Sabaneras Extra Dulces", "handle": "fresas-frescas-500g", "status": "published", "category": ["Frutas y Verduras"], "thumbnail": "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Fresas recién recolectadas de la Sabana de Bogotá, clasificadas y listas para jugo, postres o negocio.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 13, "max_price_usd": 14, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'al':22B,26B 'bogota':12 'bulto':30B 'caja':29B 'clasificada':13 'de':8,11 'detal':23B 'dulc':4A 'extra':3A 'fresa':1A,5 'jugo':17 'la':9 'lista':15 'mayor':28B 'modalidad':21B,25B 'negocio':20 'o':19 'para':16 'por':27B 'postr':18 'recien':6 'recolectada':7 'sabana':10 'sabanera':2A 'unidad':24B 'y':14	Fresas Sabaneras Extra Dulces Fresas recién recolectadas de la Sabana de Bogotá, clasificadas y listas para jugo, postres o negocio. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:50.901104-05
-prod_01M6RV433V8QZPH3PNVY46ZNEP	{"id": "prod_01M6RV433V8QZPH3PNVY46ZNEP", "title": "Café de Colombia Origen Huila Tostado", "handle": "cafe-grano-artesanal", "labels": [], "status": "published", "category": ["Despensa y Abarrotes"], "thumbnail": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Café 100% Colombiano Excelso de altura con notas a panela y cacao. Disponible por libra o paca mayorista x 12 libras.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 51, "max_price_usd": 55, "min_price_eur": 5, "min_price_usd": 6, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 5, "original_price_usd": 6}	{"id": "prod_01M6RV433V8QZPH3PNVY46ZNEP", "title": "Café de Colombia Origen Huila Tostado", "handle": "cafe-grano-artesanal", "status": "published", "category": ["Despensa y Abarrotes"], "thumbnail": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Café 100% Colombiano Excelso de altura con notas a panela y cacao. Disponible por libra o paca mayorista x 12 libras.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 51, "max_price_usd": 55, "min_price_eur": 5, "min_price_usd": 6, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 5, "original_price_usd": 6}	'100':8 '12':26 'al':29B,33B 'altura':12 'bulto':37B 'cacao':18 'cafe':1A,7 'caja':36B 'colombia':3A 'colombiano':9 'con':13 'de':2A,11 'detal':30B 'dispon':19 'excelso':10 'huila':5A 'libra':21,27 'mayor':35B 'mayorista':24 'modalidad':28B,32B 'nota':14 'o':22 'origen':4A 'paca':23 'panela':16 'por':20,34B 'tostado':6A 'unidad':31B 'x':25 'y':17	Café de Colombia Origen Huila Tostado Café 100% Colombiano Excelso de altura con notas a panela y cacao. Disponible por libra o paca mayorista x 12 libras. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:50.730569-05
-prod_01M6RV433VH280P701DXANFBRN	{"id": "prod_01M6RV433VH280P701DXANFBRN", "title": "Aceite Gourmet Vegetal / Oliva Extra", "handle": "aceite-oliva-virgen-extra", "labels": [], "status": "published", "category": ["Despensa y Abarrotes"], "thumbnail": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Aceite puro libre de colesterol para cocina familiar o fritura limpia en restaurantes. Botella o caja cerrada.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 64, "max_price_usd": 69, "min_price_eur": 7, "min_price_usd": 7, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 7, "original_price_usd": 7}	{"id": "prod_01M6RV433VH280P701DXANFBRN", "title": "Aceite Gourmet Vegetal / Oliva Extra", "handle": "aceite-oliva-virgen-extra", "status": "published", "category": ["Despensa y Abarrotes"], "thumbnail": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Aceite puro libre de colesterol para cocina familiar o fritura limpia en restaurantes. Botella o caja cerrada.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 64, "max_price_usd": 69, "min_price_eur": 7, "min_price_usd": 7, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 7, "original_price_usd": 7}	'aceit':1A,6 'al':24B,28B 'botella':19 'bulto':32B 'caja':21,31B 'cerrada':22 'cocina':12 'colesterol':10 'de':9 'detal':25B 'en':17 'extra':5A 'familiar':13 'fritura':15 'gourmet':2A 'libr':8 'limpia':16 'mayor':30B 'modalidad':23B,27B 'o':14,20 'oliva':4A 'para':11 'por':29B 'puro':7 'restaurant':18 'unidad':26B 'veget':3A	Aceite Gourmet Vegetal / Oliva Extra Aceite puro libre de colesterol para cocina familiar o fritura limpia en restaurantes. Botella o caja cerrada. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:51.349844-05
-prod_01M6RV433VXTN0Q3M4KFEPFEVY	{"id": "prod_01M6RV433VXTN0Q3M4KFEPFEVY", "title": "Aguacate Hass de Antioquia Seleccionado", "handle": "aguacate-hass-organico", "labels": [], "status": "published", "category": ["Frutas y Verduras"], "thumbnail": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Aguacates Hass cremosos de exportación cultivados en el Oriente Antioqueño. Lleva por malla familiar o canastilla mayorista de 10kg.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 15, "max_price_usd": 17, "min_price_eur": 2, "min_price_usd": 2, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 2, "original_price_usd": 2}	{"id": "prod_01M6RV433VXTN0Q3M4KFEPFEVY", "title": "Aguacate Hass de Antioquia Seleccionado", "handle": "aguacate-hass-organico", "status": "published", "category": ["Frutas y Verduras"], "thumbnail": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Aguacates Hass cremosos de exportación cultivados en el Oriente Antioqueño. Lleva por malla familiar o canastilla mayorista de 10kg.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 15, "max_price_usd": 17, "min_price_eur": 2, "min_price_usd": 2, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 2, "original_price_usd": 2}	'10kg':24 'aguac':1A,6 'al':26B,30B 'antioqueno':15 'antioquia':4A 'bulto':34B 'caja':33B 'canastilla':21 'cremoso':8 'cultivado':11 'de':3A,9,23 'detal':27B 'el':13 'en':12 'exportacion':10 'familiar':19 'hass':2A,7 'lleva':16 'malla':18 'mayor':32B 'mayorista':22 'modalidad':25B,29B 'o':20 'orient':14 'por':17,31B 'seleccionado':5A 'unidad':28B	Aguacate Hass de Antioquia Seleccionado Aguacates Hass cremosos de exportación cultivados en el Oriente Antioqueño. Lleva por malla familiar o canastilla mayorista de 10kg. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:51.931504-05
-prod_01M6RV433W5X97CNW0881T4HVS	{"id": "prod_01M6RV433W5X97CNW0881T4HVS", "title": "Huevos Rojos Camperos AA", "handle": "huevos-camperos-docena", "labels": [], "status": "published", "category": ["Lácteos y Huevos"], "thumbnail": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Huevos frescos AA de granja avícola colombiana. Llévalos por cubeta de 30 unidades o caja mayorista de 12 cubetas (360 uds).", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 38, "max_price_usd": 41, "min_price_eur": 4, "min_price_usd": 4, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 4, "original_price_usd": 4}	{"id": "prod_01M6RV433W5X97CNW0881T4HVS", "title": "Huevos Rojos Camperos AA", "handle": "huevos-camperos-docena", "status": "published", "category": ["Lácteos y Huevos"], "thumbnail": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Huevos frescos AA de granja avícola colombiana. Llévalos por cubeta de 30 unidades o caja mayorista de 12 cubetas (360 uds).", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 38, "max_price_usd": 41, "min_price_eur": 4, "min_price_usd": 4, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 4, "original_price_usd": 4}	'12':22 '30':16 '360':24 'aa':4A,7 'al':27B,31B 'avicola':10 'bulto':35B 'caja':19,34B 'campero':3A 'colombiana':11 'cubeta':14,23 'de':8,15,21 'detal':28B 'fresco':6 'granja':9 'huevo':1A,5 'llevalo':12 'mayor':33B 'mayorista':20 'modalidad':26B,30B 'o':18 'por':13,32B 'rojo':2A 'ud':25 'unidad':17,29B	Huevos Rojos Camperos AA Huevos frescos AA de granja avícola colombiana. Llévalos por cubeta de 30 unidades o caja mayorista de 12 cubetas (360 uds). Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:52.153373-05
-prod_01M6RV433W9FM6BGE5SP0V9VXE	{"id": "prod_01M6RV433W9FM6BGE5SP0V9VXE", "title": "Agua Manantial de Páramo Sin Gas", "handle": "agua-mineral-manantial", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Agua cristalina de manantial colombiano en botella individual o paca termoencogida para tiendas y eventos.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 6, "max_price_usd": 7, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M6RV433W9FM6BGE5SP0V9VXE", "title": "Agua Manantial de Páramo Sin Gas", "handle": "agua-mineral-manantial", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Agua cristalina de manantial colombiano en botella individual o paca termoencogida para tiendas y eventos.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 6, "max_price_usd": 7, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'agua':1A,7 'al':23B,27B 'botella':13 'bulto':31B 'caja':30B 'colombiano':11 'cristalina':8 'de':3A,9 'detal':24B 'en':12 'evento':21 'gas':6A 'individu':14 'mananti':2A,10 'mayor':29B 'modalidad':22B,26B 'o':15 'paca':16 'para':18 'paramo':4A 'por':28B 'sin':5A 'termoencogida':17 'tienda':19 'unidad':25B 'y':20	Agua Manantial de Páramo Sin Gas Agua cristalina de manantial colombiano en botella individual o paca termoencogida para tiendas y eventos. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:52.314399-05
-prod_01M6RV433WFGYYK1YXC74TA0VY	{"id": "prod_01M6RV433WFGYYK1YXC74TA0VY", "title": "Detergente Líquido Concentrado Multiusos", "handle": "detergente-liquido-ecologico", "labels": [], "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.287Z", "description": "Máximo poder desmanchador y fragancia fresca duradera. Disponible en galón para hogar o pimpina institucional.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 49, "max_price_usd": 53, "min_price_eur": 5, "min_price_usd": 6, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 5, "original_price_usd": 6}	{"id": "prod_01M6RV433WFGYYK1YXC74TA0VY", "title": "Detergente Líquido Concentrado Multiusos", "handle": "detergente-liquido-ecologico", "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598287, "description": "Máximo poder desmanchador y fragancia fresca duradera. Disponible en galón para hogar o pimpina institucional.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 49, "max_price_usd": 53, "min_price_eur": 5, "min_price_usd": 6, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 5, "original_price_usd": 6}	'al':21B,25B 'bulto':29B 'caja':28B 'concentrado':3A 'desmanchador':7 'detal':22B 'detergent':1A 'dispon':12 'duradera':11 'en':13 'fragancia':9 'fresca':10 'galon':14 'hogar':16 'institucion':19 'liquido':2A 'maximo':5 'mayor':27B 'modalidad':20B,24B 'multiuso':4A 'o':17 'para':15 'pimpina':18 'poder':6 'por':26B 'unidad':23B 'y':8	Detergente Líquido Concentrado Multiusos Máximo poder desmanchador y fragancia fresca duradera. Disponible en galón para hogar o pimpina institucional. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:52.710207-05
-prod_01M6RV433WHK3TK8WS4BB3NCD0	{"id": "prod_01M6RV433WHK3TK8WS4BB3NCD0", "title": "Pechuga de Pollo Campesino Sin Hueso", "handle": "pechuga-pollo-fresca", "labels": [], "status": "published", "category": ["Carnes y Charcutería"], "thumbnail": "https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Filetes de pechuga fresca limpia sin marinado artificial. Ideal para el mercado semanal o asaderos y restaurantes.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 37, "max_price_usd": 40, "min_price_eur": 4, "min_price_usd": 4, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 4, "original_price_usd": 4}	{"id": "prod_01M6RV433WHK3TK8WS4BB3NCD0", "title": "Pechuga de Pollo Campesino Sin Hueso", "handle": "pechuga-pollo-fresca", "status": "published", "category": ["Carnes y Charcutería"], "thumbnail": "https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Filetes de pechuga fresca limpia sin marinado artificial. Ideal para el mercado semanal o asaderos y restaurantes.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 37, "max_price_usd": 40, "min_price_eur": 4, "min_price_usd": 4, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 4, "original_price_usd": 4}	'al':25B,29B 'artifici':14 'asadero':21 'bulto':33B 'caja':32B 'campesino':4A 'de':2A,8 'detal':26B 'el':17 'filet':7 'fresca':10 'hueso':6A 'ideal':15 'limpia':11 'marinado':13 'mayor':31B 'mercado':18 'modalidad':24B,28B 'o':20 'para':16 'pechuga':1A,9 'pollo':3A 'por':30B 'restaurant':23 'seman':19 'sin':5A,12 'unidad':27B 'y':22	Pechuga de Pollo Campesino Sin Hueso Filetes de pechuga fresca limpia sin marinado artificial. Ideal para el mercado semanal o asaderos y restaurantes. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:52.917443-05
-prod_01M6RV433WKGNMKY7EYCP575XW	{"id": "prod_01M6RV433WKGNMKY7EYCP575XW", "title": "Papel Higiénico Triple Hoja Rinde Más", "handle": "papel-higienico-triple-hoja", "labels": [], "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1584556812952-905ffd0c611a?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.287Z", "description": "Suavidad acolchada con extracto de algodón y metraje extra. Paquete familiar o paca distribuidora.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 42, "max_price_usd": 46, "min_price_eur": 5, "min_price_usd": 5, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 5, "original_price_usd": 5}	{"id": "prod_01M6RV433WKGNMKY7EYCP575XW", "title": "Papel Higiénico Triple Hoja Rinde Más", "handle": "papel-higienico-triple-hoja", "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1584556812952-905ffd0c611a?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598287, "description": "Suavidad acolchada con extracto de algodón y metraje extra. Paquete familiar o paca distribuidora.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 42, "max_price_usd": 46, "min_price_eur": 5, "min_price_usd": 5, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 5, "original_price_usd": 5}	'acolchada':8 'al':22B,26B 'algodon':12 'bulto':30B 'caja':29B 'con':9 'de':11 'detal':23B 'distribuidora':20 'extra':15 'extracto':10 'familiar':17 'higienico':2A 'hoja':4A 'mas':6A 'mayor':28B 'metraj':14 'modalidad':21B,25B 'o':18 'paca':19 'papel':1A 'paquet':16 'por':27B 'rind':5A 'suavidad':7 'tripl':3A 'unidad':24B 'y':13	Papel Higiénico Triple Hoja Rinde Más Suavidad acolchada con extracto de algodón y metraje extra. Paquete familiar o paca distribuidora. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:53.100955-05
-prod_01M6RV433WSANFXX1A1XPDAKKT	{"id": "prod_01M6RV433WSANFXX1A1XPDAKKT", "title": "Churrasco / Lomo de Res Madurado", "handle": "lomo-res-madurado", "labels": [], "status": "published", "category": ["Carnes y Charcutería"], "thumbnail": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Corte premium de ganado seleccionado en los Llanos y Córdoba, empacado al vacío con cadena de frío garantizada.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 60, "max_price_usd": 65, "min_price_eur": 6, "min_price_usd": 7, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 6, "original_price_usd": 7}	{"id": "prod_01M6RV433WSANFXX1A1XPDAKKT", "title": "Churrasco / Lomo de Res Madurado", "handle": "lomo-res-madurado", "status": "published", "category": ["Carnes y Charcutería"], "thumbnail": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Corte premium de ganado seleccionado en los Llanos y Córdoba, empacado al vacío con cadena de frío garantizada.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 60, "max_price_usd": 65, "min_price_eur": 6, "min_price_usd": 7, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 6, "original_price_usd": 7}	'al':17,25B,29B 'bulto':33B 'cadena':20 'caja':32B 'churrasco':1A 'con':19 'cordoba':15 'cort':6 'de':3A,8,21 'detal':26B 'empacado':16 'en':11 'frio':22 'ganado':9 'garantizada':23 'llano':13 'lomo':2A 'los':12 'madurado':5A 'mayor':31B 'modalidad':24B,28B 'por':30B 'premium':7 'res':4A 'seleccionado':10 'unidad':27B 'vacio':18 'y':14	Churrasco / Lomo de Res Madurado Corte premium de ganado seleccionado en los Llanos y Córdoba, empacado al vacío con cadena de frío garantizada. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:53.270677-05
-prod_01M6RV433V2SMZXSHC9ET34Q7P	{"id": "prod_01M6RV433V2SMZXSHC9ET34Q7P", "title": "Banano Urabá Tipo Exportación", "handle": "banano-organico-exportacion", "labels": [], "status": "published", "category": ["Frutas y Verduras"], "thumbnail": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Bananos dulces ricos en potasio de Urabá. Disponibles por mano familiar o caja cerrada para tiendas y restaurantes.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 3, "max_price_usd": 3, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M6RV433V2SMZXSHC9ET34Q7P", "title": "Banano Urabá Tipo Exportación", "handle": "banano-organico-exportacion", "status": "published", "category": ["Frutas y Verduras"], "thumbnail": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Bananos dulces ricos en potasio de Urabá. Disponibles por mano familiar o caja cerrada para tiendas y restaurantes.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 3, "max_price_usd": 3, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'al':24B,28B 'banano':1A,5 'bulto':32B 'caja':17,31B 'cerrada':18 'de':10 'detal':25B 'dispon':12 'dulc':6 'en':8 'exportacion':4A 'familiar':15 'mano':14 'mayor':30B 'modalidad':23B,27B 'o':16 'para':19 'por':13,29B 'potasio':9 'restaurant':22 'rico':7 'tienda':20 'tipo':3A 'unidad':26B 'uraba':2A,11 'y':21	Banano Urabá Tipo Exportación Bananos dulces ricos en potasio de Urabá. Disponibles por mano familiar o caja cerrada para tiendas y restaurantes. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:50.241842-05
-prod_01M6RV433WTRZ4DGQ5HHJCEV93	{"id": "prod_01M6RV433WTRZ4DGQ5HHJCEV93", "title": "Jugo de Naranja Tangelo 100% Natural", "handle": "jugo-naranja-exprimido", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Exprimido de naranjas frescas del Eje Cafetero sin azúcar añadida ni conservantes.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 28, "max_price_usd": 32, "min_price_eur": 3, "min_price_usd": 3, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 3, "original_price_usd": 3}	{"id": "prod_01M6RV433WTRZ4DGQ5HHJCEV93", "title": "Jugo de Naranja Tangelo 100% Natural", "handle": "jugo-naranja-exprimido", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Exprimido de naranjas frescas del Eje Cafetero sin azúcar añadida ni conservantes.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 28, "max_price_usd": 32, "min_price_eur": 3, "min_price_usd": 3, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 3, "original_price_usd": 3}	'100':5A 'al':20B,24B 'anadida':16 'azucar':15 'bulto':28B 'cafetero':13 'caja':27B 'conservant':18 'de':2A,8 'del':11 'detal':21B 'eje':12 'exprimido':7 'fresca':10 'jugo':1A 'mayor':26B 'modalidad':19B,23B 'naranja':3A,9 'natur':6A 'ni':17 'por':25B 'sin':14 'tangelo':4A 'unidad':22B	Jugo de Naranja Tangelo 100% Natural Exprimido de naranjas frescas del Eje Cafetero sin azúcar añadida ni conservantes. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:53.327315-05
-prod_01M6RV433VFVQK8CJ13HYDBF8C	{"id": "prod_01M6RV433VFVQK8CJ13HYDBF8C", "title": "Leche Entera de la Sabana UHT", "handle": "leche-entera-fresca-1l", "labels": [], "status": "published", "category": ["Lácteos y Huevos"], "thumbnail": "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Leche 100% pura de vaca de hatos certificados en Cundinamarca y Antioquia. Venta por bolsa/caja o paca x 12 litros.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 11, "max_price_usd": 12, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M6RV433VFVQK8CJ13HYDBF8C", "title": "Leche Entera de la Sabana UHT", "handle": "leche-entera-fresca-1l", "status": "published", "category": ["Lácteos y Huevos"], "thumbnail": "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Leche 100% pura de vaca de hatos certificados en Cundinamarca y Antioquia. Venta por bolsa/caja o paca x 12 litros.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 11, "max_price_usd": 12, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'100':8 '12':25 'al':28B,32B 'antioquia':18 'bolsa/caja':21 'bulto':36B 'caja':35B 'certificado':14 'cundinamarca':16 'de':3A,10,12 'detal':29B 'en':15 'entera':2A 'hato':13 'la':4A 'lech':1A,7 'litro':26 'mayor':34B 'modalidad':27B,31B 'o':22 'paca':23 'por':20,33B 'pura':9 'sabana':5A 'uht':6A 'unidad':30B 'vaca':11 'venta':19 'x':24 'y':17	Leche Entera de la Sabana UHT Leche 100% pura de vaca de hatos certificados en Cundinamarca y Antioquia. Venta por bolsa/caja o paca x 12 litros. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:51.059268-05
-prod_01M6RV433WAC11MFF8J8MYGGXV	{"id": "prod_01M6RV433WAC11MFF8J8MYGGXV", "title": "Queso Doble Crema / Mozzarella Tajado", "handle": "queso-mozzarella-fresco", "labels": [], "status": "published", "category": ["Lácteos y Huevos"], "thumbnail": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Queso fresco colombiano de hilado suave que estira perfecto en arepas, sanduches, pizzas y panadería.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 32, "max_price_usd": 35, "min_price_eur": 3, "min_price_usd": 4, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 3, "original_price_usd": 4}	{"id": "prod_01M6RV433WAC11MFF8J8MYGGXV", "title": "Queso Doble Crema / Mozzarella Tajado", "handle": "queso-mozzarella-fresco", "status": "published", "category": ["Lácteos y Huevos"], "thumbnail": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Queso fresco colombiano de hilado suave que estira perfecto en arepas, sanduches, pizzas y panadería.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 32, "max_price_usd": 35, "min_price_eur": 3, "min_price_usd": 4, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 3, "original_price_usd": 4}	'al':22B,26B 'arepa':16 'bulto':30B 'caja':29B 'colombiano':8 'crema':3A 'de':9 'detal':23B 'dobl':2A 'en':15 'estira':13 'fresco':7 'hilado':10 'mayor':28B 'modalidad':21B,25B 'mozzarella':4A 'panaderia':20 'perfecto':14 'pizza':18 'por':27B 'que':12 'queso':1A,6 'sanduch':17 'suav':11 'tajado':5A 'unidad':24B 'y':19	Queso Doble Crema / Mozzarella Tajado Queso fresco colombiano de hilado suave que estira perfecto en arepas, sanduches, pizzas y panadería. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 11:59:52.50551-05
-prod_01M6RV433V3S45S2XK53QKXJG7	{"id": "prod_01M6RV433V3S45S2XK53QKXJG7", "title": "Arroz Blanco del Tolima Grano Entero", "handle": "arroz-blanco-extra-grano", "labels": [], "status": "published", "category": ["Despensa y Abarrotes"], "thumbnail": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-06T16:29:58.286Z", "description": "Arroz colombiano seleccionado que crece y queda suelto. Lleva por kilo o por arroba/paca mayorista de 25 bolsas.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 177, "max_price_usd": 191, "min_price_eur": 20, "min_price_usd": 21, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 20, "original_price_usd": 21}	{"id": "prod_01M6RV433V3S45S2XK53QKXJG7", "title": "Arroz Blanco del Tolima Grano Entero", "handle": "arroz-blanco-extra-grano", "status": "published", "category": ["Despensa y Abarrotes"], "thumbnail": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80", "created_at": 1793982598286, "description": "Arroz colombiano seleccionado que crece y queda suelto. Lleva por kilo o por arroba/paca mayorista de 25 bolsas.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 177, "max_price_usd": 191, "min_price_eur": 20, "min_price_usd": 21, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 20, "original_price_usd": 21}	'25':23 'al':26B,30B 'arroba/paca':20 'arroz':1A,7 'blanco':2A 'bolsa':24 'bulto':34B 'caja':33B 'colombiano':8 'crece':11 'de':22 'del':3A 'detal':27B 'entero':6A 'grano':5A 'kilo':17 'lleva':15 'mayor':32B 'mayorista':21 'modalidad':25B,29B 'o':18 'por':16,19,31B 'que':10 'queda':13 'seleccionado':9 'suelto':14 'tolima':4A 'unidad':28B 'y':12	Arroz Blanco del Tolima Grano Entero Arroz colombiano seleccionado que crece y queda suelto. Lleva por kilo o por arroba/paca mayorista de 25 bolsas. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-06 11:30:14.517598-05	2026-11-07 12:44:41.73064-05
-prod_01M6VRP832RAWH9B74NB480E0K	{"id": "prod_01M6VRP832RAWH9B74NB480E0K", "title": "Aceite Premier Puro Girasol", "handle": "aceite-premier-puro-girasol-721", "labels": [], "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80", "created_at": "2026-11-07T19:45:10.759Z", "description": "Producto fresco disponible al detal y por mayor.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 1, "max_price_usd": 1, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M6VRP832RAWH9B74NB480E0K", "title": "Aceite Premier Puro Girasol", "handle": "aceite-premier-puro-girasol-721", "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80", "created_at": 1794080710759, "description": "Producto fresco disponible al detal y por mayor.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 1, "max_price_usd": 1, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'aceit':1A 'al':8,14B,18B 'bulto':22B 'caja':21B 'detal':9,15B 'dispon':7 'fresco':6 'girasol':4A 'mayor':12,20B 'modalidad':13B,17B 'por':11,19B 'premier':2A 'producto':5 'puro':3A 'unidad':16B 'y':10	Aceite Premier Puro Girasol Producto fresco disponible al detal y por mayor. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-07 14:45:11.27803-05	2026-11-07 14:45:11.279148-05
+prod_01M7AZA52030S7D9MRA2BTE3QE	{"id": "prod_01M7AZA52030S7D9MRA2BTE3QE", "title": "Jabón Puro Hortensias y Flores Blancas Barra 180g", "handle": "jabon-puro-hortensias-flores-blancas-180g", "labels": [], "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1607006314187-578f7e6f3d9d?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Jabón en barra Puro con delicada fragancia a Hortensias y Flores Blancas. Alto poder de limpieza y cuidado de prendas delicadas.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 17, "max_price_usd": 18, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M7AZA52030S7D9MRA2BTE3QE", "title": "Jabón Puro Hortensias y Flores Blancas Barra 180g", "handle": "jabon-puro-hortensias-flores-blancas-180g", "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1607006314187-578f7e6f3d9d?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Jabón en barra Puro con delicada fragancia a Hortensias y Flores Blancas. Alto poder de limpieza y cuidado de prendas delicadas.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 17, "max_price_usd": 18, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'180g':8A 'al':31B,35B 'alto':21 'barra':7A,11 'blanca':6A,20 'bulto':39B 'caja':38B 'con':13 'cuidado':26 'de':23,27 'delicada':14,29 'detal':32B 'en':10 'flore':5A,19 'fragancia':15 'hortensia':3A,17 'jabon':1A,9 'limpieza':24 'mayor':37B 'modalidad':30B,34B 'poder':22 'por':36B 'prenda':28 'puro':2A,12 'unidad':33B 'y':4A,18,25	Jabón Puro Hortensias y Flores Blancas Barra 180g Jabón en barra Puro con delicada fragancia a Hortensias y Flores Blancas. Alto poder de limpieza y cuidado de prendas delicadas. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA520BYDYSPPV7QHQNM0Q	{"id": "prod_01M7AZA520BYDYSPPV7QHQNM0Q", "title": "Gaseosa Big Cola 1.75L - Promo Especial Bonificada (Paca x 8)", "handle": "big-cola-1-75l-promo-bonificada", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Edición promocional bonificada de Big Cola 1.75L con precio de fábrica preferencial para clientes mayoristas y tiendas.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 5, "max_price_usd": 6, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M7AZA520BYDYSPPV7QHQNM0Q", "title": "Gaseosa Big Cola 1.75L - Promo Especial Bonificada (Paca x 8)", "handle": "big-cola-1-75l-promo-bonificada", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Edición promocional bonificada de Big Cola 1.75L con precio de fábrica preferencial para clientes mayoristas y tiendas.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 5, "max_price_usd": 6, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'1.75':4A,18 '8':11A 'al':31B,35B 'big':2A,16 'bonificada':8A,14 'bulto':39B 'caja':38B 'client':26 'cola':3A,17 'con':20 'de':15,22 'detal':32B 'edicion':12 'especi':7A 'fabrica':23 'gaseosa':1A 'l':5A,19 'mayor':37B 'mayorista':27 'modalidad':30B,34B 'paca':9A 'para':25 'por':36B 'precio':21 'preferenci':24 'promo':6A 'promocion':13 'tienda':29 'unidad':33B 'x':10A 'y':28	Gaseosa Big Cola 1.75L - Promo Especial Bonificada (Paca x 8) Edición promocional bonificada de Big Cola 1.75L con precio de fábrica preferencial para clientes mayoristas y tiendas. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA520MJ70VFJHQCYFE2Q4	{"id": "prod_01M7AZA520MJ70VFJHQCYFE2Q4", "title": "Bebida Cifrut Citrus Cítricos 250ml (Paca x 15)", "handle": "cifrut-citrus-250ml-paca-x15", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Deliciosa bebida refrescante Cifrut sabor a cítricos con vitamina C en práctica botella pet de 250ml para loncheras y tiendas.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M7AZA520MJ70VFJHQCYFE2Q4", "title": "Bebida Cifrut Citrus Cítricos 250ml (Paca x 15)", "handle": "cifrut-citrus-250ml-paca-x15", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Deliciosa bebida refrescante Cifrut sabor a cítricos con vitamina C en práctica botella pet de 250ml para loncheras y tiendas.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'15':8A '250ml':5A,24 'al':30B,34B 'bebida':1A,10 'botella':21 'bulto':38B 'c':18 'caja':37B 'cifrut':2A,12 'citrico':4A,15 'citrus':3A 'con':16 'de':23 'deliciosa':9 'detal':31B 'en':19 'lonchera':26 'mayor':36B 'modalidad':29B,33B 'paca':6A 'para':25 'pet':22 'por':35B 'practica':20 'refrescant':11 'sabor':13 'tienda':28 'unidad':32B 'vitamina':17 'x':7A 'y':27	Bebida Cifrut Citrus Cítricos 250ml (Paca x 15) Deliciosa bebida refrescante Cifrut sabor a cítricos con vitamina C en práctica botella pet de 250ml para loncheras y tiendas. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA520NC8Y5PYEFNZ5RSAT	{"id": "prod_01M7AZA520NC8Y5PYEFNZ5RSAT", "title": "Gaseosa Big Cola 1.75 Litros No Retornable (Paca x 8)", "handle": "big-cola-1-75l-paca-x8", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Gaseosa Big Cola tamaño familiar de 1.75L PET no retornable. Sabor refrescante inconfundible al mejor precio de mercado.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 7, "max_price_usd": 8, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M7AZA520NC8Y5PYEFNZ5RSAT", "title": "Gaseosa Big Cola 1.75 Litros No Retornable (Paca x 8)", "handle": "big-cola-1-75l-paca-x8", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Gaseosa Big Cola tamaño familiar de 1.75L PET no retornable. Sabor refrescante inconfundible al mejor precio de mercado.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 7, "max_price_usd": 8, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'1.75':4A,17 '8':10A 'al':25,31B,35B 'big':2A,12 'bulto':39B 'caja':38B 'cola':3A,13 'de':16,28 'detal':32B 'familiar':15 'gaseosa':1A,11 'inconfund':24 'l':18 'litro':5A 'mayor':37B 'mejor':26 'mercado':29 'modalidad':30B,34B 'paca':8A 'pet':19 'por':36B 'precio':27 'refrescant':23 'retorn':7A,21 'sabor':22 'tamano':14 'unidad':33B 'x':9A	Gaseosa Big Cola 1.75 Litros No Retornable (Paca x 8) Gaseosa Big Cola tamaño familiar de 1.75L PET no retornable. Sabor refrescante inconfundible al mejor precio de mercado. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA520R524K5DKXMXK1FDZ	{"id": "prod_01M7AZA520R524K5DKXMXK1FDZ", "title": "Desodorante Rexona Women Clinical Classic Tubo 30g", "handle": "rexona-women-clinical-tubo-30g", "labels": [], "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Presentación práctica para bolso o viaje. Rexona Women Clinical Classic 30g con 96 horas de protección avanzada antitranspirante.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 32, "max_price_usd": 35, "min_price_eur": 3, "min_price_usd": 3, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 3, "original_price_usd": 3}	{"id": "prod_01M7AZA520R524K5DKXMXK1FDZ", "title": "Desodorante Rexona Women Clinical Classic Tubo 30g", "handle": "rexona-women-clinical-tubo-30g", "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Presentación práctica para bolso o viaje. Rexona Women Clinical Classic 30g con 96 horas de protección avanzada antitranspirante.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 32, "max_price_usd": 35, "min_price_eur": 3, "min_price_usd": 3, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 3, "original_price_usd": 3}	'30g':7A,18 '96':20 'al':27B,31B 'antitranspirant':25 'avanzada':24 'bolso':11 'bulto':35B 'caja':34B 'classic':5A,17 'clinic':4A,16 'con':19 'de':22 'desodorant':1A 'detal':28B 'hora':21 'mayor':33B 'modalidad':26B,30B 'o':12 'para':10 'por':32B 'practica':9 'presentacion':8 'proteccion':23 'rexona':2A,14 'tubo':6A 'unidad':29B 'viaj':13 'women':3A,15	Desodorante Rexona Women Clinical Classic Tubo 30g Presentación práctica para bolso o viaje. Rexona Women Clinical Classic 30g con 96 horas de protección avanzada antitranspirante. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA520REMWA8TJH89AK0N6	{"id": "prod_01M7AZA520REMWA8TJH89AK0N6", "title": "Gaseosa Big Sabor Uva 400ml PET (Paca x 12)", "handle": "big-uva-400ml-paca-x12", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Gaseosa Big sabor uva dulce y refrescante en presentación personal de 400ml en botella plástica no retornable.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M7AZA520REMWA8TJH89AK0N6", "title": "Gaseosa Big Sabor Uva 400ml PET (Paca x 12)", "handle": "big-uva-400ml-paca-x12", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Gaseosa Big sabor uva dulce y refrescante en presentación personal de 400ml en botella plástica no retornable.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'12':9A '400ml':5A,21 'al':28B,32B 'big':2A,11 'botella':23 'bulto':36B 'caja':35B 'de':20 'detal':29B 'dulc':14 'en':17,22 'gaseosa':1A,10 'mayor':34B 'modalidad':27B,31B 'paca':7A 'person':19 'pet':6A 'plastica':24 'por':33B 'presentacion':18 'refrescant':16 'retorn':26 'sabor':3A,12 'unidad':30B 'uva':4A,13 'x':8A 'y':15	Gaseosa Big Sabor Uva 400ml PET (Paca x 12) Gaseosa Big sabor uva dulce y refrescante en presentación personal de 400ml en botella plástica no retornable. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA520TTS02XMW50VKCR4X	{"id": "prod_01M7AZA520TTS02XMW50VKCR4X", "title": "Desodorante Rexona Women Clinical Classic Tubo 60g", "handle": "rexona-women-clinical-tubo-60g", "labels": [], "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Desodorante antitranspirante Rexona Women Clinical Classic en crema tubo 60g. Máxima protección dermatológica contra la sudoración y el mal olor.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 54, "max_price_usd": 58, "min_price_eur": 5, "min_price_usd": 5, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 5, "original_price_usd": 5}	{"id": "prod_01M7AZA520TTS02XMW50VKCR4X", "title": "Desodorante Rexona Women Clinical Classic Tubo 60g", "handle": "rexona-women-clinical-tubo-60g", "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Desodorante antitranspirante Rexona Women Clinical Classic en crema tubo 60g. Máxima protección dermatológica contra la sudoración y el mal olor.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 54, "max_price_usd": 58, "min_price_eur": 5, "min_price_usd": 5, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 5, "original_price_usd": 5}	'60g':7A,17 'al':29B,33B 'antitranspirant':9 'bulto':37B 'caja':36B 'classic':5A,13 'clinic':4A,12 'contra':21 'crema':15 'dermatologica':20 'desodorant':1A,8 'detal':30B 'el':25 'en':14 'la':22 'mal':26 'maxima':18 'mayor':35B 'modalidad':28B,32B 'olor':27 'por':34B 'proteccion':19 'rexona':2A,10 'sudoracion':23 'tubo':6A,16 'unidad':31B 'women':3A,11 'y':24	Desodorante Rexona Women Clinical Classic Tubo 60g Desodorante antitranspirante Rexona Women Clinical Classic en crema tubo 60g. Máxima protección dermatológica contra la sudoración y el mal olor. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA520XPX02GTD9DPE8H3Y	{"id": "prod_01M7AZA520XPX02GTD9DPE8H3Y", "title": "Desodorante Rexona Men Clinical Clean Tubo 60g", "handle": "rexona-men-clinical-clean-tubo-60g", "labels": [], "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1585751119414-ef2636f8aede?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Desodorante antitranspirante Rexona Men Clinical Clean en tubo crema 60g. 3 veces más protección contra el sudor y fragancia masculina fresca.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 54, "max_price_usd": 58, "min_price_eur": 5, "min_price_usd": 5, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 5, "original_price_usd": 5}	{"id": "prod_01M7AZA520XPX02GTD9DPE8H3Y", "title": "Desodorante Rexona Men Clinical Clean Tubo 60g", "handle": "rexona-men-clinical-clean-tubo-60g", "status": "published", "category": ["Aseo y Hogar"], "thumbnail": "https://images.unsplash.com/photo-1585751119414-ef2636f8aede?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Desodorante antitranspirante Rexona Men Clinical Clean en tubo crema 60g. 3 veces más protección contra el sudor y fragancia masculina fresca.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 54, "max_price_usd": 58, "min_price_eur": 5, "min_price_usd": 5, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 5, "original_price_usd": 5}	'3':18 '60g':7A,17 'al':30B,34B 'antitranspirant':9 'bulto':38B 'caja':37B 'clean':5A,13 'clinic':4A,12 'contra':22 'crema':16 'desodorant':1A,8 'detal':31B 'el':23 'en':14 'fragancia':26 'fresca':28 'mas':20 'masculina':27 'mayor':36B 'men':3A,11 'modalidad':29B,33B 'por':35B 'proteccion':21 'rexona':2A,10 'sudor':24 'tubo':6A,15 'unidad':32B 'vece':19 'y':25	Desodorante Rexona Men Clinical Clean Tubo 60g Desodorante antitranspirante Rexona Men Clinical Clean en tubo crema 60g. 3 veces más protección contra el sudor y fragancia masculina fresca. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA5214JSFNBG7DTF3KN16	{"id": "prod_01M7AZA5214JSFNBG7DTF3KN16", "title": "Gaseosa Big Sabor Manzana 400ml No Retornable (Paca x 12)", "handle": "big-manzana-400ml-paca-x12", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1576186726580-a816e8b12896?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Gaseosa Big Manzana roja en envase pet de 400ml. Delicioso sabor frutal con gas para toda la familia.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M7AZA5214JSFNBG7DTF3KN16", "title": "Gaseosa Big Sabor Manzana 400ml No Retornable (Paca x 12)", "handle": "big-manzana-400ml-paca-x12", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1576186726580-a816e8b12896?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Gaseosa Big Manzana roja en envase pet de 400ml. Delicioso sabor frutal con gas para toda la familia.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'12':10A '400ml':5A,19 'al':30B,34B 'big':2A,12 'bulto':38B 'caja':37B 'con':23 'de':18 'delicioso':20 'detal':31B 'en':15 'envas':16 'familia':28 'frutal':22 'gas':24 'gaseosa':1A,11 'la':27 'manzana':4A,13 'mayor':36B 'modalidad':29B,33B 'paca':8A 'para':25 'pet':17 'por':35B 'retorn':7A 'roja':14 'sabor':3A,21 'toda':26 'unidad':32B 'x':9A	Gaseosa Big Sabor Manzana 400ml No Retornable (Paca x 12) Gaseosa Big Manzana roja en envase pet de 400ml. Delicioso sabor frutal con gas para toda la familia. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA5218VXYMT96TK0GX8AX	{"id": "prod_01M7AZA5218VXYMT96TK0GX8AX", "title": "Bebida Cifrut Sabor Mora 250ml (Paca x 15)", "handle": "cifrut-mora-250ml-paca-x15", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Bebida Cifrut sabor mora silvestre con jugo de fruta natural. Ideal para acompañar comidas y refrigerios.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M7AZA5218VXYMT96TK0GX8AX", "title": "Bebida Cifrut Sabor Mora 250ml (Paca x 15)", "handle": "cifrut-mora-250ml-paca-x15", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Bebida Cifrut sabor mora silvestre con jugo de fruta natural. Ideal para acompañar comidas y refrigerios.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'15':8A '250ml':5A 'acompanar':21 'al':26B,30B 'bebida':1A,9 'bulto':34B 'caja':33B 'cifrut':2A,10 'comida':22 'con':14 'de':16 'detal':27B 'fruta':17 'ideal':19 'jugo':15 'mayor':32B 'modalidad':25B,29B 'mora':4A,12 'natur':18 'paca':6A 'para':20 'por':31B 'refrigerio':24 'sabor':3A,11 'silvestr':13 'unidad':28B 'x':7A 'y':23	Bebida Cifrut Sabor Mora 250ml (Paca x 15) Bebida Cifrut sabor mora silvestre con jugo de fruta natural. Ideal para acompañar comidas y refrigerios. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA521DSZC6NMT56S5K6KB	{"id": "prod_01M7AZA521DSZC6NMT56S5K6KB", "title": "Gaseosa Big Sabor Manzana 400ml - Promo Bonificación x 12", "handle": "big-manzana-400ml-promo-bonificada", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Lote bonificado de Big Manzana 400ml con descuento especial para mayoristas y ventas por volumen.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 3, "max_price_usd": 3, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M7AZA521DSZC6NMT56S5K6KB", "title": "Gaseosa Big Sabor Manzana 400ml - Promo Bonificación x 12", "handle": "big-manzana-400ml-promo-bonificada", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Lote bonificado de Big Manzana 400ml con descuento especial para mayoristas y ventas por volumen.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 3, "max_price_usd": 3, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'12':9A '400ml':5A,15 'al':26B,30B 'big':2A,13 'bonificacion':7A 'bonificado':11 'bulto':34B 'caja':33B 'con':16 'de':12 'descuento':17 'detal':27B 'especi':18 'gaseosa':1A 'lote':10 'manzana':4A,14 'mayor':32B 'mayorista':20 'modalidad':25B,29B 'para':19 'por':23,31B 'promo':6A 'sabor':3A 'unidad':28B 'venta':22 'volumen':24 'x':8A 'y':21	Gaseosa Big Sabor Manzana 400ml - Promo Bonificación x 12 Lote bonificado de Big Manzana 400ml con descuento especial para mayoristas y ventas por volumen. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA521F3C8D1041RWKRJG3	{"id": "prod_01M7AZA521F3C8D1041RWKRJG3", "title": "Gaseosa Big Sabor Piña Tropical 400ml (Paca x 12)", "handle": "big-pina-400ml-paca-x12", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Bebida gaseosa Big piña tropical con burbujas intensas. Botella personal de 400ml para consumo inmediato.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M7AZA521F3C8D1041RWKRJG3", "title": "Gaseosa Big Sabor Piña Tropical 400ml (Paca x 12)", "handle": "big-pina-400ml-paca-x12", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Bebida gaseosa Big piña tropical con burbujas intensas. Botella personal de 400ml para consumo inmediato.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'12':9A '400ml':6A,21 'al':26B,30B 'bebida':10 'big':2A,12 'botella':18 'bulto':34B 'burbuja':16 'caja':33B 'con':15 'consumo':23 'de':20 'detal':27B 'gaseosa':1A,11 'inmediato':24 'intensa':17 'mayor':32B 'modalidad':25B,29B 'paca':7A 'para':22 'person':19 'pina':4A,13 'por':31B 'sabor':3A 'tropic':5A,14 'unidad':28B 'x':8A	Gaseosa Big Sabor Piña Tropical 400ml (Paca x 12) Bebida gaseosa Big piña tropical con burbujas intensas. Botella personal de 400ml para consumo inmediato. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA521FWZQH8VA4TS3G7BR	{"id": "prod_01M7AZA521FWZQH8VA4TS3G7BR", "title": "Bebida Cifrut Fruit Ponche de Frutas 250ml (Paca x 15)", "handle": "cifrut-fruit-ponche-250ml-paca-x15", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Cifrut Fruit Punch combinación de frutas tropicales en botella de 250ml. Gran rotación en tiendas y autoservicios.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M7AZA521FWZQH8VA4TS3G7BR", "title": "Bebida Cifrut Fruit Ponche de Frutas 250ml (Paca x 15)", "handle": "cifrut-fruit-ponche-250ml-paca-x15", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Cifrut Fruit Punch combinación de frutas tropicales en botella de 250ml. Gran rotación en tiendas y autoservicios.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'15':10A '250ml':7A,21 'al':29B,33B 'autoservicio':27 'bebida':1A 'botella':19 'bulto':37B 'caja':36B 'cifrut':2A,11 'combinacion':14 'de':5A,15,20 'detal':30B 'en':18,24 'fruit':3A,12 'fruta':6A,16 'gran':22 'mayor':35B 'modalidad':28B,32B 'paca':8A 'ponch':4A 'por':34B 'punch':13 'rotacion':23 'tienda':25 'tropical':17 'unidad':31B 'x':9A 'y':26	Bebida Cifrut Fruit Ponche de Frutas 250ml (Paca x 15) Cifrut Fruit Punch combinación de frutas tropicales en botella de 250ml. Gran rotación en tiendas y autoservicios. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
+prod_01M7AZA521NY3ZRQF4AF4QV8RA	{"id": "prod_01M7AZA521NY3ZRQF4AF4QV8RA", "title": "Agua Pura de Mesa Vida 620ml (Bonificación Paca x 20)", "handle": "agua-vida-620ml-bonificada", "labels": [], "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=600&q=80", "created_at": "2026-11-13T17:29:30.957Z", "description": "Agua de mesa pura tratada y purificada Vida de 620ml. Hidratación limpia y saludable a precio bonificado de distribuidor.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	{"id": "prod_01M7AZA521NY3ZRQF4AF4QV8RA", "title": "Agua Pura de Mesa Vida 620ml (Bonificación Paca x 20)", "handle": "agua-vida-620ml-bonificada", "status": "published", "category": ["Bebidas y Licores"], "thumbnail": "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=600&q=80", "created_at": 1794590970957, "description": "Agua de mesa pura tratada y purificada Vida de 620ml. Hidratación limpia y saludable a precio bonificado de distribuidor.", "on_sale_eur": false, "on_sale_usd": false, "max_price_eur": 4, "max_price_usd": 4, "min_price_eur": 1, "min_price_usd": 1, "option_values": ["Modalidad:Al Detal (Unidad)", "Modalidad:Al por Mayor (Caja / Bulto)"], "sales_channel_ids": ["sc_01M6Q03EJC9CS5HCFC8Y1GDNH1"], "original_price_eur": 1, "original_price_usd": 1}	'20':10A '620ml':6A,20 'agua':1A,11 'al':31B,35B 'bonificacion':7A 'bonificado':27 'bulto':39B 'caja':38B 'de':3A,12,19,28 'detal':32B 'distribuidor':29 'hidratacion':21 'limpia':22 'mayor':37B 'mesa':4A,13 'modalidad':30B,34B 'paca':8A 'por':36B 'precio':26 'pura':2A,14 'purificada':17 'salud':24 'tratada':15 'unidad':33B 'vida':5A,18 'x':9A 'y':16,23	Agua Pura de Mesa Vida 620ml (Bonificación Paca x 20) Agua de mesa pura tratada y purificada Vida de 620ml. Hidratación limpia y saludable a precio bonificado de distribuidor. Modalidad:Al Detal (Unidad) Modalidad:Al por Mayor (Caja / Bulto)	2026-11-13 12:29:49.864912-05	2026-11-13 12:29:49.864912-05
 \.
 
 
@@ -7256,7 +6734,7 @@ prod_01M6VRP832RAWH9B74NB480E0K	{"id": "prod_01M6VRP832RAWH9B74NB480E0K", "title
 --
 
 COPY public.search_postgres_index (name, table_name, schema_hash, plan, document_count, created_at, updated_at) FROM stdin;
-product_v1	search_pg_product_v1	6a867764af1115440210b465fe11db3c1627a9a818c408f9b3c16e778b4b4b40	{"fields": [{"kind": "keyword", "path": "id", "field": {"type": "keyword", "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "keyword", "path": "status", "field": {"type": "keyword", "filterable": true, "retrievable": false}, "is_date": false, "is_array": false}, {"kind": "keyword", "path": "sales_channel_ids", "field": {"type": "keyword", "array": true, "filterable": true, "retrievable": false}, "is_date": false, "is_array": true}, {"kind": "text", "path": "title", "field": {"type": "text", "sortable": true, "searchable": {"weight": 3}, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "text", "path": "description", "field": {"type": "text", "searchable": {"weight": 1}}, "is_date": false, "is_array": false}, {"kind": "keyword", "path": "handle", "field": {"type": "keyword", "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "keyword", "path": "thumbnail", "field": {"type": "keyword", "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "created_at", "field": {"type": "date", "sortable": true, "retrievable": true}, "is_date": true, "is_array": false}, {"kind": "keyword", "path": "category", "field": {"type": "keyword", "array": true, "facetable": true, "filterable": true, "retrievable": true}, "is_date": false, "is_array": true}, {"kind": "keyword", "path": "labels", "field": {"type": "keyword", "array": true, "facetable": true, "filterable": true, "retrievable": true}, "is_date": false, "is_array": true}, {"kind": "keyword", "path": "option_values", "field": {"type": "keyword", "array": true, "facetable": true, "filterable": true, "searchable": {"weight": 2}, "retrievable": true}, "is_date": false, "is_array": true}, {"kind": "number", "path": "min_price_eur", "field": {"type": "float", "sortable": true, "facetable": {"types": ["stats"]}, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "max_price_eur", "field": {"type": "float", "sortable": true, "facetable": {"types": ["stats"]}, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "original_price_eur", "field": {"type": "float", "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "boolean", "path": "on_sale_eur", "field": {"type": "boolean", "facetable": true, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "min_price_usd", "field": {"type": "float", "sortable": true, "facetable": {"types": ["stats"]}, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "max_price_usd", "field": {"type": "float", "sortable": true, "facetable": {"types": ["stats"]}, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "original_price_usd", "field": {"type": "float", "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "boolean", "path": "on_sale_usd", "field": {"type": "boolean", "facetable": true, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}], "vectors": [], "searchable": ["title", "description", "option_values"], "primary_key": "id", "schema_hash": "6a867764af1115440210b465fe11db3c1627a9a818c408f9b3c16e778b4b4b40"}	17	2026-11-05 18:18:12.199994-05	2026-11-07 14:45:11.27803-05
+product_v1	search_pg_product_v1	6a867764af1115440210b465fe11db3c1627a9a818c408f9b3c16e778b4b4b40	{"fields": [{"kind": "keyword", "path": "id", "field": {"type": "keyword", "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "keyword", "path": "status", "field": {"type": "keyword", "filterable": true, "retrievable": false}, "is_date": false, "is_array": false}, {"kind": "keyword", "path": "sales_channel_ids", "field": {"type": "keyword", "array": true, "filterable": true, "retrievable": false}, "is_date": false, "is_array": true}, {"kind": "text", "path": "title", "field": {"type": "text", "sortable": true, "searchable": {"weight": 3}, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "text", "path": "description", "field": {"type": "text", "searchable": {"weight": 1}}, "is_date": false, "is_array": false}, {"kind": "keyword", "path": "handle", "field": {"type": "keyword", "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "keyword", "path": "thumbnail", "field": {"type": "keyword", "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "created_at", "field": {"type": "date", "sortable": true, "retrievable": true}, "is_date": true, "is_array": false}, {"kind": "keyword", "path": "category", "field": {"type": "keyword", "array": true, "facetable": true, "filterable": true, "retrievable": true}, "is_date": false, "is_array": true}, {"kind": "keyword", "path": "labels", "field": {"type": "keyword", "array": true, "facetable": true, "filterable": true, "retrievable": true}, "is_date": false, "is_array": true}, {"kind": "keyword", "path": "option_values", "field": {"type": "keyword", "array": true, "facetable": true, "filterable": true, "searchable": {"weight": 2}, "retrievable": true}, "is_date": false, "is_array": true}, {"kind": "number", "path": "min_price_eur", "field": {"type": "float", "sortable": true, "facetable": {"types": ["stats"]}, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "max_price_eur", "field": {"type": "float", "sortable": true, "facetable": {"types": ["stats"]}, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "original_price_eur", "field": {"type": "float", "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "boolean", "path": "on_sale_eur", "field": {"type": "boolean", "facetable": true, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "min_price_usd", "field": {"type": "float", "sortable": true, "facetable": {"types": ["stats"]}, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "max_price_usd", "field": {"type": "float", "sortable": true, "facetable": {"types": ["stats"]}, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "number", "path": "original_price_usd", "field": {"type": "float", "retrievable": true}, "is_date": false, "is_array": false}, {"kind": "boolean", "path": "on_sale_usd", "field": {"type": "boolean", "facetable": true, "filterable": true, "retrievable": true}, "is_date": false, "is_array": false}], "vectors": [], "searchable": ["title", "description", "option_values"], "primary_key": "id", "schema_hash": "6a867764af1115440210b465fe11db3c1627a9a818c408f9b3c16e778b4b4b40"}	14	2026-11-05 18:18:12.199994-05	2026-11-13 12:29:49.864912-05
 \.
 
 

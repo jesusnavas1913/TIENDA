@@ -1,0 +1,340 @@
+
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <!--[if gte mso 9]>
+  <xml>
+    <x:ExcelWorkbook>
+      <x:ExcelWorksheets>
+        <x:ExcelWorksheet>
+          <x:Name>Productos Facturas</x:Name>
+          <x:WorksheetOptions>
+            <x:DisplayGridlines/>
+          </x:WorksheetOptions>
+        </x:ExcelWorksheet>
+      </x:ExcelWorksheets>
+    </x:ExcelWorkbook>
+  </xml>
+  <![endif]-->
+  <style>
+    th { background-color: #0f172a; color: #ffffff; font-family: Segoe UI, Arial; font-size: 11pt; font-weight: bold; border: 1px solid #334155; padding: 10px; text-align: center; }
+    td { font-family: Segoe UI, Arial; font-size: 10pt; border: 1px solid #cbd5e1; padding: 8px; vertical-align: middle; }
+    .num { text-align: right; mso-number-format:"\$#,##0"; }
+    .center { text-align: center; }
+    .barcode { text-align: center; font-family: monospace; font-weight: bold; mso-number-format:"\@"; }
+    .tag-detal { background-color: #f0fdf4; color: #166534; font-weight: bold; }
+    .tag-mayor { background-color: #eff6ff; color: #1e40af; font-weight: bold; }
+    .ahorro { background-color: #ecfdf5; color: #047857; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>LISTADO OFICIAL DE PRODUCTOS FACTURAS SANTANDER Y AJE</h2>
+  <p><b>Fórmulas Industriales Aplicadas:</b> Detal = Costo / (1 - 0.20) | Mayor = (Costo × Uds) / (1 - 0.15) | Sede: Sede Principal</p>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Ítem Factura</th>
+        <th>Código Barras GS1 770</th>
+        <th>Nombre del Producto</th>
+        <th>Categoría</th>
+        <th>Sede</th>
+        <th>Pres. Detal</th>
+        <th>Costo Unitario COP</th>
+        <th>Margen Detal</th>
+        <th>Precio Venta Detal COP</th>
+        <th>Pres. Mayor</th>
+        <th>Uds / Empaque</th>
+        <th>Costo Empaque COP</th>
+        <th>Margen Mayor</th>
+        <th>Precio Venta Mayor COP</th>
+        <th>PUM Mayor COP</th>
+        <th>Ahorro Unitario COP</th>
+        <th>Ahorro Total Empaque COP</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td>Santander Pág 4/4 (#39)</td>
+        <td class="barcode">7702010123901</td>
+        <td><b>Desodorante Rexona Women Clinical Classic Tubo 60g</b></td>
+        <td>Aseo y Cuidado Personal</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad Tubo 60g</td>
+        <td class="num">$ 16.000</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 20.000</td>
+        <td class="center">Caja x 12</td>
+        <td class="center">12</td>
+        <td class="num">$ 192.000</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 225.900</td>
+        <td class="num tag-mayor">$ 18.825</td>
+        <td class="num ahorro">$ 1.175</td>
+        <td class="num ahorro">$ 14.100</td>
+      </tr>
+      
+      <tr>
+        <td>Santander Pág 4/4 (#40)</td>
+        <td class="barcode">7702010123918</td>
+        <td><b>Desodorante Rexona Men Clinical Clean Tubo 60g</b></td>
+        <td>Aseo y Cuidado Personal</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad Tubo 60g</td>
+        <td class="num">$ 16.000</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 20.000</td>
+        <td class="center">Caja x 12</td>
+        <td class="center">12</td>
+        <td class="num">$ 192.000</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 225.900</td>
+        <td class="num tag-mayor">$ 18.825</td>
+        <td class="num ahorro">$ 1.175</td>
+        <td class="num ahorro">$ 14.100</td>
+      </tr>
+      
+      <tr>
+        <td>Santander Pág 4/4 (#41)</td>
+        <td class="barcode">7702010123925</td>
+        <td><b>Desodorante Rexona Women Clinical Classic Tubo 30g</b></td>
+        <td>Aseo y Cuidado Personal</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Unidad Tubo 30g</td>
+        <td class="num">$ 9.600</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 12.000</td>
+        <td class="center">Caja x 12</td>
+        <td class="center">12</td>
+        <td class="num">$ 115.200</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 135.500</td>
+        <td class="num tag-mayor">$ 11.292</td>
+        <td class="num ahorro">$ 708</td>
+        <td class="num ahorro">$ 8.500</td>
+      </tr>
+      
+      <tr>
+        <td>Santander Pág 4/4 (#42)</td>
+        <td class="barcode">7702010123932</td>
+        <td><b>Jabón Puro Hortensias y Flores Blancas Barra 180g</b></td>
+        <td>Aseo y Hogar</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Barra 180g</td>
+        <td class="num">$ 2.400</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 3.000</td>
+        <td class="center">Fardo x 25</td>
+        <td class="center">25</td>
+        <td class="num">$ 60.000</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 70.600</td>
+        <td class="num tag-mayor">$ 2.824</td>
+        <td class="num ahorro">$ 176</td>
+        <td class="num ahorro">$ 4.400</td>
+      </tr>
+      
+      <tr>
+        <td>AJE Fact 1 (PTE10337)</td>
+        <td class="barcode">7703010103371</td>
+        <td><b>Gaseosa Big Cola 1.75 Litros No Retornable (Paca x 8)</b></td>
+        <td>Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Botella 1.75L</td>
+        <td class="num">$ 3.200</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 4.000</td>
+        <td class="center">Paca x 8</td>
+        <td class="center">8</td>
+        <td class="num">$ 25.600</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 30.100</td>
+        <td class="num tag-mayor">$ 3.762</td>
+        <td class="num ahorro">$ 238</td>
+        <td class="num ahorro">$ 1.900</td>
+      </tr>
+      
+      <tr>
+        <td>AJE Fact 1 (PTE10337-B)</td>
+        <td class="barcode">7703010103388</td>
+        <td><b>Gaseosa Big Cola 1.75L - Promo Bonificada (Paca x 8)</b></td>
+        <td>Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Botella 1.75L</td>
+        <td class="num">$ 2.700</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 3.400</td>
+        <td class="center">Paca x 8</td>
+        <td class="center">8</td>
+        <td class="num">$ 21.600</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 25.400</td>
+        <td class="num tag-mayor">$ 3.175</td>
+        <td class="num ahorro">$ 225</td>
+        <td class="num ahorro">$ 1.800</td>
+      </tr>
+      
+      <tr>
+        <td>AJE Fact 2 (PTE10015)</td>
+        <td class="barcode">7703010100158</td>
+        <td><b>Gaseosa Big Sabor Uva 400ml PET (Paca x 12)</b></td>
+        <td>Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Botella 400ml</td>
+        <td class="num">$ 1.200</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 1.500</td>
+        <td class="center">Paca x 12</td>
+        <td class="center">12</td>
+        <td class="num">$ 14.400</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 16.900</td>
+        <td class="num tag-mayor">$ 1.408</td>
+        <td class="num ahorro">$ 92</td>
+        <td class="num ahorro">$ 1.100</td>
+      </tr>
+      
+      <tr>
+        <td>AJE Fact 2 (PTE10036)</td>
+        <td class="barcode">7703010100363</td>
+        <td><b>Bebida Cifrut Citrus Cítricos 250ml (Paca x 15)</b></td>
+        <td>Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Botella 250ml</td>
+        <td class="num">$ 960</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 1.200</td>
+        <td class="center">Paca x 15</td>
+        <td class="center">15</td>
+        <td class="num">$ 14.400</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 16.900</td>
+        <td class="num tag-mayor">$ 1.127</td>
+        <td class="num ahorro">$ 73</td>
+        <td class="num ahorro">$ 1.100</td>
+      </tr>
+      
+      <tr>
+        <td>AJE Fact 2 (PTE10063)</td>
+        <td class="barcode">7703010100639</td>
+        <td><b>Bebida Cifrut Sabor Mora 250ml (Paca x 15)</b></td>
+        <td>Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Botella 250ml</td>
+        <td class="num">$ 960</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 1.200</td>
+        <td class="center">Paca x 15</td>
+        <td class="center">15</td>
+        <td class="num">$ 14.400</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 16.900</td>
+        <td class="num tag-mayor">$ 1.127</td>
+        <td class="num ahorro">$ 73</td>
+        <td class="num ahorro">$ 1.100</td>
+      </tr>
+      
+      <tr>
+        <td>AJE Fact 2 (PTE10074)</td>
+        <td class="barcode">7703010100745</td>
+        <td><b>Bebida Cifrut Fruit Ponche de Frutas 250ml (Paca x 15)</b></td>
+        <td>Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Botella 250ml</td>
+        <td class="num">$ 960</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 1.200</td>
+        <td class="center">Paca x 15</td>
+        <td class="center">15</td>
+        <td class="num">$ 14.400</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 16.900</td>
+        <td class="num tag-mayor">$ 1.127</td>
+        <td class="num ahorro">$ 73</td>
+        <td class="num ahorro">$ 1.100</td>
+      </tr>
+      
+      <tr>
+        <td>AJE Fact 2 (PTE10077)</td>
+        <td class="barcode">7703010100776</td>
+        <td><b>Gaseosa Big Sabor Piña Tropical 400ml (Paca x 12)</b></td>
+        <td>Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Botella 400ml</td>
+        <td class="num">$ 1.200</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 1.500</td>
+        <td class="center">Paca x 12</td>
+        <td class="center">12</td>
+        <td class="num">$ 14.400</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 16.900</td>
+        <td class="num tag-mayor">$ 1.408</td>
+        <td class="num ahorro">$ 92</td>
+        <td class="num ahorro">$ 1.100</td>
+      </tr>
+      
+      <tr>
+        <td>AJE Fact 2 (PTE10310-B)</td>
+        <td class="barcode">7703010103104</td>
+        <td><b>Agua Pura de Mesa Vida 620ml (Bonificación Paca x 20)</b></td>
+        <td>Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Botella 620ml</td>
+        <td class="num">$ 800</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 1.000</td>
+        <td class="center">Paca x 20</td>
+        <td class="center">20</td>
+        <td class="num">$ 16.000</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 18.800</td>
+        <td class="num tag-mayor">$ 940</td>
+        <td class="num ahorro">$ 60</td>
+        <td class="num ahorro">$ 1.200</td>
+      </tr>
+      
+      <tr>
+        <td>AJE Fact 2 (PTE10351)</td>
+        <td class="barcode">7703010103517</td>
+        <td><b>Gaseosa Big Sabor Manzana 400ml No Retornable (Paca x 12)</b></td>
+        <td>Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Botella 400ml</td>
+        <td class="num">$ 1.200</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 1.500</td>
+        <td class="center">Paca x 12</td>
+        <td class="center">12</td>
+        <td class="num">$ 14.400</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 16.900</td>
+        <td class="num tag-mayor">$ 1.408</td>
+        <td class="num ahorro">$ 92</td>
+        <td class="num ahorro">$ 1.100</td>
+      </tr>
+      
+      <tr>
+        <td>AJE Fact 2 (PTE10351-B)</td>
+        <td class="barcode">7703010103524</td>
+        <td><b>Gaseosa Big Sabor Manzana 400ml - Promo Bonificación x 12</b></td>
+        <td>Bebidas y Licores</td>
+        <td class="center">Sede Principal</td>
+        <td class="center">Botella 400ml</td>
+        <td class="num">$ 1.000</td>
+        <td class="center">20%</td>
+        <td class="num tag-detal">$ 1.250</td>
+        <td class="center">Paca x 12</td>
+        <td class="center">12</td>
+        <td class="num">$ 12.000</td>
+        <td class="center">15%</td>
+        <td class="num tag-mayor">$ 14.100</td>
+        <td class="num tag-mayor">$ 1.175</td>
+        <td class="num ahorro">$ 75</td>
+        <td class="num ahorro">$ 900</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</body>
+</html>
