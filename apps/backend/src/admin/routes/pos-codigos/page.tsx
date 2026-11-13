@@ -73,6 +73,15 @@ const POSBarcodeManagerPage = () => {
   const [ocrProgress, setOcrProgress] = useState<string>("")
   const [iaScannedItems, setIaScannedItems] = useState<ScannedProductItem[]>([])
   const [publishedSuccessCount, setPublishedSuccessCount] = useState<number | null>(null)
+  const [aiProviderInfo, setAiProviderInfo] = useState<{
+    hasGemini: boolean
+    hasOpenAI: boolean
+    activeProvider: string
+  }>({
+    hasGemini: false,
+    hasOpenAI: false,
+    activeProvider: "Local OCR (Tesseract.js)",
+  })
 
   // Catalogo filter states
   const [search, setSearch] = useState("")
@@ -89,6 +98,12 @@ const POSBarcodeManagerPage = () => {
       const json = await res.json()
       if (json.products) setProducts(json.products)
       if (json.categories) setCategories(json.categories)
+
+      const aiRes = await fetch("/admin/ai-scanner", { credentials: "include" }).catch(() => null)
+      if (aiRes && aiRes.ok) {
+        const aiJson = await aiRes.json()
+        setAiProviderInfo(aiJson)
+      }
     } catch {
       toast.error("Error al cargar productos del catálogo")
     } finally {
@@ -184,6 +199,65 @@ const POSBarcodeManagerPage = () => {
 
     let raw = (overrideText !== undefined ? overrideText : iaInvoiceText).trim()
     const imgSrc = targetImage || iaImagePreview
+
+    // 1. SI ESTÁ DISPONIBLE VISIÓN IA EN BACKEND (GEMINI / OPENAI EN .ENV)
+    if (aiProviderInfo.hasGemini || aiProviderInfo.hasOpenAI) {
+      try {
+        setOcrProgress(`Analizando con ${aiProviderInfo.activeProvider}...`)
+        const aiRes = await fetch("/admin/ai-scanner", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            imageBase64: imgSrc,
+            rawText: raw,
+          }),
+        })
+        const aiJson = await aiRes.json()
+        if (aiJson.success && Array.isArray(aiJson.products) && aiJson.products.length > 0) {
+          let counter = 100
+          const parsed = aiJson.products.map((item: any) => {
+            const pasillo = detectPasillo(item.pasilloName || item.title)
+            const cost = Number(item.costCop) || 1200
+            const mUnits = Number(item.mayorUnits) || 12
+            const dMargin = 20
+            const mMargin = 15
+            const dPrice = calcIndustrialPrice(cost, dMargin)
+            const mPrice = calcIndustrialPrice(cost * mUnits, mMargin)
+            const pum = Math.round(mPrice / mUnits)
+            const barcode = `770${String(Date.now()).slice(-6)}${String(counter++).slice(-4)}`
+            const img = detectImageUrl(item.title, pasillo.name)
+
+            return {
+              id: `scan-${counter}`,
+              barcode,
+              title: item.title,
+              pasilloName: pasillo.name,
+              categoryId: pasillo.id,
+              imageUrl: img,
+              costCop: cost,
+              detalMarginPct: dMargin,
+              mayorMarginPct: mMargin,
+              mayorUnits: mUnits,
+              detalLabel: item.detalLabel || "Unidad",
+              mayorLabel: item.mayorLabel || `Caja x ${mUnits} uds`,
+              detalPrice: dPrice,
+              mayorPrice: mPrice,
+              pum,
+              ahorro: Math.max(0, dPrice - pum),
+            }
+          })
+
+          setIaScannedItems(parsed)
+          setOcrProgress(`✅ ¡${parsed.length} productos procesados con ${aiJson.provider}!`)
+          toast.success(`IA procesó ${parsed.length} productos con éxito`)
+          setIaProcessing(false)
+          return
+        }
+      } catch (err) {
+        console.warn("Fallo IA en backend, usando OCR local:", err)
+      }
+    }
 
     // Dynamic Tesseract OCR execution in browser
     if (imgSrc && imgSrc.startsWith("data:image")) {
@@ -688,6 +762,29 @@ const POSBarcodeManagerPage = () => {
       {/* PESTAÑA 1: INGESTA INTELIGENTE CON IA & OCR */}
       {activeTab === "ia-ocr" && (
         <div className="flex flex-col gap-6">
+          {/* AI ENGINE STATUS BANNER */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-ui-bg-subtle border rounded-xl text-xs">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+              <span className="font-bold text-ui-fg-base">
+                Motor Activo: {aiProviderInfo.activeProvider}
+              </span>
+              {aiProviderInfo.hasGemini || aiProviderInfo.hasOpenAI ? (
+                <Badge color="green" className="text-[10px] font-bold">
+                  Visión Artificial IA
+                </Badge>
+              ) : (
+                <Badge color="grey" className="text-[10px] font-bold">
+                  OCR Local Autónomo (Sin Claves)
+                </Badge>
+              )}
+            </div>
+            <div className="text-ui-fg-muted text-[11px]">
+              {aiProviderInfo.hasGemini || aiProviderInfo.hasOpenAI
+                ? "Leyendo fotos directamente con IA multimodal de alta resolución."
+                : "💡 Puedes colocar GEMINI_API_KEY en apps/backend/.env para activar Visión de Google."}
+            </div>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* STEP 1: CARGA DE FACTURA */}
             <div className="lg:col-span-5 bg-ui-bg-base border rounded-2xl p-5 shadow-sm flex flex-col justify-between">
