@@ -416,3 +416,4 @@ console.log(`XLS generado: ${outXlsPath}`)
 const outJsonPath = path.resolve("c:/Users/User/Desktop/pagina wed/mi-tienda/productos_factura_santander_aje.json")
 fs.writeFileSync(outJsonPath, JSON.stringify(products, null, 2), "utf8")
 console.log(`JSON generado: ${outJsonPath}`)
+

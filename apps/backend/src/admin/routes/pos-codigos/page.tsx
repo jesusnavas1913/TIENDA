@@ -793,6 +793,12 @@ const POSBarcodeManagerPage = () => {
         return false
       if (adminQuickFilter === "high-margin" && (info.detalPct ?? 20) < 25)
         return false
+      if (adminQuickFilter === "margin-10" && Number(info.detalPct) !== 10 && Number(info.mayorPct) !== 10)
+        return false
+      if (adminQuickFilter === "margin-15" && Number(info.detalPct) !== 15 && Number(info.mayorPct) !== 15)
+        return false
+      if (adminQuickFilter === "margin-20" && Number(info.detalPct) !== 20 && Number(info.mayorPct) !== 20)
+        return false
 
       if (!search.trim()) return true
       const q = search.toLowerCase()
@@ -1795,11 +1801,35 @@ const POSBarcodeManagerPage = () => {
           </Button>
           <Button
             size="small"
+            variant={adminQuickFilter === "margin-10" ? "primary" : "secondary"}
+            type="button"
+            onClick={() => setAdminQuickFilter("margin-10")}
+          >
+            🎯 Margen 10%
+          </Button>
+          <Button
+            size="small"
+            variant={adminQuickFilter === "margin-15" ? "primary" : "secondary"}
+            type="button"
+            onClick={() => setAdminQuickFilter("margin-15")}
+          >
+            📦 Margen 15%
+          </Button>
+          <Button
+            size="small"
+            variant={adminQuickFilter === "margin-20" ? "primary" : "secondary"}
+            type="button"
+            onClick={() => setAdminQuickFilter("margin-20")}
+          >
+            🏪 Margen 20%
+          </Button>
+          <Button
+            size="small"
             variant={adminQuickFilter === "promo" ? "primary" : "secondary"}
             type="button"
             onClick={() => setAdminQuickFilter("promo")}
           >
-            🔥 En Oferta / Descuento
+            🔥 En Oferta
           </Button>
           <Button
             size="small"

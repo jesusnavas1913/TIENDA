@@ -391,3 +391,4 @@ export default async function seedRealInvoiceProducts({ container }: ExecArgs) {
 
   logger.info(`✅ ¡Éxito! Se crearon ${createdProducts.length} productos reales con fórmula industrial y código 770.`)
 }
+
