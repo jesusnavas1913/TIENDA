@@ -321,3 +321,4 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     return res.status(500).json({ error: error.message || "Error al procesar solicitud" })
   }
 }
+

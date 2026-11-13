@@ -61,12 +61,6 @@ export default async function Nav() {
               <a href="#mapa-sedes-colombia" className="hover:text-emerald-700 transition-colors flex items-center gap-1.5 text-emerald-800 font-extrabold bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
                 🏢 Sede Principal
               </a>
-              <LocalizedClientLink
-                href="/admin/ingesta"
-                className="hover:text-blue-800 transition-colors flex items-center gap-1.5 text-blue-900 font-extrabold bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-full border border-blue-200 shadow-sm"
-              >
-                ⚡ Ingesta IA & Márgenes (10% - 15% - 20%)
-              </LocalizedClientLink>
             </div>
           </div>
 
