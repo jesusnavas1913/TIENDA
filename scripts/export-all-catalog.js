@@ -161,3 +161,4 @@ async function exportCompleteCatalog() {
 }
 
 exportCompleteCatalog().catch(console.error)
+

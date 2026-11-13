@@ -543,3 +543,4 @@ export default async function seedCompleteSupermarket({ container }: ExecArgs) {
 
   logger.info(`✅ ¡Éxito! Se añadieron ${createdProducts.length} productos completando Verduras, Carnes, Arroces, Víveres, Lácteos, Aseo y Bebidas.`)
 }
+
