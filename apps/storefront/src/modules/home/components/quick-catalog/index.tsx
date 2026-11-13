@@ -752,6 +752,64 @@ export default function QuickSupermarketCatalog({
         </div>
       </div>
 
+      {/* Visual Department Showcase Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 mb-8">
+        <button
+          type="button"
+          onClick={() => setSelectedCategory("all")}
+          className={`p-3.5 rounded-2xl border text-center transition-all duration-200 flex flex-col items-center justify-between gap-2 shadow-sm ${
+            selectedCategory === "all"
+              ? "bg-slate-900 text-white border-slate-900 shadow-md scale-[1.02] ring-2 ring-emerald-500/50"
+              : "bg-white hover:bg-slate-50 border-slate-200 text-slate-800 hover:border-slate-300"
+          }`}
+        >
+          <span className="text-2xl p-2 rounded-xl bg-slate-100/80">🛒</span>
+          <div className="text-xs font-black leading-tight">
+            <span>Todos</span>
+            <span className="block text-[10px] font-semibold opacity-75">{products.length} SKUs</span>
+          </div>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setSelectedCategory("offers")}
+          className={`p-3.5 rounded-2xl border text-center transition-all duration-200 flex flex-col items-center justify-between gap-2 shadow-sm ${
+            selectedCategory === "offers"
+              ? "bg-gradient-to-br from-rose-600 to-red-700 text-white border-rose-600 shadow-md scale-[1.02] ring-2 ring-rose-400"
+              : "bg-gradient-to-br from-rose-50 to-red-50 hover:from-rose-100 hover:to-red-100 border-rose-200 text-rose-950"
+          }`}
+        >
+          <span className="text-2xl p-2 rounded-xl bg-white/80 shadow-inner">🔥</span>
+          <div className="text-xs font-black leading-tight">
+            <span>Ofertas</span>
+            <span className="block text-[10px] font-semibold text-rose-700">{offersCount} Descuentos</span>
+          </div>
+        </button>
+
+        {categories.slice(0, 5).map((cat) => {
+          const style = CATEGORY_STYLES[cat.name] || CATEGORY_STYLES["Frutas y Verduras"]
+          const isSelected = selectedCategory === cat.name
+          return (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => setSelectedCategory(cat.name)}
+              className={`p-3.5 rounded-2xl border text-center transition-all duration-200 flex flex-col items-center justify-between gap-2 shadow-sm ${
+                isSelected
+                  ? "bg-emerald-700 text-white border-emerald-700 shadow-md scale-[1.02] ring-2 ring-emerald-400"
+                  : "bg-white hover:bg-slate-50 border-slate-200 text-slate-800 hover:border-emerald-300"
+              }`}
+            >
+              <span className="text-2xl p-2 rounded-xl bg-slate-50 shadow-inner">{style?.emoji || "📦"}</span>
+              <div className="text-xs font-black leading-tight line-clamp-1">
+                <span>{cat.name}</span>
+                <span className="block text-[10px] font-semibold opacity-70">{cat.count} refs</span>
+              </div>
+            </button>
+          )
+        })}
+      </div>
+
       {/* Sticky Navigation & Filter Controls */}
       <div className="flex flex-col gap-5 mb-10 bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/90 shadow-sm">
         <div className="flex flex-col small:flex-row small:items-center justify-between gap-4">
